@@ -1,0 +1,6 @@
+rootProject.name='SampleArchitecture'
+include ':app'
+include ':base'
+include ':page-login'
+include ':page-main'
+include ':page-bet'
