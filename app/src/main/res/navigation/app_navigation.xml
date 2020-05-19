@@ -19,9 +19,16 @@
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/betFragment"
         android:name="com.example.page_bet.BetFragment"
         android:label="BetFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.page_login.RegisterFragment"
+        android:label="RegisterFragment" />
 </navigation>

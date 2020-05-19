@@ -45,7 +45,7 @@ class Repository(private val sampleService: SampleService) {
     fun getGameMenu(): Flow<ViewState<GameMenuResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.getGameMenu()
+            val result = sampleService.getGameMenu("")
         }
     }
 }

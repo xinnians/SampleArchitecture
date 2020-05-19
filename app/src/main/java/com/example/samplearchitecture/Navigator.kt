@@ -14,12 +14,20 @@ internal class Navigator: BaseNavigator(), BetNavigation,LoginNavigation,MainNav
 
     }
 
-    override fun openLoginUp() {
-//        navController?.popBackStack()
+    override fun registerPage() {
+        navController?.navigate(R.id.action_loginFragment_to_registerFragment)
     }
 
-    override fun openLoginDown() {
-        navController?.navigate(R.id.action_loginFragment_to_mainFragment)
+    override fun loginPage() {
+        navController?.popBackStack()
+    }
+
+    override fun forgetPasswordPage() {
+
+    }
+
+    override fun testPlay() {
+
     }
 
     override fun openMainUp() {
