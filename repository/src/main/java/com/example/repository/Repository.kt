@@ -1,6 +1,8 @@
 package com.example.repository
 
 import com.example.repository.api.SampleService
+import com.example.repository.model.LoginParam
+import com.example.repository.model.LoginResponse
 import com.example.repository.model.NewsArticles
 import com.example.repository.model.ViewState
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +30,16 @@ class Repository(private val sampleService: SampleService) {
             // 3. Get articles from database [Single source of truth]
 //            emit(ViewState.success(newsDao.getNewsArticles()))
             emit(ViewState.success(newsSource.articles))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun login(): Flow<ViewState<LoginResponse.Data>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.login(LoginParam("test123","test123"))
+            emit(ViewState.success(result.data))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
         }.flowOn(Dispatchers.IO)

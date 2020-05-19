@@ -3,11 +3,12 @@ package com.example.samplearchitecture.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation.findNavController
+import com.example.base.BaseActivity
 import com.example.samplearchitecture.Navigator
 import com.example.samplearchitecture.R
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val navigator: Navigator by lazy {
         XInjectionManager.findComponent<Navigator>()

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.example.repository.Repository
 import com.example.repository.api.BaseAPI
 import com.example.repository.api.SampleAPI
@@ -28,6 +29,7 @@ object AppInjector {
                 ResourceProvider(it)
             BaseAPI.init(application)
             repository = Repository(SampleAPI.getInstance()?.getService()!!)
+            factory.init(application, repository, preferences, resource)
             viewModelFactory = factory
         }
     }
@@ -42,5 +44,8 @@ object AppInjector {
             viewModelFactory
         ).get(T::class.java)
 
-
+    inline fun <reified T : ViewModel> obtainViewModel(application: Application): T =
+        ViewModelProvider(application as ViewModelStoreOwner,
+            viewModelFactory
+        ).get(T::class.java)
 }

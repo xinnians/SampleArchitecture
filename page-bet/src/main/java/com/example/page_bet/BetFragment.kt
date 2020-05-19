@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.example.base.AppInjector
+import com.example.base.observeNotNull
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_bet.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -43,16 +44,12 @@ class BetFragment : Fragment() {
 
         mViewModel.getNewsArticles().observeNotNull(this){ state ->
             when(state) {
-                is ViewState.Success -> Log.e("Ian","ViewState.Success")
+                is ViewState.Success -> Log.e("Ian","ViewState.Success : ${state.data}")
                 is ViewState.Loading -> Log.e("Ian","ViewState.Loading")
                 is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
             }
         }
 
 
-    }
-
-    inline fun <T> LiveData<T>.observeNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
-        this.observe(owner, Observer { it?.apply(observer) })
     }
 }
