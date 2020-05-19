@@ -42,10 +42,13 @@ class Repository(private val sampleService: SampleService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getGameMenu(): Flow<ViewState<GameMenuResponse>> {
+    fun getGameMenu(token: String): Flow<ViewState<GameMenuResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.getGameMenu()
-        }
+            val result = sampleService.getGameMenu(token)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
     }
 }
