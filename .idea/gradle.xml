@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/page-login" />
             <option value="$PROJECT_DIR$/page-main" />
             <option value="$PROJECT_DIR$/repository" />
+            <option value="$PROJECT_DIR$/resource" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

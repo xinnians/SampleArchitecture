@@ -1,10 +1,7 @@
 package com.example.repository
 
 import com.example.repository.api.SampleService
-import com.example.repository.model.LoginParam
-import com.example.repository.model.LoginResponse
-import com.example.repository.model.NewsArticles
-import com.example.repository.model.ViewState
+import com.example.repository.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -35,13 +32,20 @@ class Repository(private val sampleService: SampleService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun login(): Flow<ViewState<LoginResponse.Data>> {
+    fun getLoginResult(): Flow<ViewState<LoginResponse.Data>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.login(LoginParam("test123","test123"))
+            val result = sampleService.getLoginResult(LoginRequest("test123","test123"))
             emit(ViewState.success(result.data))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
         }.flowOn(Dispatchers.IO)
+    }
+
+    fun getGameMenu(): Flow<ViewState<GameMenuResponse>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.getGameMenu()
+        }
     }
 }

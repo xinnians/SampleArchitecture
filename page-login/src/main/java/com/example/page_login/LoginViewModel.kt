@@ -9,7 +9,7 @@ import com.example.repository.model.ViewState
 
 class LoginViewModel(repository: Repository) : ViewModel() {
     private val loginResult: LiveData<ViewState<LoginResponse.Data>> =
-        repository.login().asLiveData()
+        repository.getLoginResult().asLiveData()
 
     fun getLoginResult(): LiveData<ViewState<LoginResponse.Data>> = loginResult
 }
