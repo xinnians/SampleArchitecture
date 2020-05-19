@@ -27,5 +27,5 @@ interface SampleService {
      * @param token String
      * */
     @GET("api/Games/GameMenu")
-    suspend fun getGameMenu(@Header("Access-token") token: String): GameMenuResponse
+    suspend fun getGameMenu(@Header("Authorization") token: String): GameMenuResponse
 }

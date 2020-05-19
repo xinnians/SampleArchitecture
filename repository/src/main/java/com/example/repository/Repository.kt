@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.flowOn
 
 class Repository(private val sampleService: SampleService) {
 
+    companion object {
+        const val test = "tttttt"
+    }
+
     /**
      * Fetch the news articles from database if exist else fetch from web
      * and persist them in the database
