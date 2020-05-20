@@ -1,4 +1,4 @@
-package com.example.page_bet.bet_menu
+package com.example.repository.model
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.example.repository.model.GameMenuResponse

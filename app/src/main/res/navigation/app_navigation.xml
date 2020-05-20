@@ -23,5 +23,21 @@
     <fragment
         android:id="@+id/betFragment"
         android:name="com.example.page_bet.BetFragment"
-        android:label="BetFragment" />
+        android:label="BetFragment" >
+        <action
+            android:id="@+id/action_betFragment_to_betMenuFragment"
+            app:destination="@id/betMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/betMenuFragment"
+        android:name="com.example.page_bet.bet_menu.BetMenuFragment"
+        android:label="BetMenuFragment" >
+        <action
+            android:id="@+id/action_betMenuFragment_to_gameFavoriteFragment"
+            app:destination="@id/gameFavoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameFavoriteFragment"
+        android:name="com.example.page_bet.game_favorite.GameFavoriteFragment"
+        android:label="GameFavoriteFragment" />
 </navigation>

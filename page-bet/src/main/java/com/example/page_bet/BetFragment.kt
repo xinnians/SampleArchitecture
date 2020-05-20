@@ -50,6 +50,5 @@ class BetFragment : Fragment() {
             }
         }
 
-
     }
 }

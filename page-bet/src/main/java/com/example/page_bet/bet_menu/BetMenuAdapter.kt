@@ -1,9 +1,11 @@
 package com.example.page_bet.bet_menu
 
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.GameMenuResponse
+import com.example.repository.model.MultipleMenuItem
 
 class BetMenuAdapter(data: MutableList<MultipleMenuItem>) :
     BaseMultiItemQuickAdapter<MultipleMenuItem, BaseViewHolder>(data) {
@@ -15,16 +17,20 @@ class BetMenuAdapter(data: MutableList<MultipleMenuItem>) :
 
     override fun convert(helper: BaseViewHolder?, item: MultipleMenuItem?) {
         helper?.let {
-            helper.setText(R.id.tvTypeName,item?.getData()?.gameTypeDisplayName?:"empty")
+            it.setText(R.id.tvTypeName,item?.getData()?.gameTypeDisplayName?:"empty")
+            var layoutManager = LinearLayoutManager(mContext)
+            layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            helper?.getView<RecyclerView>(R.id.rvGameList).layoutManager = layoutManager
+            var adapter: GameListAdapter = GameListAdapter(item?.getData()?.gameInfoEntityList?: listOf())
+            helper?.getView<RecyclerView>(R.id.rvGameList).adapter = adapter
+
             when (it.itemViewType) {
                 MultipleMenuItem.HOT -> {
-
                 }
                 MultipleMenuItem.FAVORITE -> {
-
+                    helper?.addOnClickListener(R.id.ivEdit)
                 }
                 MultipleMenuItem.NORMAL -> {
-
                 }
                 else -> {
 

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_167"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ededed">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutInfo"
@@ -40,6 +41,7 @@
             android:paddingStart="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_12"
             android:gravity="center"
+            android:elevation="@dimen/dp_2"
             android:textSize="@dimen/sp_14"
             android:textColor="#000000"
             android:text="投注記錄"/>
@@ -51,6 +53,7 @@
         android:id="@+id/rvGameList"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_126"
+        android:layout_marginStart="@dimen/dp_13"
         app:layout_constraintTop_toBottomOf="@id/layoutInfo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
