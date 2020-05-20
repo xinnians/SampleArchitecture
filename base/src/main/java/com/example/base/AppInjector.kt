@@ -13,11 +13,11 @@ import com.example.repository.api.SampleAPI
 
 object AppInjector {
 
-    lateinit var application: Application private set
-    lateinit var viewModelFactory: BaseViewModelFactory private set
-    lateinit var repository: Repository private set
-    lateinit var preferences: SharedPreferencesProvider private set
-    lateinit var resource: ResourceProvider private set
+    private lateinit var application: Application
+    private lateinit var viewModelFactory: BaseViewModelFactory
+    private lateinit var repository: Repository
+    private lateinit var preferences: SharedPreferencesProvider
+    private lateinit var resource: ResourceProvider
 
     fun init(application: Application, factory: BaseViewModelFactory) {
         AppInjector.application = application
@@ -36,16 +36,18 @@ object AppInjector {
 
     inline fun <reified T : ViewModel> obtainViewModel(activity: Activity): T =
         ViewModelProvider(activity as AppCompatActivity,
-            viewModelFactory
+            getViewModelFactory()
         ).get(T::class.java)
 
     inline fun <reified T : ViewModel> obtainViewModel(fragment: Fragment): T =
         ViewModelProvider(fragment,
-            viewModelFactory
+            getViewModelFactory()
         ).get(T::class.java)
 
     inline fun <reified T : ViewModel> obtainViewModel(application: Application): T =
         ViewModelProvider(application as ViewModelStoreOwner,
-            viewModelFactory
+            getViewModelFactory()
         ).get(T::class.java)
+
+    fun getViewModelFactory():BaseViewModelFactory = viewModelFactory
 }
