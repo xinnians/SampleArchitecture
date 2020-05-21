@@ -1,4 +1,4 @@
-package com.example.resource
+package com.example.base
 
 import android.content.Context
 
@@ -12,8 +12,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,6 +44,14 @@ fun View.visible() {
 inline fun View.onClick(crossinline clickAction: () -> Unit) = this.setOnClickListener {
     clickAction.invoke()
 }
+
+fun Fragment.toast(text: CharSequence) = requireActivity().toast(text)
+
+fun Context.toast(message: CharSequence): Toast = Toast
+    .makeText(this, message, Toast.LENGTH_SHORT)
+    .apply {
+        show()
+    }
 
 //fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
 //    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }

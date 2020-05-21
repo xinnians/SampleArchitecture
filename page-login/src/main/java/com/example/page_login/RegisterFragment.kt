@@ -4,31 +4,16 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.core.text.color
-import com.example.base.BaseFragment
-import com.example.resource.*
+import com.example.base.*
+import com.example.base.widget.CustomEditTextView
+import kotlinx.android.synthetic.main.fragment_register.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.support.v4.find
-import org.jetbrains.anko.support.v4.toast
 
 class RegisterFragment : BaseFragment() {
-    private val btnRegister by lazy { find<Button>(R.id.btnRegister) }
-    private val etAccount by lazy { find<EditText>(R.id.etAccount) }
-    private val etPws by lazy { find<EditText>(R.id.etPws) }
-    private val tvHide by lazy { find<TextView>(R.id.tvHide) }
-    private val tvAccountMsg by lazy { find<TextView>(R.id.tvAccountMsg) }
-    private val tvPwsMsg by lazy { find<TextView>(R.id.tvPwsMsg) }
-    private val tvLoginMsg by lazy { find<TextView>(R.id.tvLoginMsg) }
-    private var isHide = true
     private var isAccount = false
     private var isPws = false
     private lateinit var prefStore: PreferenceStore
@@ -50,66 +35,58 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun setListener() {
-        etAccount.addTextChangedListener(object : TextWatcherSon() {
-            override fun textChanged(editable: Editable) {
-                if (editable.toString().length < 6) {
-                    etAccount.backgroundResource = R.drawable.radius_err_board
-                    tvAccountMsg.let {
-                        it.visible()
-                        it.text = "6-16 字母或数字"
-                        isAccount = false
-                    }
-
-                } else {
-                    etAccount.backgroundResource = R.drawable.radius_board
-                    tvAccountMsg.let {
-                        it.gone()
-                        it.text = ""
-                        isAccount = true
+        cetAccount.let {
+            it.title = "用戶名"
+            it.hint = "請輸入用戶名"
+            it.textVisible = false
+            it.textChangedListener(object : TextWatcherSon() {
+                override fun textChanged(editable: Editable) {
+                    if (editable.toString().length < 6) {
+                        it.let {
+                            it.setBackground(R.drawable.radius_err_board)
+                            it.notice = "6-16 字母或数字"
+                        }
+                    } else {
+                        it.let {
+                            it.setBackground(R.drawable.radius_board)
+                            it.notice = ""
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
 
-        etPws.addTextChangedListener(object : TextWatcherSon() {
-            override fun textChanged(editable: Editable) {
-                if (editable.toString().length < 6) {
-                    etPws.backgroundResource = R.drawable.radius_err_board
-                    tvPwsMsg.let {
-                        it.visible()
-                        it.text = "6-16 字母或数字"
+
+        cetPws.let {
+            it.title = "密碼"
+            it.hint = "請輸入密碼"
+            it.inputType = CustomEditTextView.InType.PASSWORD
+            it.textChangedListener(object : TextWatcherSon() {
+                override fun textChanged(editable: Editable) {
+                    if (editable.toString().length < 6) {
+                        it.let {
+                            it.setBackground(R.drawable.radius_err_board)
+                            it.notice = "6-16 字母或数字"
+                        }
                         isPws = false
-                    }
 
-                } else {
-                    etPws.backgroundResource = R.drawable.radius_board
-                    tvPwsMsg.let {
-                        it.gone()
-                        it.text = ""
+                    } else {
+                        it.let {
+                            it.setBackground(R.drawable.radius_board)
+                            it.notice = ""
+                        }
                         isPws = true
                     }
                 }
-            }
-        })
-
-        tvHide.onClick {
-            if (isHide) {
-                isHide = false
-                tvHide.text = "hide"
-                etPws.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            } else {
-                isHide = true
-                tvHide.text = "show"
-                etPws.transformationMethod = PasswordTransformationMethod.getInstance()
-            }
+            })
         }
 
         btnRegister.text = "免費註冊"
         btnRegister.onClick {
             if (isAccount && isPws) {
                 toast("註冊成功")
-                prefStore.account = etAccount.text.toString()
-                prefStore.password = etPws.text.toString()
+                prefStore.account = cetAccount.text
+                prefStore.password = cetPws.text
             } else {
                 toast("請輸入帳號密碼喔")
             }

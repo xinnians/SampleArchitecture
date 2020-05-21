@@ -3,8 +3,6 @@ package com.example.samplearchitecture
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.base.AppInjector.repository
 import com.example.base.BaseViewModelFactory
 import com.example.base.ResourceProvider
 import com.example.base.SharedPreferencesProvider
@@ -36,10 +34,10 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return with(modelClass) {
             when {
-                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = repository)
-                isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(repository = repository)
-                isAssignableFrom(MainViewModel::class.java) -> MainViewModel()
-                isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = repository)
+                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = mRepository!!)
+                isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(repository = mRepository!!)
+                isAssignableFrom(MainViewModel::class.java) -> MainViewModel(repository = mRepository!!)
+                isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = mRepository!!)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             } as T
         }

@@ -12,27 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.text.color
-import com.example.base.AppInjector
-import com.example.base.BaseFragment
-import com.example.base.observeNotNull
+import com.example.base.*
+import com.example.base.widget.CustomEditTextView
 import com.example.repository.model.ViewState
 import com.example.resource.*
+import kotlinx.android.synthetic.main.fragment_login.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.support.v4.find
-import org.jetbrains.anko.support.v4.toast
 
 class LoginFragment : BaseFragment() {
-    private val btnLogin by lazy { find<Button>(R.id.btnLogin) }
-    private val etAccount by lazy { find<EditText>(R.id.etAccount) }
-    private val etPws by lazy { find<EditText>(R.id.etPws) }
-    private val tvHide by lazy { find<TextView>(R.id.tvHide) }
-    private val tvAccountMsg by lazy { find<TextView>(R.id.tvAccountMsg) }
-    private val tvPwsMsg by lazy { find<TextView>(R.id.tvPwsMsg) }
-    private val tvRegisterMsg by lazy { find<TextView>(R.id.tvRegisterMsg) }
-    private val cbRemember by lazy { find<CheckBox>(R.id.cbRemember) }
-    private val ivTestPlay by lazy { find<ImageView>(R.id.ivTestPlay) }
-    private var isHide = true
     private var isAccount = false
     private var isPws = false
 
@@ -62,9 +49,6 @@ class LoginFragment : BaseFragment() {
 
     private fun init(){
         mViewModel = AppInjector.obtainViewModel(this)
-//        btnUp.setOnClickListener { navigation.openLoginUp() }
-//        btnDown.setOnClickListener { navigation.openLoginDown() }
-
         mViewModel.getLoginResult().observeNotNull(this){ state ->
             when(state) {
                 is ViewState.Success -> {
@@ -80,69 +64,63 @@ class LoginFragment : BaseFragment() {
     private fun setListener() {
         cbRemember.isChecked = prefStore.remember
         if (cbRemember.isChecked) {
-            etAccount.setText(prefStore.account)
-            etPws.setText(prefStore.password)
+            cetAccount.text = prefStore.account
+            cetPws.text = prefStore.password
             isAccount = true
             isPws = true
         }
 
-        etAccount.addTextChangedListener(object : TextWatcherSon() {
-            override fun textChanged(editable: Editable) {
-                if (editable.toString().length < 6) {
-                    etAccount.backgroundResource = R.drawable.radius_err_board
-                    tvAccountMsg.let {
-                        it.visible()
-                        it.text = "6-16 字母或数字"
-                        isAccount = false
-                    }
-
-                } else {
-                    etAccount.backgroundResource = R.drawable.radius_board
-                    tvAccountMsg.let {
-                        it.gone()
-                        it.text = ""
-                        isAccount = true
+        cetAccount.let {
+            it.title = "用戶名"
+            it.hint = "請輸入用戶名"
+            it.textVisible = false
+            it.textChangedListener(object : TextWatcherSon() {
+                override fun textChanged(editable: Editable) {
+                    if (editable.toString().length < 6) {
+                        it.let {
+                            it.setBackground(R.drawable.radius_err_board)
+                            it.notice = "6-16 字母或数字"
+                        }
+                    } else {
+                        it.let {
+                            it.setBackground(R.drawable.radius_board)
+                            it.notice = ""
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
 
-        etPws.addTextChangedListener(object : TextWatcherSon() {
-            override fun textChanged(editable: Editable) {
-                if (editable.toString().length < 6) {
-                    etPws.backgroundResource = R.drawable.radius_err_board
-                    tvPwsMsg.let {
-                        it.visible()
-                        it.text = "6-16 字母或数字"
+
+        cetPws.let {
+            it.title = "密碼"
+            it.hint = "請輸入密碼"
+            it.inputType = CustomEditTextView.InType.PASSWORD
+            it.textChangedListener(object : TextWatcherSon() {
+                override fun textChanged(editable: Editable) {
+                    if (editable.toString().length < 6) {
+                        it.let {
+                            it.setBackground(R.drawable.radius_err_board)
+                            it.notice = "6-16 字母或数字"
+                        }
                         isPws = false
-                    }
 
-                } else {
-                    etPws.backgroundResource = R.drawable.radius_board
-                    tvPwsMsg.let {
-                        it.gone()
-                        it.text = ""
+                    } else {
+                        it.let {
+                            it.setBackground(R.drawable.radius_board)
+                            it.notice = ""
+                        }
                         isPws = true
                     }
                 }
-            }
-        })
+            })
+        }
 
         cbRemember.onClick {
             prefStore.remember = cbRemember.isChecked
         }
 
-        tvHide.onClick {
-            if (isHide) {
-                isHide = false
-                tvHide.text = "hide"
-                etPws.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            } else {
-                isHide = true
-                tvHide.text = "show"
-                etPws.transformationMethod = PasswordTransformationMethod.getInstance()
-            }
-        }
+
 
         ivTestPlay.onClick {
             toast("試玩版開發中")
@@ -151,7 +129,7 @@ class LoginFragment : BaseFragment() {
         btnLogin.text = "登入"
         btnLogin.onClick {
             if (isAccount && isPws) {
-                if ((etAccount.text.toString() == prefStore.account && etPws.text.toString() == prefStore.password)) {
+                if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
                     toast("登入成功")
                 } else {
                     toast("帳號密碼錯誤")

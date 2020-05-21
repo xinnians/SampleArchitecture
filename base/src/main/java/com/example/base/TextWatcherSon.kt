@@ -1,4 +1,4 @@
-package com.example.resource
+package com.example.base
 
 import android.text.Editable
 import android.text.TextWatcher

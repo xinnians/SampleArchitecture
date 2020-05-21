@@ -19,125 +19,31 @@
         android:src="@drawable/abc_vector_test"
         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clAccount"
+    <com.example.base.widget.CustomEditTextView
+        android:id="@+id/cetAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
-        >
+        />
 
-        <TextView
-            android:id="@+id/tvAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/sp_14"
-            android:text="用戶名"
-            />
-
-
-        <EditText
-            android:id="@+id/etAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAccount"
-            android:layout_marginTop="@dimen/dp_10"
-            android:hint="請輸入用戶名"
-            android:paddingTop="@dimen/dp_11"
-            android:paddingBottom="@dimen/dp_9"
-            android:paddingStart="@dimen/dp_12"
-            android:textSize="@dimen/sp_14"
-            android:background="@drawable/radius_board"
-            />
-
-        <TextView
-            android:id="@+id/tvAccountMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etAccount"
-            android:layout_marginTop="@dimen/dp_5"
-            android:textSize="@dimen/sp_12"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clPws"
+    <com.example.base.widget.CustomEditTextView
+        android:id="@+id/cetPws"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/clAccount"
+        app:layout_constraintTop_toBottomOf="@+id/cetAccount"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
-        >
-
-        <TextView
-            android:id="@+id/tvPws"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/sp_14"
-            android:text="密碼"
-            />
-
-
-        <EditText
-            android:id="@+id/etPws"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPws"
-            android:layout_marginTop="@dimen/dp_10"
-            android:inputType="textPassword"
-            android:hint="請輸入密碼"
-            android:paddingTop="@dimen/dp_11"
-            android:paddingBottom="@dimen/dp_9"
-            android:paddingStart="@dimen/dp_12"
-            android:paddingEnd="@dimen/dp_12"
-            android:textSize="@dimen/sp_14"
-            android:background="@drawable/radius_board"
-            />
-
-        <TextView
-            android:id="@+id/tvHide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/etPws"
-            app:layout_constraintTop_toTopOf="@+id/etPws"
-            app:layout_constraintBottom_toBottomOf="@+id/etPws"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:textSize="@dimen/sp_12"
-            android:text="show"
-            />
-
-        <TextView
-            android:id="@+id/tvPwsMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPws"
-            android:layout_marginTop="@dimen/dp_5"
-            android:textSize="@dimen/sp_12"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clInvite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/clPws"
+        app:layout_constraintTop_toBottomOf="@+id/cetPws"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
@@ -196,8 +102,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        android:layout_marginTop="@dimen/dp_100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dp_60"
         android:textSize="@dimen/sp_12"
         />
 
