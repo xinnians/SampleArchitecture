@@ -1,6 +1,6 @@
 package com.example.page_main
 
 interface MainNavigation {
-    fun openMainUp()
-    fun openMainDown()
+    fun backToLoginPage()
+    fun goToBetMenuPage()
 }

@@ -28,7 +28,8 @@ data class GameMenuResponse(
             val gameTypeId: Int,
             @SerializedName("lockTime")
             val lockTime: Int,
-            var isFavorite: Boolean = false
+            var isFavorite: Boolean = false,
+            var isClick: Boolean = false
         ) : Parcelable
     }
 }

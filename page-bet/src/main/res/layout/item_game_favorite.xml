@@ -28,4 +28,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_7"/>
 
+    <View
+        android:id="@+id/layoutSpace"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_109"
+        app:layout_constraintTop_toBottomOf="@id/rvGameList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

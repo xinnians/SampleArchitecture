@@ -13,34 +13,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fragment_bet"
-        app:layout_constraintTop_toTopOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRow1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_5">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRow2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/layoutRow1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_7">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRow3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_88"
+        app:layout_constraintTop_toBottomOf="@id/layoutRow2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_7">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRow4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutRow3"
+        app:layout_constraintBottom_toTopOf="@id/layoutRow5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRow5"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_202"
+        android:elevation=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-        android:id="@+id/btnUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Up"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"/>
-
-    <Button
-        android:id="@+id/btnDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Down"
-        app:layout_constraintTop_toTopOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,8 +37,8 @@ class MainFragment : BaseFragment() {
 
     private fun init() {
         mMainViewModel = AppInjector.obtainViewModel(this)
-        btnUp.setOnClickListener { navigation.openMainUp() }
-        btnDown.setOnClickListener { navigation.openMainDown() }
+        btnUp.setOnClickListener { navigation.backToLoginPage() }
+        btnDown.setOnClickListener { navigation.goToBetMenuPage() }
         Log.e("[MainFragment]", "lotteryToken: ${getSharedViewModel().lotteryToken.value}")
 
         mMainViewModel.getGameMenuResult(getSharedViewModel().lotteryToken.value.orEmpty())

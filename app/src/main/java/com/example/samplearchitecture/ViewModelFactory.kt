@@ -7,8 +7,9 @@ import com.example.base.BaseViewModelFactory
 import com.example.base.ResourceProvider
 import com.example.base.SharedPreferencesProvider
 import com.example.base.SharedViewModel
-import com.example.page_bet.BetViewModel
+import com.example.page_bet.bet.BetViewModel
 import com.example.page_bet.bet_menu.BetMenuViewModel
+import com.example.page_bet.game_favorite.GameFavoriteViewModel
 import com.example.page_login.LoginViewModel
 import com.example.page_main.MainViewModel
 import com.example.repository.Repository
@@ -35,11 +36,14 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return with(modelClass) {
             when {
-                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = mRepository!!)
+                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(
+                    repository = mRepository!!
+                )
                 isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(repository = mRepository!!)
                 isAssignableFrom(MainViewModel::class.java) -> MainViewModel(mRepository!!)
                 isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = mRepository!!)
                 isAssignableFrom(BetMenuViewModel::class.java) -> BetMenuViewModel(repository = mRepository!!)
+                isAssignableFrom(GameFavoriteViewModel::class.java) -> GameFavoriteViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             } as T
         }

@@ -1,6 +1,5 @@
 package com.example.samplearchitecture
 
-import android.util.Log
 import com.example.page_bet.BetNavigation
 import com.example.page_login.LoginNavigation
 import com.example.page_main.MainNavigation
@@ -11,11 +10,14 @@ internal class Navigator: BaseNavigator(), BetNavigation,LoginNavigation,MainNav
     }
 
     override fun openBetDown() {
-        navController?.navigate(R.id.action_betFragment_to_betMenuFragment)
     }
 
     override fun toGameFavoritePage() {
         navController?.navigate(R.id.action_betMenuFragment_to_gameFavoriteFragment)
+    }
+
+    override fun goBackToBetMenuPage() {
+        navController?.popBackStack()
     }
 
     override fun openLoginUp() {
@@ -26,11 +28,11 @@ internal class Navigator: BaseNavigator(), BetNavigation,LoginNavigation,MainNav
         navController?.navigate(R.id.action_loginFragment_to_mainFragment)
     }
 
-    override fun openMainUp() {
+    override fun backToLoginPage() {
         navController?.popBackStack()
     }
 
-    override fun openMainDown() {
-        navController?.navigate(R.id.action_mainFragment_to_betFragment)
+    override fun goToBetMenuPage() {
+        navController?.navigate(R.id.action_mainFragment_to_betMenuFragment)
     }
 }
