@@ -16,6 +16,11 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class BetFragment : Fragment() {
 
+    companion object{
+        const val TAG_GAME_ID = "tag_game_id"
+        const val TAG_GAME_NAME = "tag_game_name"
+    }
+
     private lateinit var mViewModel: BetViewModel
 
     private val navigation: BetNavigation by lazy {
@@ -38,6 +43,8 @@ class BetFragment : Fragment() {
 
     private fun init(){
         mViewModel = AppInjector.obtainViewModel(this)
-
+        arguments?.getString(TAG_GAME_NAME,"empty").let {
+            ivGameName.text = it
+        }
     }
 }

@@ -16,5 +16,6 @@ class GameListAdapter(data: List<GameMenuResponse.Data.GameInfoEntity>) :
     override fun convert(helper: BaseViewHolder?, item: GameMenuResponse.Data.GameInfoEntity?) {
 //        helper?.setText(R.id.tvGameName,item?.gameName?:"empty")
         helper?.setText(R.id.tvGameName,item?.gameName?:"empty")
+        helper?.addOnClickListener(R.id.layoutBackground)
     }
 }

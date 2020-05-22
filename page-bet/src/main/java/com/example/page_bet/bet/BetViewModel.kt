@@ -9,12 +9,14 @@ import com.example.repository.model.ViewState
 
 class BetViewModel(repository: Repository) : ViewModel(){
 
-    private val newsArticles: LiveData<ViewState<List<NewsArticles>>> = repository.getNewsArticles().asLiveData()
+//    private val newsArticles: LiveData<ViewState<List<NewsArticles>>> = repository.getNewsArticles().asLiveData()
+//
+//    /**
+//     * Return news articles to observeNotNull on the UI.
+//     */
+//    fun getNewsArticles(): LiveData<ViewState<List<NewsArticles>>> = newsArticles
 
-    /**
-     * Return news articles to observeNotNull on the UI.
-     */
-    fun getNewsArticles(): LiveData<ViewState<List<NewsArticles>>> = newsArticles
+    fun getCurrentIssueInfo(gameId: Int){}
 
 
 }
