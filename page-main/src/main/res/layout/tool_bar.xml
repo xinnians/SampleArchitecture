@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_44"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/ivTitleIcon"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/title"
+        android:layout_marginStart="@dimen/dp_16"
+        />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        app:layout_constraintStart_toEndOf="@+id/ivTitleIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivTitleIcon"
+        android:layout_marginStart="@dimen/dp_6"
+        android:textSize="@dimen/sp_12"
+        android:text="金牌玩家"
+        />
+
+    <TextView
+        android:id="@+id/tvDollar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        app:layout_constraintStart_toEndOf="@+id/ivTitleIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTitleIcon"
+        android:layout_marginStart="@dimen/dp_6"
+        android:textSize="@dimen/sp_12"
+        android:text="$"
+        />
+
+    <TextView
+        android:id="@+id/tvMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        app:layout_constraintStart_toEndOf="@+id/tvDollar"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTitleIcon"
+        android:layout_marginStart="@dimen/dp_4"
+        android:textSize="@dimen/sp_12"
+        android:text="・・・・・・・"
+        />
+
+    <ImageView
+        android:id="@+id/ivShowMoney"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        app:layout_constraintStart_toEndOf="@+id/tvMoney"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTitleIcon"
+        android:layout_marginStart="@dimen/dp_4"
+        android:src="@drawable/close_eye"
+        />
+    
+    <ImageView
+        android:id="@+id/ivGroup"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:src="@drawable/group"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
