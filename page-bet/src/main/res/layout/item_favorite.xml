@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_167"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ededed">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutInfo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_41"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#f4f4f4">
+
+        <TextView
+            android:id="@+id/tvTypeName"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:gravity="center"
+            android:textSize="@dimen/sp_18"
+            android:textColor="#000000"
+            android:text="我的最愛"/>
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="@dimen/dp_27"
+            android:layout_height="@dimen/dp_27"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTypeName"
+            android:layout_marginStart="@dimen/dp_12"
+            android:background="@drawable/bg_white_button"
+            android:padding="@dimen/dp_7_5"
+            android:src="@drawable/ic_pencil"
+            android:gravity="center"
+            android:elevation="@dimen/dp_2"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"
+            android:text="時時彩"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGameList"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_126"
+        android:layout_marginStart="@dimen/dp_13"
+        app:layout_constraintTop_toBottomOf="@id/layoutInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

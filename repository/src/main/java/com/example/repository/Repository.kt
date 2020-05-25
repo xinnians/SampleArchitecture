@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.flowOn
 
 class Repository(private val sampleService: SampleService) {
 
+    companion object {
+        const val test = "tttttt"
+    }
+
     /**
      * Fetch the news articles from database if exist else fetch from web
      * and persist them in the database
@@ -46,6 +50,16 @@ class Repository(private val sampleService: SampleService) {
         return flow {
             emit(ViewState.loading())
             val result = sampleService.getGameMenu(token)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getIssueInfo(token: String, gameId: Int): Flow<ViewState<IssueInfoResponse>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.issueInfo(token, gameId)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))

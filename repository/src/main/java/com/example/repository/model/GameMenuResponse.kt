@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class GameMenuResponse(
     @SerializedName("data")
     val data: List<Data>
-): BaseResult() {
+) : BaseResult() {
     data class Data(
         @SerializedName("gameInfoEntityList")
         val gameInfoEntityList: List<GameInfoEntity>,
@@ -27,7 +27,9 @@ data class GameMenuResponse(
             @SerializedName("gameTypeId")
             val gameTypeId: Int,
             @SerializedName("lockTime")
-            val lockTime: Int
+            val lockTime: Int,
+            var isFavorite: Boolean = false,
+            var isClick: Boolean = false
         ) : Parcelable
     }
 }

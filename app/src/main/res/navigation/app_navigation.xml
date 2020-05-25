@@ -9,8 +9,8 @@
         android:name="com.example.page_main.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_betFragment"
-            app:destination="@id/betFragment" />
+            android:id="@+id/action_mainFragment_to_betMenuFragment"
+            app:destination="@id/betMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -25,8 +25,23 @@
     </fragment>
     <fragment
         android:id="@+id/betFragment"
-        android:name="com.example.page_bet.BetFragment"
+        android:name="com.example.page_bet.bet.BetFragment"
         android:label="BetFragment" />
+    <fragment
+        android:id="@+id/betMenuFragment"
+        android:name="com.example.page_bet.bet_menu.BetMenuFragment"
+        android:label="BetMenuFragment" >
+        <action
+            android:id="@+id/action_betMenuFragment_to_gameFavoriteFragment"
+            app:destination="@id/gameFavoriteFragment" />
+        <action
+            android:id="@+id/action_betMenuFragment_to_betFragment"
+            app:destination="@id/betFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameFavoriteFragment"
+        android:name="com.example.page_bet.game_favorite.GameFavoriteFragment"
+        android:label="GameFavoriteFragment" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.page_login.RegisterFragment"

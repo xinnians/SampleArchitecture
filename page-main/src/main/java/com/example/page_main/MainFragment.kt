@@ -1,6 +1,5 @@
 package com.example.page_main
 
-import android.content.Context
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -13,6 +12,9 @@ import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.onClick
 import kotlinx.android.synthetic.main.tool_bar.*
+import com.example.base.observeNotNull
+import com.example.repository.model.ViewState
+import kotlinx.android.synthetic.main.fragment_main.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class MainFragment : BaseFragment() {
@@ -34,17 +36,27 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
         setListener()
     }
 
-    private fun init(){
+    private fun init() {
         mMainViewModel = AppInjector.obtainViewModel(this)
+        btnUp.setOnClickListener { navigation.backToLoginPage() }
+        btnDown.setOnClickListener { navigation.goToBetMenuPage() }
+        Log.e("[MainFragment]", "lotteryToken: ${getSharedViewModel().lotteryToken.value}")
+
+        mMainViewModel.getGameMenuResult(getSharedViewModel().lotteryToken.value.orEmpty())
+            .observeNotNull(this) { state ->
+                when (state) {
+                    is ViewState.Success -> Log.e("Ian", "ViewState.Success : ${state.data.data}")
+                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+                }
+
+            }
 
         Log.e("[MainFragment]","lotteryToken: ${getSharedViewModel().lotteryToken.value}")
-
-
     }
 
     private fun setListener() {

@@ -1,13 +1,7 @@
 package com.example.repository.api
 
-import com.example.repository.model.GameMenuResponse
-import com.example.repository.model.LoginRequest
-import com.example.repository.model.LoginResponse
-import com.example.repository.model.NewsSourceResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import com.example.repository.model.*
+import retrofit2.http.*
 
 interface SampleService {
     @GET("articles?source=google-news&apiKey=ea919804ff5f4532a03c45e243a5b122")
@@ -27,5 +21,13 @@ interface SampleService {
      * @param token String
      * */
     @GET("api/Games/GameMenu")
-    suspend fun getGameMenu(@Header("Access-token") token: String): GameMenuResponse
+    suspend fun getGameMenu(@Header("Authorization") token: String): GameMenuResponse
+    /**
+     * 取得當期期號資訊
+     * @param token String
+     * @param gameId int
+     * */
+    @GET("api/Issue/IssueInfo/{gameId}")
+    fun issueInfo(@Header("Authorization") token: String,
+                  @Path("gameId") gameId: Int): IssueInfoResponse
 }

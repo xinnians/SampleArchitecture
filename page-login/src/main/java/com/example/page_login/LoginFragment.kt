@@ -53,7 +53,7 @@ class LoginFragment : BaseFragment() {
             when(state) {
                 is ViewState.Success -> {
                     Log.e("Ian","ViewState.Success : ${state.data.token}")
-                    getSharedViewModel().lotteryToken.postValue(state.data.token)
+                    getSharedViewModel().lotteryToken.postValue("Bearer ${state.data.token}")
                 }
                 is ViewState.Loading -> Log.e("Ian","ViewState.Loading")
                 is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
