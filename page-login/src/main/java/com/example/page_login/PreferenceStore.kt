@@ -35,11 +35,11 @@ class PreferenceStore(context: Context) {
         set(switch) = prefs.edit { putBoolean(SE_SWITCH, switch) }
 
     var account: String
-        get() = prefs.getString(ACCOUNT, "")!!
+        get() = prefs.getString(ACCOUNT, "test123")!!
         set(account) = prefs.edit { putString(ACCOUNT, account) }
 
     var password: String
-        get() = prefs.getString(PASSWORD, "")!!
+        get() = prefs.getString(PASSWORD, "test123")!!
         set(password) = prefs.edit { putString(PASSWORD, password) }
 
     var remember: Boolean
