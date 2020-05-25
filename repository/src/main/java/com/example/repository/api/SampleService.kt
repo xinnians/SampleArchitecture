@@ -28,6 +28,14 @@ interface SampleService {
      * @param gameId int
      * */
     @GET("api/Issue/IssueInfo/{gameId}")
-    fun issueInfo(@Header("Authorization") token: String,
+    suspend fun issueInfo(@Header("Authorization") token: String,
                   @Path("gameId") gameId: Int): IssueInfoResponse
+    /**
+     * 取得多個遊戲最新開獎結果
+     * @param token String
+     * @param gameId int
+     * */
+    @GET("/api/Draw/LatestIssueResult")
+    suspend fun lastIssueResult(@Header("Authorization") token: String,
+                          @Query("gameIdList") gameId: Int): LastIssueResultResponse
 }

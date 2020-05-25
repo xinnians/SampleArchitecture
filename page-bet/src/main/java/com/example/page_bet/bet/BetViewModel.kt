@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.example.repository.Repository
 import com.example.repository.model.IssueInfoResponse
+import com.example.repository.model.LastIssueResultResponse
 import com.example.repository.model.NewsArticles
 import com.example.repository.model.ViewState
 
@@ -20,6 +21,10 @@ class BetViewModel(var repository: Repository) : ViewModel(){
 
     fun getCurrentIssueInfo(token:String, gameId: Int): LiveData<ViewState<IssueInfoResponse>>{
         return repository.getIssueInfo(token, gameId).asLiveData()
+    }
+
+    fun getLastIssueResult(token:String, gameId: Int): LiveData<ViewState<LastIssueResultResponse>>{
+        return repository.getLastIssueResult(token, gameId).asLiveData()
     }
 
 }

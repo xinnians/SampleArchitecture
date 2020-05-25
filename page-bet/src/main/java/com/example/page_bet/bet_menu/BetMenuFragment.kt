@@ -15,6 +15,7 @@ import com.example.page_bet.R
 import com.example.page_bet.bet.BetFragment
 import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_ID
 import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_NAME
+import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_TYPE
 import com.example.repository.model.GameMenuResponse
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_bet_menu.*
@@ -79,6 +80,7 @@ class BetMenuFragment : BaseFragment() {
                                 var bundle = Bundle()
                                 bundle.putInt(TAG_GAME_ID,msg.gameId)
                                 bundle.putString(TAG_GAME_NAME,msg.gameName)
+                                bundle.putInt(TAG_GAME_TYPE,msg.gameTypeId)
                                 navigation.toBetPage(bundle)
                             }
                         })
