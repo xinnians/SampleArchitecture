@@ -1,7 +1,6 @@
 package com.example.repository.api
 
 import com.example.repository.model.*
-import retrofit2.Call
 import retrofit2.http.*
 
 interface SampleService {
@@ -29,6 +28,6 @@ interface SampleService {
      * @param gameId int
      * */
     @GET("api/Issue/IssueInfo/{gameId}")
-    fun issueInfo(@Header("Access-token") token: String,
+    fun issueInfo(@Header("Authorization") token: String,
                   @Path("gameId") gameId: Int): IssueInfoResponse
 }

@@ -55,4 +55,14 @@ class Repository(private val sampleService: SampleService) {
             emit(ViewState.error(it.message.orEmpty()))
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getIssueInfo(token: String, gameId: Int): Flow<ViewState<IssueInfoResponse>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.issueInfo(token, gameId)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 }
