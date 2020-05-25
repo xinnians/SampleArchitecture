@@ -54,9 +54,9 @@ fun Context.toast(message: CharSequence): Toast = Toast
         show()
     }
 
-fun Fragment.getDaawable(resId: Int) = requireContext().getDrawable(resId)
+fun Fragment.drawable(resId: Int) = requireContext().drawable(resId)
 
-fun Context.getDrawable(resId: Int) = ContextCompat.getDrawable(this, resId)
+fun Context.drawable(resId: Int) = ContextCompat.getDrawable(this, resId)
 
 //fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
 //    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }

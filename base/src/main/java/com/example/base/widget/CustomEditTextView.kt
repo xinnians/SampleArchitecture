@@ -74,7 +74,7 @@ class CustomEditTextView @JvmOverloads constructor(
 
 
     var hint: String
-        get() = etInput.hint.toString()
+        get() = this.toString()
         set(hint) {
             if (hint.isNotBlank() || hint.isNotEmpty()) {
                 etInput.hint = hint
@@ -93,7 +93,7 @@ class CustomEditTextView @JvmOverloads constructor(
 
 
     var notice: String
-        get() = tvNotice.text.toString()
+        get() = this.toString()
         set(notice) {
             if (notice.isNotBlank() || notice.isNotEmpty()) {
                 tvNotice.let {

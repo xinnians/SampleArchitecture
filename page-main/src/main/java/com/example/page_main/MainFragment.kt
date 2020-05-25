@@ -1,18 +1,11 @@
 package com.example.page_main
 
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import com.example.base.AppInjector
-import com.example.base.BaseFragment
-import com.example.base.onClick
-import kotlinx.android.synthetic.main.tool_bar.*
-import com.example.base.observeNotNull
+import com.example.base.*
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -60,24 +53,13 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setListener() {
-        tvMoney.let {
-            it.text = "1,000"
-            it.transformationMethod = PasswordTransformationMethod.getInstance()
-        }
+        ctbTitleBar.let {
+            it.money = "1,000,000.000"
+            it.showTime = 5000
+            it.showBack = true
+            it.backListener(View.OnClickListener { navigation.backToLoginPage() }
 
-        ivShowMoney.onClick {
-            if (isHide) {
-                isHide = false
-                ivShowMoney.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.open_eye))
-                tvMoney.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            } else {
-                isHide = true
-                ivShowMoney.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.close_eye))
-                tvMoney.let {
-                    it.maxEms = 6
-                    it.transformationMethod = PasswordTransformationMethod.getInstance()
-                }
-            }
+            )
         }
     }
 }
