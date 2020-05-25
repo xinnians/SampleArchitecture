@@ -5,4 +5,5 @@ interface LoginNavigation {
     fun loginPage()
     fun forgetPasswordPage()
     fun testPlay()
+    fun mainPage()
 }

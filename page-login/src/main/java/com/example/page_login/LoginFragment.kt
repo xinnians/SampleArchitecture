@@ -81,11 +81,13 @@ class LoginFragment : BaseFragment() {
                             it.setBackground(R.drawable.radius_err_board)
                             it.notice = "6-16 字母或数字"
                         }
+                        isAccount = false
                     } else {
                         it.let {
                             it.setBackground(R.drawable.radius_board)
                             it.notice = ""
                         }
+                        isAccount = true
                     }
                 }
             })
@@ -131,6 +133,7 @@ class LoginFragment : BaseFragment() {
             if (isAccount && isPws) {
                 if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
                     toast("登入成功")
+                    navigation.mainPage()
                 } else {
                     toast("帳號密碼錯誤")
                 }

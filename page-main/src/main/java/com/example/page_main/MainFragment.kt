@@ -37,11 +37,7 @@ class MainFragment : BaseFragment() {
 
     private fun init(){
         mMainViewModel = AppInjector.obtainViewModel(this)
-        btnUp.setOnClickListener { navigation.openMainUp() }
-        btnDown.setOnClickListener { navigation.openMainDown() }
-//        getSharedViewModel().lotteryToken.observeNotNull(this){
-//
-//        }
+
         Log.e("[MainFragment]","lotteryToken: ${getSharedViewModel().lotteryToken.value}")
 
 

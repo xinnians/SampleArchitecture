@@ -46,11 +46,13 @@ class RegisterFragment : BaseFragment() {
                             it.setBackground(R.drawable.radius_err_board)
                             it.notice = "6-16 字母或数字"
                         }
+                        isAccount = false
                     } else {
                         it.let {
                             it.setBackground(R.drawable.radius_board)
                             it.notice = ""
                         }
+                        isAccount = true
                     }
                 }
             })
@@ -87,6 +89,7 @@ class RegisterFragment : BaseFragment() {
                 toast("註冊成功")
                 prefStore.account = cetAccount.text
                 prefStore.password = cetPws.text
+                navigation.loginPage()
             } else {
                 toast("請輸入帳號密碼喔")
             }

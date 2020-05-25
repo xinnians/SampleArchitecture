@@ -30,11 +30,9 @@ internal class Navigator: BaseNavigator(), BetNavigation,LoginNavigation,MainNav
 
     }
 
-    override fun openMainUp() {
-        navController?.popBackStack()
+    override fun mainPage() {
+        navController?.navigate(R.id.action_loginFragment_to_mainFragment)
     }
 
-    override fun openMainDown() {
-        navController?.navigate(R.id.action_mainFragment_to_betFragment)
-    }
+
 }
