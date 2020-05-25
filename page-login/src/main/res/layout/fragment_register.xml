@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ededed"
-    android:clickable="true">
-
+    android:clickable="true"
+    >
+    
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="@dimen/dp_150"
@@ -38,7 +39,7 @@
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
         />
-
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clInvite"
         android:layout_width="match_parent"
@@ -48,32 +49,39 @@
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
         >
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cbRemember"
+        
+        <TextView
+            android:id="@+id/tvInvite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="記住帳號密碼"
+            android:textSize="@dimen/sp_14"
+            android:text="推薦代碼（選填）"
             />
-
-
-        <TextView
-            android:id="@+id/tvForget"
-            android:layout_width="wrap_content"
+        
+        
+        <EditText
+            android:id="@+id/etInvite"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="@dimen/sp_12"
-            android:text="忘記密碼"
+            app:layout_constraintTop_toBottomOf="@+id/tvInvite"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_13"
+            android:paddingBottom="@dimen/dp_11"
+            android:paddingStart="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_12"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/radius_board"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    
+    
+    
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -83,21 +91,12 @@
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_35"
         android:layout_marginEnd="@dimen/dp_35"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
         />
-
-    <ImageView
-        android:id="@+id/ivTestPlay"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginStart="@dimen/dp_35"
-        android:src="@drawable/test_play"
-        />
-
+    
     <TextView
-        android:id="@+id/tvRegisterMsg"
+        android:id="@+id/tvLoginMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +105,6 @@
         android:layout_marginBottom="@dimen/dp_60"
         android:textSize="@dimen/sp_12"
         />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

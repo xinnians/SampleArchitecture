@@ -1,6 +1,9 @@
 package com.example.page_login
 
 interface LoginNavigation {
-    fun openLoginUp()
-    fun openLoginDown()
+    fun registerPage()
+    fun loginPage()
+    fun forgetPasswordPage()
+    fun testPlay()
+    fun mainPage()
 }

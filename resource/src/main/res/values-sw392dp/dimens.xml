@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+	<dimen name="dp_501">523.7120dp</dimen>
 	<dimen name="dp_m_60">-62.7200dp</dimen>
 	<dimen name="dp_m_30">-31.3600dp</dimen>
 	<dimen name="dp_m_20">-20.9067dp</dimen>

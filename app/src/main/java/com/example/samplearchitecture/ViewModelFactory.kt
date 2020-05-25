@@ -36,9 +36,7 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return with(modelClass) {
             when {
-                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(
-                    repository = mRepository!!
-                )
+                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = mRepository!!)
                 isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(repository = mRepository!!)
                 isAssignableFrom(MainViewModel::class.java) -> MainViewModel(mRepository!!)
                 isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = mRepository!!)

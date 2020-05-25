@@ -18,12 +18,12 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
         navController?.popBackStack()
     }
 
-    override fun openLoginUp() {
-//        navController?.popBackStack()
+    override fun registerPage() {
+        navController?.navigate(R.id.action_loginFragment_to_registerFragment)
     }
 
-    override fun openLoginDown() {
-        navController?.navigate(R.id.action_loginFragment_to_mainFragment)
+    override fun loginPage() {
+        navController?.popBackStack()
     }
 
     override fun backToLoginPage() {
@@ -32,5 +32,18 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
 
     override fun goToBetMenuPage() {
         navController?.navigate(R.id.action_mainFragment_to_betMenuFragment)
+
+    override fun forgetPasswordPage() {
+
     }
+
+    override fun testPlay() {
+
+    }
+
+    override fun mainPage() {
+        navController?.navigate(R.id.action_loginFragment_to_mainFragment)
+    }
+
+
 }

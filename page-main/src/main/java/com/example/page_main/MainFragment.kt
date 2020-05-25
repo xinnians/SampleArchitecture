@@ -50,5 +50,7 @@ class MainFragment : BaseFragment() {
                 }
 
             }
+
+        Log.e("[MainFragment]","lotteryToken: ${getSharedViewModel().lotteryToken.value}")
     }
 }

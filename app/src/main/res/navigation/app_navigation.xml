@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/betFragment"
@@ -39,4 +42,8 @@
         android:id="@+id/gameFavoriteFragment"
         android:name="com.example.page_bet.game_favorite.GameFavoriteFragment"
         android:label="GameFavoriteFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.page_login.RegisterFragment"
+        android:label="RegisterFragment" />
 </navigation>

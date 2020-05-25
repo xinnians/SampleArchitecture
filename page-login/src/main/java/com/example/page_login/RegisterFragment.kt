@@ -4,72 +4,37 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.core.text.color
 import com.example.base.*
 import com.example.base.widget.CustomEditTextView
-import com.example.repository.model.ViewState
-import com.example.resource.*
-import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_register.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
-class LoginFragment : BaseFragment() {
+class RegisterFragment : BaseFragment() {
     private var isAccount = false
     private var isPws = false
-
-    private lateinit var mViewModel: LoginViewModel
-
     private lateinit var prefStore: PreferenceStore
 
     private val navigation: LoginNavigation by lazy {
         XInjectionManager.findComponent<LoginNavigation>()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = container?.inflate(R.layout.fragment_login)
+    ): View? = container?.inflate(R.layout.fragment_register)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefStore = PreferenceStore(requireActivity())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        init()
         setListener()
     }
 
-    private fun init(){
-        mViewModel = AppInjector.obtainViewModel(this)
-        mViewModel.getLoginResult().observeNotNull(this){ state ->
-            when(state) {
-                is ViewState.Success -> {
-                    Log.e("Ian","ViewState.Success : ${state.data.token}")
-                    getSharedViewModel().lotteryToken.postValue("Bearer ${state.data.token}")
-                }
-                is ViewState.Loading -> Log.e("Ian","ViewState.Loading")
-                is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
-            }
-        }
-    }
-
     private fun setListener() {
-        cbRemember.isChecked = prefStore.remember
-        if (cbRemember.isChecked) {
-            cetAccount.text = prefStore.account
-            cetPws.text = prefStore.password
-            isAccount = true
-            isPws = true
-        }
-
         cetAccount.let {
             it.title = "用戶名"
             it.hint = "請輸入用戶名"
@@ -118,37 +83,25 @@ class LoginFragment : BaseFragment() {
             })
         }
 
-        cbRemember.onClick {
-            prefStore.remember = cbRemember.isChecked
-        }
-
-
-
-        ivTestPlay.onClick {
-            toast("試玩版開發中")
-        }
-
-        btnLogin.text = "登入"
-        btnLogin.onClick {
+        btnRegister.text = "免費註冊"
+        btnRegister.onClick {
             if (isAccount && isPws) {
-                if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
-                    toast("登入成功")
-                    navigation.mainPage()
-                } else {
-                    toast("帳號密碼錯誤")
-                }
+                toast("註冊成功")
+                prefStore.account = cetAccount.text
+                prefStore.password = cetPws.text
+                navigation.loginPage()
             } else {
                 toast("請輸入帳號密碼喔")
             }
         }
 
         val s = SpannableStringBuilder()
-            .append("尚未註冊？")
-            .color(Color.RED) { append("免費註冊") }
+            .append("已有帳號？")
+            .color(Color.RED) { append("登入") }
 
-        tvRegisterMsg.text = s
-        tvRegisterMsg.onClick {
-            navigation.registerPage()
+        tvLoginMsg.text = s
+        tvLoginMsg.onClick {
+            navigation.loginPage()
         }
     }
 }
