@@ -298,8 +298,58 @@
                     android:layout_marginStart="@dimen/dp_12"
                     android:src="@drawable/unit_change"
                     />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutRow5_1_2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/bg_line_board"
+                >
 
+                <TextView
+                    android:id="@+id/tvDown"
+                    android:layout_width="@dimen/dp_29"
+                    android:layout_height="@dimen/dp_30"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:text="-"
+                    android:background="@drawable/bg_unit_unselect"
+                    />
+
+                <TextView
+                    android:id="@+id/tvCount"
+                    android:layout_width="@dimen/dp_42"
+                    android:layout_height="@dimen/dp_30"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvDown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:text="10000"
+                    />
+
+                <TextView
+                    android:id="@+id/tvUP"
+                    android:layout_width="@dimen/dp_29"
+                    android:layout_height="@dimen/dp_30"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvCount"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:text="+"
+                    android:background="@drawable/bg_unit_unselect"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
