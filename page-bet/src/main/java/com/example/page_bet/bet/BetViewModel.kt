@@ -6,6 +6,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.example.repository.Repository
 import com.example.repository.model.*
+import kotlinx.coroutines.flow.concatMap
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 
 class BetViewModel(var repository: Repository) : ViewModel(){
 
@@ -16,6 +19,8 @@ class BetViewModel(var repository: Repository) : ViewModel(){
 //     */
 //    fun getNewsArticles(): LiveData<ViewState<List<NewsArticles>>> = newsArticles
 
+//    private var playTypeInfoList: LiveData<List<BetTypeGroups>> =
+
     fun getCurrentIssueInfo(token:String, gameId: Int): LiveData<ViewState<IssueInfoResponse>>{
         return repository.getIssueInfo(token, gameId).asLiveData()
     }
@@ -24,8 +29,28 @@ class BetViewModel(var repository: Repository) : ViewModel(){
         return repository.getLastIssueResult(token, gameId).asLiveData()
     }
 
-    fun getPlayTypeInfoList(token:String, gameId: Int): LiveData<ViewState<PlayTypeInfoResponse>>{
-        return repository.getPlayTypeInfoList(token, gameId).asLiveData()
+    fun getPlayTypeInfoList(token:String, gameId: Int): LiveData<ViewState<List<BetTypeEntity>>>{
+        return repository.getPlayTypeInfoList(token, gameId).flatMapConcat{ state ->
+            flow<ViewState<List<BetTypeEntity>>> {
+                when (state) {
+                    is ViewState.Success -> {
+                        var betTypeList: ArrayList<BetTypeEntity> = arrayListOf()
+                        if(!state.data.data.betTypeGroupList.isNullOrEmpty()){
+                            for (item in state.data.data.betTypeGroupList) {
+                                betTypeList.addAll(item.betTypeEntityList)
+                            }
+                        }
+                        emit(ViewState.success(betTypeList.toList()))
+                    }
+                    is ViewState.Loading -> {
+                        emit(ViewState.loading())
+                    }
+                    is ViewState.Error -> {
+                        emit(ViewState.error(state.message.orEmpty()))
+                    }
+                }
+            }
+        }.asLiveData()
     }
 
 }

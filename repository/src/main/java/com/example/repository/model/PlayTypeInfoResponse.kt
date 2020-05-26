@@ -31,7 +31,8 @@ data class BetTypeEntity(
     @SerializedName("betGroupEntityList")
     val mobileBetGroupEntityList: List<BetGroupEntity>,
     @SerializedName("status")
-    val status: Int
+    val status: Int,
+    var isSelect: Boolean = false
 )
 
 data class BetGroupEntity(

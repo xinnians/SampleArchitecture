@@ -5,21 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.base.AppInjector
-import com.example.base.BaseFragment
-import com.example.base.observeNotNull
-import com.example.base.timer
+import com.example.base.*
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.repository.model.MultipleIssueResultItem
-import com.example.repository.model.MultipleIssueResultItem.Companion.TIME_LOTTERY
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
-import kotlin.concurrent.timer
 
 class BetFragment : BaseFragment() {
 
@@ -30,6 +24,7 @@ class BetFragment : BaseFragment() {
     }
 
     private lateinit var mViewModel: BetViewModel
+    private var mPlayTypeDialog: PlayTypeDialog? = null
 
     private var mGameID: Int = -1
     private var mGameTypeID: Int = -1
@@ -61,7 +56,14 @@ class BetFragment : BaseFragment() {
             mGameTypeID = it.getInt(TAG_GAME_TYPE, -1)
         }
         refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
-        refreshLastIssueResult(getSharedViewModel().lotteryToken.value?: "empty", mGameID, mGameTypeID)
+        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID, mGameTypeID)
+
+        //TODO 要先判斷該遊戲有沒有官方跟信用的玩法支援再依此更新官方/信用的顯示資訊，目前該處只有直接去撈官方玩法，所以遇到只有支援信用的遊戲時會顯示空畫面
+        initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
+
+        ivPlayTypeSelect.onClick {
+            mPlayTypeDialog?.let { it.show() }
+        }
     }
 
     //刷新當期投注資訊
@@ -72,7 +74,7 @@ class BetFragment : BaseFragment() {
                 when (state) {
                     is ViewState.Success -> {
                         state.data.data?.let {
-                            tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum -> if(issueNum.length!! >7) issueNum.substring(issueNum.length-7) else issueNum }}期"
+                            tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum -> if (issueNum.length!! > 7) issueNum.substring(issueNum.length - 7) else issueNum }}期"
                             var leftTime = ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
                             launch {
                                 timer(1000, false) {
@@ -80,10 +82,8 @@ class BetFragment : BaseFragment() {
                                     tvCurrentIssueLeftTime.text = getDisplayTime(time)
                                     if (time <= 0) {
                                         this.cancel()
-                                        refreshCurrentIssueInfo(
-                                            getSharedViewModel().lotteryToken.value ?: "empty", mGameID
-                                        )
-                                        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID,mGameTypeID)
+                                        refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
+                                        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID, mGameTypeID)
                                     }
                                 }
                             }
@@ -97,29 +97,47 @@ class BetFragment : BaseFragment() {
 
     //刷新最新開獎資訊
     private fun refreshLastIssueResult(token: String, gameId: Int, gameTypeId: Int) {
-        Log.e("Ian","[refreshLastIssueResult] token:$token, gameId:$gameId gameTypeId:$gameTypeId")
+        Log.e("Ian", "[refreshLastIssueResult] token:$token, gameId:$gameId gameTypeId:$gameTypeId")
         mViewModel.getLastIssueResult(token, gameId)
-            .observeNotNull(this){ state ->
-                when(state){
+            .observeNotNull(this) { state ->
+                when (state) {
                     is ViewState.Success -> {
                         //TODO 根據gametype切換adapter中的item顯示
                         Log.e("Ian", "[refreshLastIssueResult] Success data:${state.data}")
 
-                        tvLastIssueNumber.text = "${state.data.data[0].issueNum.let { if(it.length>7) it.substring(it.length-7) else it }}期"
+                        tvLastIssueNumber.text = "${state.data.data[0].issueNum.let { if (it.length > 7) it.substring(it.length - 7) else it }}期"
 
                         var layoutManager = LinearLayoutManager(context)
                         layoutManager.orientation = LinearLayoutManager.VERTICAL
                         rvLastIssueResult.layoutManager = layoutManager
 
-                        var adapter: IssueResultAdapter = IssueResultAdapter(mutableListOf(
-                            MultipleIssueResultItem(gameTypeId, state.data.data[0])
-                        ))
+                        var adapter: IssueResultAdapter = IssueResultAdapter(mutableListOf(MultipleIssueResultItem(gameTypeId, state.data.data[0])))
                         rvLastIssueResult.adapter = adapter
                     }
                     is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
                     is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
                 }
             }
+    }
+
+    private fun initPlayTypeInfo(token: String, gameId: Int) {
+        mViewModel.getPlayTypeInfoList(token, gameId).observeNotNull(this) { state ->
+            when (state) {
+                is ViewState.Success -> {
+                    if (mPlayTypeDialog == null) mPlayTypeDialog = context?.let {
+                        PlayTypeDialog(it, state.data, object : PlayTypeDialog.OnPlayTypeSelectListener {
+                                override fun onSelect(playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String) {
+                                    Log.e("Ian","[onPlayTypeSelectListener] playTypeCode:$playTypeCode")
+                                    //TODO change投注欄位的ui
+                                }
+
+                            })
+                    }
+                }
+                is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+                is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+            }
+        }
     }
 
     private fun getDisplayTime(second: Int): String {
