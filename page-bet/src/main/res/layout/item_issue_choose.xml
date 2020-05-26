@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/spLeft"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintEnd_toStartOf="@id/layoutIssueResult"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutIssueResult"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spLeft"
+        app:layout_constraintEnd_toStartOf="@id/spRight">
+
+        <TextView
+            android:id="@+id/tvPosition1"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="1"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPosition2"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition1"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="2"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPosition3"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition2"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPosition4"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition3"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="4"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPosition5"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition4"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="5"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/spRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/layoutIssueResult"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class IssueInfoResponse(
     @SerializedName("data")
-    val data: Data
+    val data: Data?
 ): BaseResult() {
     data class Data(
         @SerializedName("buyEndTime")

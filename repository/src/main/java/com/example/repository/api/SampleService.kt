@@ -38,4 +38,12 @@ interface SampleService {
     @GET("/api/Draw/LatestIssueResult")
     suspend fun lastIssueResult(@Header("Authorization") token: String,
                           @Query("gameIdList") gameId: Int): LastIssueResultResponse
+
+    /**
+     * Mobile獎金盤-遊戲玩法清單資訊
+     * @param gameId String
+     * */
+    @GET("/api/Games/PlayTypeInfoList/{gameId}")
+    suspend fun playTypeInfoList(@Header("Authorization") token: String,
+                         @Path("gameId") gameId: Int): PlayTypeInfoResponse
 }

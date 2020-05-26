@@ -64,24 +64,27 @@ class BetFragment : BaseFragment() {
         refreshLastIssueResult(getSharedViewModel().lotteryToken.value?: "empty", mGameID, mGameTypeID)
     }
 
+    //刷新當期投注資訊
     private fun refreshCurrentIssueInfo(token: String, gameId: Int) {
         Log.e("Ian", "[refreshCurrentIssueInfo] token:$token, gameId:$gameId")
         mViewModel.getCurrentIssueInfo(token, gameId)
             .observeNotNull(this) { state ->
                 when (state) {
                     is ViewState.Success -> {
-                        tvCurrentIssueNumber.text = "${state.data.data.issueNum.substring(5)}期"
-                        var leftTime = ((state.data.data.buyEndTime - System.currentTimeMillis()) / 1000).toInt()
-                        launch {
-                            timer(1000, false) {
-                                var time = leftTime--
-                                tvCurrentIssueLeftTime.text = getDisplayTime(time)
-                                if (time <= 0) {
-                                    this.cancel()
-                                    refreshCurrentIssueInfo(
-                                        getSharedViewModel().lotteryToken.value ?: "empty", mGameID
-                                    )
-                                    refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID,mGameTypeID)
+                        state.data.data?.let {
+                            tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum -> if(issueNum.length!! >7) issueNum.substring(issueNum.length-7) else issueNum }}期"
+                            var leftTime = ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
+                            launch {
+                                timer(1000, false) {
+                                    var time = leftTime--
+                                    tvCurrentIssueLeftTime.text = getDisplayTime(time)
+                                    if (time <= 0) {
+                                        this.cancel()
+                                        refreshCurrentIssueInfo(
+                                            getSharedViewModel().lotteryToken.value ?: "empty", mGameID
+                                        )
+                                        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID,mGameTypeID)
+                                    }
                                 }
                             }
                         }
@@ -92,6 +95,7 @@ class BetFragment : BaseFragment() {
             }
     }
 
+    //刷新最新開獎資訊
     private fun refreshLastIssueResult(token: String, gameId: Int, gameTypeId: Int) {
         Log.e("Ian","[refreshLastIssueResult] token:$token, gameId:$gameId gameTypeId:$gameTypeId")
         mViewModel.getLastIssueResult(token, gameId)
@@ -101,7 +105,7 @@ class BetFragment : BaseFragment() {
                         //TODO 根據gametype切換adapter中的item顯示
                         Log.e("Ian", "[refreshLastIssueResult] Success data:${state.data}")
 
-                        tvLastIssueNumber.text = "${state.data.data[0].issueNum.substring(5)}期"
+                        tvLastIssueNumber.text = "${state.data.data[0].issueNum.let { if(it.length>7) it.substring(it.length-7) else it }}期"
 
                         var layoutManager = LinearLayoutManager(context)
                         layoutManager.orientation = LinearLayoutManager.VERTICAL

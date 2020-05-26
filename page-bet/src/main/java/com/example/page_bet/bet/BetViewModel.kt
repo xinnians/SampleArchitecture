@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.example.repository.Repository
-import com.example.repository.model.IssueInfoResponse
-import com.example.repository.model.LastIssueResultResponse
-import com.example.repository.model.NewsArticles
-import com.example.repository.model.ViewState
+import com.example.repository.model.*
 
 class BetViewModel(var repository: Repository) : ViewModel(){
 
@@ -25,6 +22,10 @@ class BetViewModel(var repository: Repository) : ViewModel(){
 
     fun getLastIssueResult(token:String, gameId: Int): LiveData<ViewState<LastIssueResultResponse>>{
         return repository.getLastIssueResult(token, gameId).asLiveData()
+    }
+
+    fun getPlayTypeInfoList(token:String, gameId: Int): LiveData<ViewState<PlayTypeInfoResponse>>{
+        return repository.getPlayTypeInfoList(token, gameId).asLiveData()
     }
 
 }
