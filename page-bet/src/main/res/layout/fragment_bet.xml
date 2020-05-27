@@ -52,6 +52,15 @@
             app:layout_constraintStart_toEndOf="@id/ivGameName"
             android:layout_marginStart="@dimen/dp_11"
             android:background="@drawable/bg_white_left_corner_button">
+
+            <com.example.base.widget.CustomSwitch
+                android:id="@+id/csPlayType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
             
             <TextView
                 android:id="@+id/tvCurrentIssueNumber"
@@ -349,6 +358,26 @@
                     android:layout_marginStart="@dimen/dp_4"
                     android:text="+"
                     android:background="@drawable/bg_unit_unselect"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutRow5_1_3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                app:layout_constraintTop_toBottomOf="@+id/layoutRow5_1_1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_5"
+                >
+
+                <com.example.base.widget.CustomSwitch
+                    android:id="@+id/csPlayRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

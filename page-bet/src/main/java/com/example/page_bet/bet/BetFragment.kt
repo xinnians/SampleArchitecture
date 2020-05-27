@@ -5,18 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
 import com.example.base.timer
+import com.example.base.widget.CustomSwitch
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
-import kotlin.concurrent.timer
 
 class BetFragment : BaseFragment() {
 
@@ -45,6 +44,7 @@ class BetFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        setListener()
     }
 
     private fun init() {
@@ -110,5 +110,21 @@ class BetFragment : BaseFragment() {
             }
         }
         return "$h : $d : $s"
+    }
+
+    private fun setListener() {
+        csPlayType.switchType = CustomSwitch.GAME_TYPE
+        csPlayType.setOnSwitchCallListener(object : CustomSwitch.OnSwitchCall{
+            override fun onCall(type: Boolean) {
+
+            }
+        })
+
+        csPlayRate.switchType = CustomSwitch.GAME_RATE
+        csPlayRate.setOnSwitchCallListener(object : CustomSwitch.OnSwitchCall{
+            override fun onCall(type: Boolean) {
+
+            }
+        })
     }
 }
