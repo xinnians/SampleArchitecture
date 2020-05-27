@@ -1,4 +1,4 @@
-package com.example.repository.model
+package com.example.repository.model.base
 
 open class BaseResult {
     val status: Int = 0

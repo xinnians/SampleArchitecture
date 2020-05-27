@@ -5,11 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
-import com.example.repository.model.ViewState
+import com.example.repository.model.base.ViewState
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 

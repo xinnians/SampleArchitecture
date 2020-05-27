@@ -1,8 +1,8 @@
 package com.example.page_bet.game_favorite
 
 import androidx.lifecycle.ViewModel
-import com.example.repository.model.GameMenuResponse
-import com.example.repository.model.MultipleMenuItem
+import com.example.repository.model.bet.GameMenuResponse
+import com.example.repository.model.bet.MultipleMenuItem
 
 class GameFavoriteViewModel : ViewModel() {
     fun getFavoriteList(list: ArrayList<MultipleMenuItem>?) : MutableList<MultipleMenuItem>{

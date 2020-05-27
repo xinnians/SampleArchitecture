@@ -1,4 +1,4 @@
-package com.example.repository.model
+package com.example.repository.model.bet
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
@@ -13,10 +13,11 @@ open class MultipleIssueResultItem : MultiItemEntity {
         const val MARX_SIX = 5
     }
 
-    private var itemType = TIME_LOTTERY
+    private var itemType =
+        TIME_LOTTERY
     private var data: LastIssueResultResponse.Data? = null
 
-    constructor(itemType: Int = TIME_LOTTERY,data: LastIssueResultResponse.Data){
+    constructor(itemType: Int = TIME_LOTTERY, data: LastIssueResultResponse.Data){
         this.itemType = itemType
         this.data = data
     }

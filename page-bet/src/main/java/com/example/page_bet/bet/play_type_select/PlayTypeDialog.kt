@@ -1,4 +1,4 @@
-package com.example.page_bet.bet
+package com.example.page_bet.bet.play_type_select
 
 import android.app.Dialog
 import android.content.Context
@@ -7,13 +7,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.onClick
 import com.example.page_bet.R
-import com.example.repository.model.BetGroupEntity
-import com.example.repository.model.BetTypeEntity
-import com.example.repository.model.PlayTypeInfoEntity
+import com.example.repository.model.bet.BetGroupEntity
+import com.example.repository.model.bet.BetTypeEntity
 import kotlinx.android.synthetic.main.dialog_play_type.*
 
 class PlayTypeDialog(context: Context, var data: List<BetTypeEntity>, listener: OnPlayTypeSelectListener? = null) : Dialog(context) {
@@ -21,6 +19,9 @@ class PlayTypeDialog(context: Context, var data: List<BetTypeEntity>, listener: 
     private var mBetTypeAdapter: BetTypeAdapter? = null
     private var mBetGroupAdapter: BetGroupAdapter? = null
     private var mOnPlayTypeSelectListener: OnPlayTypeSelectListener? = listener
+
+    private var mCurrentBetTypeDisplayName: String? = null
+    private var mCurrentBetGroupDisplayName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +48,15 @@ class PlayTypeDialog(context: Context, var data: List<BetTypeEntity>, listener: 
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvBetType.layoutManager = layoutManager
 
-        mBetTypeAdapter = BetTypeAdapter(data)
+        mBetTypeAdapter =
+            BetTypeAdapter(data)
         mBetTypeAdapter?.setOnItemChildClickListener { adapter, view, position ->
             Log.e("Ian", "[mBetTypeAdapter] onclick position:$position")
             for (item in data) item.isSelect = false
             data[position].isSelect = true
             adapter.notifyDataSetChanged()
+
+            mCurrentBetTypeDisplayName = data[position].betTypeDisplayName
 
             setBetGroupData(data[position].mobileBetGroupEntityList)
         }
@@ -65,10 +69,13 @@ class PlayTypeDialog(context: Context, var data: List<BetTypeEntity>, listener: 
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvBetGroup.layoutManager = layoutManager
 
-        mBetGroupAdapter = BetGroupAdapter(betGroupEntityList ?: listOf())
+        mBetGroupAdapter =
+            BetGroupAdapter(
+                betGroupEntityList ?: listOf()
+            )
         mBetGroupAdapter?.setOnPlayTypeSelectListener(object : BetGroupAdapter.OnPlayTypeSelect{
-            override fun onSelect(playTypeCode: Int, playTypeDisplayName: String) {
-                mOnPlayTypeSelectListener?.onSelect(playTypeCode,playTypeDisplayName,"","")
+            override fun onSelect(playTypeCode: Int, playTypeDisplayName: String, betGroupDisplayName: String) {
+                mOnPlayTypeSelectListener?.onSelect(playTypeCode,playTypeDisplayName,betGroupDisplayName,mCurrentBetTypeDisplayName?:"empty")
                 close()
             }
         })

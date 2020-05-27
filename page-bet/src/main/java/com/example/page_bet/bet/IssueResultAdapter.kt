@@ -1,11 +1,10 @@
 package com.example.page_bet.bet
 
 import android.util.Log
-import android.widget.TextView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.MultipleIssueResultItem
+import com.example.repository.model.bet.MultipleIssueResultItem
 
 class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
     BaseMultiItemQuickAdapter<MultipleIssueResultItem, BaseViewHolder>(data) {

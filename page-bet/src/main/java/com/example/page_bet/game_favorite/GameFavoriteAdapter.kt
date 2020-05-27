@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.MultipleMenuItem
+import com.example.repository.model.bet.MultipleMenuItem
 
 class GameFavoriteAdapter(data: MutableList<MultipleMenuItem>) :
     BaseQuickAdapter<MultipleMenuItem, BaseViewHolder>(R.layout.item_game_favorite, data) {

@@ -1,9 +1,9 @@
-package com.example.page_bet.bet
+package com.example.page_bet.bet.play_type_select
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.PlayTypeInfoEntity
+import com.example.repository.model.bet.PlayTypeInfoEntity
 
 class PlayTypeAdapter(data: List<PlayTypeInfoEntity>) :
     BaseQuickAdapter<PlayTypeInfoEntity, BaseViewHolder>(R.layout.item_play_type, data) {

@@ -1,4 +1,4 @@
-package com.example.repository.model
+package com.example.repository.model.base
 
 /**
  * Describes state of the view at any
@@ -38,17 +38,20 @@ sealed class ViewState<ResultType> {
         /**
          * Creates [ViewState] object with [Success] state and [data].
          */
-        fun <ResultType> success(data: ResultType): ViewState<ResultType> = Success(data)
+        fun <ResultType> success(data: ResultType): ViewState<ResultType> =
+            Success(data)
 
         /**
          * Creates [ViewState] object with [Loading] state to notify
          * the UI to showing loading.
          */
-        fun <ResultType> loading(): ViewState<ResultType> = Loading()
+        fun <ResultType> loading(): ViewState<ResultType> =
+            Loading()
 
         /**
          * Creates [ViewState] object with [Error] state and [message].
          */
-        fun <ResultType> error(message: String): ViewState<ResultType> = Error(message)
+        fun <ResultType> error(message: String): ViewState<ResultType> =
+            Error(message)
     }
 }

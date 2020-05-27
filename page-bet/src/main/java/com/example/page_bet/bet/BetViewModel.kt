@@ -3,10 +3,11 @@ package com.example.page_bet.bet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import com.example.repository.Repository
-import com.example.repository.model.*
-import kotlinx.coroutines.flow.concatMap
+import com.example.repository.model.base.ViewState
+import com.example.repository.model.bet.BetTypeEntity
+import com.example.repository.model.bet.IssueInfoResponse
+import com.example.repository.model.bet.LastIssueResultResponse
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 

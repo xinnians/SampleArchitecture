@@ -1,5 +1,6 @@
-package com.example.repository.model
+package com.example.repository.model.bet
 
+import com.example.repository.model.base.BaseResult
 import com.google.gson.annotations.SerializedName
 
 data class IssueInfoResponse(

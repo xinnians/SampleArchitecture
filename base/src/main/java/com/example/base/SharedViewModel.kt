@@ -1,12 +1,9 @@
 package com.example.base
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.repository.Repository
-import com.example.repository.model.MultipleMenuItem
+import com.example.repository.model.bet.MultipleMenuItem
 
 class SharedViewModel(repository: Repository) :
     ViewModel(){

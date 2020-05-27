@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.repository.Repository
 import com.example.repository.model.LoginResponse
-import com.example.repository.model.ViewState
+import com.example.repository.model.base.ViewState
 
 class LoginViewModel(repository: Repository) : ViewModel() {
     private val loginResult: LiveData<ViewState<LoginResponse.Data>> =

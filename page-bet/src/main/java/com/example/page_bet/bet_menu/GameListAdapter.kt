@@ -4,7 +4,7 @@ import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.GameMenuResponse
+import com.example.repository.model.bet.GameMenuResponse
 
 class GameListAdapter(data: List<GameMenuResponse.Data.GameInfoEntity>) :
     BaseQuickAdapter<GameMenuResponse.Data.GameInfoEntity, BaseViewHolder>(R.layout.item_game, data) {

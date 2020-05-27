@@ -3,8 +3,8 @@ package com.example.page_bet.bet_menu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.repository.Repository
-import com.example.repository.model.MultipleMenuItem
-import com.example.repository.model.ViewState
+import com.example.repository.model.bet.MultipleMenuItem
+import com.example.repository.model.base.ViewState
 import kotlinx.coroutines.flow.*
 
 class BetMenuViewModel(var repository: Repository) : ViewModel() {

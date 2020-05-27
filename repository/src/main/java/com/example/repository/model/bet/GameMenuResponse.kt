@@ -1,6 +1,7 @@
-package com.example.repository.model
+package com.example.repository.model.bet
 
 import android.os.Parcelable
+import com.example.repository.model.base.BaseResult
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 

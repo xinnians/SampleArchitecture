@@ -1,4 +1,4 @@
-package com.example.repository.model
+package com.example.repository.model.bet
 
 
 import com.google.gson.annotations.SerializedName

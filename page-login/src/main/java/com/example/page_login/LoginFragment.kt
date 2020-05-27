@@ -4,18 +4,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.core.text.color
 import com.example.base.*
 import com.example.base.widget.CustomEditTextView
-import com.example.repository.model.ViewState
-import com.example.resource.*
+import com.example.repository.model.base.ViewState
 import kotlinx.android.synthetic.main.fragment_login.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  五星  -->
+    <!--  直選復式  -->
+    <!--  直選組合  -->
+    <!--  五星定位膽  -->
+    <string-array name="fiveStar">
+        <item>萬</item>
+        <item>千</item>
+        <item>百</item>
+        <item>十</item>
+        <item>個</item>
+    </string-array>
+
+    <!--  一帆風順  -->
+    <string-array name="fiveStar_one">
+        <item>一帆風順</item>
+    </string-array>
+
+    <!--  好事成雙  -->
+    <string-array name="fiveStar_two">
+        <item>好事成雙</item>
+    </string-array>
+
+    <!--  三星報喜  -->
+    <string-array name="fiveStar_three">
+        <item>三星報喜</item>
+    </string-array>
+
+    <!--  四季發財  -->
+    <string-array name="fiveStar_four">
+        <item>四季發財</item>
+    </string-array>
+
+    <!--  組選120  -->
+    <string-array name="fiveStar_set120">
+        <item>組選120</item>
+    </string-array>
+
+    <!--  組選60  -->
+    <string-array name="fiveStar_set60">
+        <item>二重號</item>
+        <item>單號</item>
+    </string-array>
+
+    <!--  組選30  -->
+    <string-array name="fiveStar_set30">
+        <item>二重號</item>
+        <item>單號</item>
+    </string-array>
+
+    <!--  組選20  -->
+    <string-array name="fiveStar_set20">
+        <item>三重號</item>
+        <item>單號</item>
+    </string-array>
+
+    <!--  組選10  -->
+    <string-array name="fiveStar_set10">
+        <item>三重號</item>
+        <item>二重號</item>
+    </string-array>
+
+    <!--  組選5  -->
+    <string-array name="fiveStar_set5">
+        <item>四重號</item>
+        <item>單號</item>
+    </string-array>
+
+    <!--  四星  -->
+    <!--  前四復式  -->
+    <!--  前四組合  -->
+    <string-array name="fourStar_front">
+        <item>萬</item>
+        <item>千</item>
+        <item>百</item>
+        <item>十</item>
+    </string-array>
+
+    <!--  後四復式  -->
+    <!--  後四組合  -->
+    <string-array name="fourStar_last">
+        <item>千</item>
+        <item>百</item>
+        <item>十</item>
+        <item>個</item>
+    </string-array>
+
+    <!--  前四組選24  -->
+    <!--  後四組選24  -->
+    <string-array name="fourStar_set24">
+        <item>組選24</item>
+    </string-array>
+
+    <!--  前四組選12  -->
+    <!--  後四組選12  -->
+    <string-array name="fourStar_set12">
+        <item>二重號</item>
+        <item>單號</item>
+    </string-array>
+
+    <!--  前四組選6  -->
+    <!--  後四組選6  -->
+    <string-array name="fourStar_set6">
+        <item>二重號</item>
+    </string-array>
+
+    <!--  前四組選4  -->
+    <!--  後四組選4  -->
+    <string-array name="fourStar_set4">
+        <item>三重號</item>
+        <item>單號</item>
+    </string-array>
+
+
+    <!--  前三  -->
+    <!--  直選復式  -->
+    <!--  直選組合  -->
+    <string-array name="frontThree">
+        <item>萬</item>
+        <item>千</item>
+        <item>百</item>
+    </string-array>
+
+    <!--  直選和值  -->
+    <!--  組選和值  -->
+    <string-array name="betSum">
+        <item>和值</item>
+    </string-array>
+
+    <!--  直選跨度  -->
+    <string-array name="betSpan">
+        <item>跨度</item>
+    </string-array>
+
+    <!--  組選  -->
+    <string-array name="betSet">
+        <item>組選</item>
+    </string-array>
+
+    <!--  組三復式  -->
+    <string-array name="threeSet3">
+        <item>組三</item>
+    </string-array>
+
+    <!--  組六復式  -->
+    <string-array name="threeSet6">
+        <item>組六</item>
+    </string-array>
+
+    <!--  組選包膽  -->
+    <string-array name="betBaodan">
+        <item>包膽</item>
+    </string-array>
+
+    <!--  和值尾數  -->
+    <string-array name="threeLastSum">
+        <item>和值尾數</item>
+    </string-array>
+
+    <!--  特殊號碼  -->
+    <string-array name="threeSpecial">
+        <item>特殊號碼</item>
+    </string-array>
+
+    <!--  中三  -->
+    <!--  直選復式  -->
+    <!--  直選組合  -->
+    <string-array name="middleThree">
+        <item>千</item>
+        <item>百</item>
+        <item>十</item>
+    </string-array>
+
+    <!--  後三  -->
+    <!--  直選復式  -->
+    <!--  直選組合  -->
+    <string-array name="lastThree">
+        <item>百</item>
+        <item>十</item>
+        <item>個</item>
+    </string-array>
+
+    <!--  前二  -->
+    <!--  直選復式  -->
+    <string-array name="frontTwo">
+        <item>萬</item>
+        <item>千</item>
+    </string-array>
+
+    <!--  後二  -->
+    <!--  直選復式  -->
+    <string-array name="lastTwo">
+        <item>十</item>
+        <item>個</item>
+    </string-array>
+
+    <!--  不定位  -->
+    <string-array name="notPositioned">
+        <item>不定位</item>
+    </string-array>
+
+    <!--  龍虎和  -->
+    <string-array name="dragonTigerSum">
+        <item>位置</item>
+        <item>號碼</item>
+    </string-array>
+
+</resources>

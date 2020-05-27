@@ -5,19 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
-import com.example.page_bet.bet.BetFragment
 import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_ID
 import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_NAME
 import com.example.page_bet.bet.BetFragment.Companion.TAG_GAME_TYPE
-import com.example.repository.model.GameMenuResponse
-import com.example.repository.model.ViewState
+import com.example.repository.model.bet.GameMenuResponse
+import com.example.repository.model.base.ViewState
 import kotlinx.android.synthetic.main.fragment_bet_menu.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 

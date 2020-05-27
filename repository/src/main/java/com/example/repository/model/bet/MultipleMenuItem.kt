@@ -1,7 +1,6 @@
-package com.example.repository.model
+package com.example.repository.model.bet
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.example.repository.model.GameMenuResponse
 
 open class MultipleMenuItem : MultiItemEntity {
 

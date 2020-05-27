@@ -2,6 +2,11 @@ package com.example.repository
 
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
+import com.example.repository.model.base.ViewState
+import com.example.repository.model.bet.GameMenuResponse
+import com.example.repository.model.bet.IssueInfoResponse
+import com.example.repository.model.bet.LastIssueResultResponse
+import com.example.repository.model.bet.PlayTypeInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

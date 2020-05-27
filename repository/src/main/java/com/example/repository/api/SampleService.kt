@@ -1,6 +1,10 @@
 package com.example.repository.api
 
 import com.example.repository.model.*
+import com.example.repository.model.bet.GameMenuResponse
+import com.example.repository.model.bet.IssueInfoResponse
+import com.example.repository.model.bet.LastIssueResultResponse
+import com.example.repository.model.bet.PlayTypeInfoResponse
 import retrofit2.http.*
 
 interface SampleService {

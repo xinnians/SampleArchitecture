@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
-import com.example.repository.model.GameMenuResponse
-import com.example.repository.model.MultipleMenuItem
+import com.example.repository.model.bet.GameMenuResponse
+import com.example.repository.model.bet.MultipleMenuItem
 
 class BetMenuAdapter(data: MutableList<MultipleMenuItem>) :
     BaseMultiItemQuickAdapter<MultipleMenuItem, BaseViewHolder>(data) {
