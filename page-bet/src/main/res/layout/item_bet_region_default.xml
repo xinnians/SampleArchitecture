@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutBetRegion"
+    android:layout_width="@dimen/dp_335"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_9"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:background="@drawable/bg_white_10_corner"
+    android:elevation="@dimen/dp_2">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_32"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_darkgray_10_top_corner"
+        android:textSize="@dimen/sp_17"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:text="千位"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

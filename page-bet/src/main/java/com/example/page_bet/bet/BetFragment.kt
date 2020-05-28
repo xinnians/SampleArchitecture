@@ -11,10 +11,8 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetItemUtil.getTypeData
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
-import com.example.repository.model.bet.MultipleIssueResultItem
 import com.example.repository.model.base.ViewState
-import com.example.repository.model.bet.BetTypeEntity
-import com.example.repository.model.bet.MultiplePlayTypePositionItem
+import com.example.repository.model.bet.*
 import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -36,6 +34,7 @@ class BetFragment : BaseFragment() {
     private var mGameTypeID: Int = -1
 
     private var mBetPositionAdapter: BetPositionAdapter? = null
+    private var mBetRegionAdapter: BetRegionAdapter? = null
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -61,18 +60,35 @@ class BetFragment : BaseFragment() {
         }
         refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
         refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-                ?: "empty", mGameID, mGameTypeID)
+                                   ?: "empty", mGameID, mGameTypeID)
 
         //TODO 要先判斷該遊戲有沒有官方跟信用的玩法支援再依此更新官方/信用的顯示資訊，目前該處只有直接去撈官方玩法，所以遇到只有支援信用的遊戲時會顯示空畫面
         initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
-        ivPlayTypeSelect.onClick { mPlayTypeDialog?.let { it.show() } }
+        ivPlayTypeSelect.onClick { mPlayTypeDialog?.show() }
 
         var layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         rvBetPositionSelect.layoutManager = layoutManager
 
         mBetPositionAdapter = BetPositionAdapter(listOf())
+        mBetPositionAdapter?.setOnItemChildClickListener { adapter, view, position ->
+            Log.e("Iam","[BetPositionAdapter] ItemChildClickListener position: $position")
+            mBetPositionAdapter?.data?.let {
+                for(item in it){
+                    item?.getData()?.isSelect = false
+                }
+            }
+            mBetPositionAdapter?.data?.get(position)?.getData()?.isSelect = true
+            mBetPositionAdapter?.notifyDataSetChanged()
+        }
         rvBetPositionSelect.adapter = mBetPositionAdapter
+
+        var layout = LinearLayoutManager(context)
+        layout.orientation = LinearLayoutManager.VERTICAL
+        rvBetRegion.layoutManager = layout
+        mBetRegionAdapter = BetRegionAdapter(listOf())
+        rvBetRegion.adapter = mBetRegionAdapter
+
     }
 
     //刷新當期投注資訊
@@ -85,7 +101,8 @@ class BetFragment : BaseFragment() {
                         tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum ->
                             if (issueNum.length!! > 7) issueNum.substring(issueNum.length - 7) else issueNum
                         }}期"
-                        var leftTime = ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
+                        var leftTime =
+                            ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
                         launch {
                             timer(1000, false) {
                                 var time = leftTime--
@@ -93,9 +110,9 @@ class BetFragment : BaseFragment() {
                                 if (time <= 0) {
                                     this.cancel()
                                     refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value
-                                            ?: "empty", mGameID)
+                                                                ?: "empty", mGameID)
                                     refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-                                            ?: "empty", mGameID, mGameTypeID)
+                                                               ?: "empty", mGameID, mGameTypeID)
                                 }
                             }
                         }
@@ -116,13 +133,15 @@ class BetFragment : BaseFragment() {
                     //TODO 根據gametype切換adapter中的item顯示
                     Log.e("Ian", "[refreshLastIssueResult] Success data:${state.data}")
 
-                    tvLastIssueNumber.text = "${state.data.data[0].issueNum.let { if (it.length > 7) it.substring(it.length - 7) else it }}期"
+                    tvLastIssueNumber.text =
+                        "${state.data.data[0].issueNum.let { if (it.length > 7) it.substring(it.length - 7) else it }}期"
 
                     var layoutManager = LinearLayoutManager(context)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
                     rvLastIssueResult.layoutManager = layoutManager
 
-                    var adapter: IssueResultAdapter = IssueResultAdapter(mutableListOf(MultipleIssueResultItem(gameTypeId, state.data.data[0])))
+                    var adapter: IssueResultAdapter =
+                        IssueResultAdapter(mutableListOf(MultipleIssueResultItem(gameTypeId, state.data.data[0])))
                     rvLastIssueResult.adapter = adapter
                 }
                 is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
@@ -169,7 +188,7 @@ class BetFragment : BaseFragment() {
         return "$h : $d : $s"
     }
 
-    private fun initPlayTypeDialog(data: List<BetTypeEntity>){
+    private fun initPlayTypeDialog(data: List<BetTypeEntity>) {
         if (mPlayTypeDialog == null) mPlayTypeDialog = context?.let {
             PlayTypeDialog(it, data, object : PlayTypeDialog.OnPlayTypeSelectListener {
                 override fun onSelect(playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String) {
@@ -183,15 +202,28 @@ class BetFragment : BaseFragment() {
                     var oriList = result.second
                     var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
 
-                    for (item in oriList){
-                        modifyList.add(MultiplePlayTypePositionItem(oriList.size,item))
+                    //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
+                    if (oriList.isNotEmpty()) {
+                        for (item in oriList) {
+                            modifyList.add(MultiplePlayTypePositionItem(oriList.size, item))
+                        }
+                    } else {
+                        modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", HashMap())))
                     }
-                    Log.e("Ian","itemType:${modifyList[0].itemType}, Data:${modifyList[0].getData()}")
+//                    Log.e("Ian","itemType:${modifyList?.get(0)?.itemType}, Data:${modifyList?.get(0)?.getData()}")
 
                     mBetPositionAdapter?.setNewData(modifyList)
+
+                    //TODO 在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
+                    mBetRegionAdapter?.setNewData(listOf(MultipleLotteryEntity(result.first, result.second[0])))
+
                 }
 
             })
         }
+    }
+
+    private fun setBetRegionDisplay(data: List<MultipleLotteryEntity>) {
+        mBetRegionAdapter?.setNewData(data)
     }
 }

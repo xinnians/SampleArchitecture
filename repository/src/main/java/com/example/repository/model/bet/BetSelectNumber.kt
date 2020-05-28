@@ -2,7 +2,7 @@ package com.example.repository.model.bet
 
 data class BetSelectNumber(var playTypeCode:String = "", var betNumber:String = "")
 
-data class BetData(var displayTitle: String, var unitMap: HashMap<String,Boolean>)
+data class BetData(var displayTitle: String, var unitMap: HashMap<String,Boolean>, var isSelect: Boolean = false, var isDataSet: Boolean = false)
 
 //-----------------------------------------------快3-獎金盤---------------------------------------------
 

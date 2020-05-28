@@ -1,4 +1,4 @@
-package com.example.page_bet.bet
+package com.example.repository.constant
 
 
 
@@ -200,7 +200,7 @@ const val playTypeID_203131 = "203131"
 const val playTypeID_203133 = "203133"
 //前三-和值尾数
 const val playTypeID_203134 = "203134"
-//前三-特殊号码(豹子,顺子, 对子)
+//前三-特殊号码(豹子(),顺子(), 对子)
 const val playTypeID_203135 = "203135"
 
 //中三-直選複式
@@ -229,7 +229,7 @@ const val playTypeID_203231 = "203231"
 const val playTypeID_203233 = "203233"
 //中三-和值尾数
 const val playTypeID_203234 = "203234"
-//中三-特殊号码(豹子,顺子, 对子)
+//中三-特殊号码(豹子(),顺子(), 对子)
 const val playTypeID_203235 = "203235"
 
 //後三-直選複式
@@ -258,7 +258,7 @@ const val playTypeID_203331 = "203331"
 const val playTypeID_203333 = "203333"
 //後三-和值尾数
 const val playTypeID_203334 = "203334"
-//後三-特殊号码(豹子,顺子, 对子)
+//後三-特殊号码(豹子(),顺子(), 对子)
 const val playTypeID_203335 = "203335"
 
 //前二-直選複式
@@ -380,37 +380,37 @@ const val playTypeID_204023 = "204023"
 //任選四-組選4
 const val playTypeID_204024 = "204024"
 
-enum class BetItemType{
-    NONE,
+enum class BetItemType(val typeNumber: Int){
+    NONE(-1),
     //預設
-    DEFAULT_BET_TYPE,
-    SUM_BET_TYPE,
+    DEFAULT_BET_TYPE(0),
+    SUM_BET_TYPE(1),
     // 1-26
-    SET_SUM_BET_TYPE,
+    SET_SUM_BET_TYPE(2),
 
-    SPECIAL_BET_TYPE,
+    SPECIAL_BET_TYPE(3),
     // 0-18
-    TWO_SUM_BET_TYPE,
+    TWO_SUM_BET_TYPE(4),
 
-    TWO_SET_SUM_BET_TYPE,
+    TWO_SET_SUM_BET_TYPE(5),
     //比大小 1-4
-    SIZE_SINGLE_DOUBLE_BET_TYPE,
+    SIZE_SINGLE_DOUBLE_BET_TYPE(6),
     //龍虎和 0-9
-    DRAGON_TIGER_POSITION_BET_TYPE,
+    DRAGON_TIGER_POSITION_BET_TYPE(7),
     //龍虎和 1-3
-    DRAGON_TIGER_NUMBER_BET_TYPE,
+    DRAGON_TIGER_NUMBER_BET_TYPE(8),
     //任三組選和值 1-26
-    ANY_THREE_SET_SUM_BET_TYPE,
+    ANY_THREE_SET_SUM_BET_TYPE(9),
     //任三直選和值 0-27
-    ANY_THREE_SUM_BET_TYPE,
+    ANY_THREE_SUM_BET_TYPE(10),
     //任二直選和值 0-18
-    ANY_TWO_SUM_BET_TYPE,
+    ANY_TWO_SUM_BET_TYPE(11),
     //任二組選和值 1-17
-    ANY_TWO_SET_SUM_BET_TYPE,
+    ANY_TWO_SET_SUM_BET_TYPE(12),
     //任二組選 0-9
-    ANY_TWO_SET_BET_TYPE,
+    ANY_TWO_SET_BET_TYPE(13),
     //任三組選 0-9
-    ANY_THREE_SET,
+    ANY_THREE_SET(14),
     //任四組選 0-9
-    ANY_FOUR_SET
+    ANY_FOUR_SET(15)
 }

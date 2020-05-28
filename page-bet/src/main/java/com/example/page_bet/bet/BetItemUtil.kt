@@ -3,6 +3,7 @@ package com.example.page_bet.bet
 import android.annotation.SuppressLint
 import android.content.Context
 import com.example.page_bet.R
+import com.example.repository.constant.*
 import com.example.repository.model.bet.BetData
 
 object BetItemUtil {
@@ -70,12 +71,7 @@ object BetItemUtil {
             //任選二-直選複式
             //任選三-直選複式
             //任選四-直選複式
-            playTypeID_205000,
-            playTypeID_205010,
-            playTypeID_205040,
-            playTypeID_202000,
-            playTypeID_203000,
-            playTypeID_204000 -> {
+            playTypeID_205000, playTypeID_205010, playTypeID_205040, playTypeID_202000, playTypeID_203000, playTypeID_204000 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fiveStar).toList()
 
@@ -88,7 +84,7 @@ object BetItemUtil {
 
             }
             //五星-組選120
-            playTypeID_205021-> {
+            playTypeID_205021 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fiveStar_set120).toList()
 
@@ -142,42 +138,36 @@ object BetItemUtil {
             //---------------------------------------------四星---------------------------------------------
             //四星-前四複式
             //四星-前四組合
-            playTypeID_204100,
-            playTypeID_204110 ->{
+            playTypeID_204100, playTypeID_204110 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_front).toList()
             }
             //四星-前四組選24
             //四星-後四組選24
-            playTypeID_204121,
-            playTypeID_204221 ->{
+            playTypeID_204121, playTypeID_204221 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_set24).toList()
             }
             //四星-前四組選12
-            playTypeID_204122,
-            playTypeID_204222 ->{
+            playTypeID_204122, playTypeID_204222 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_set12).toList()
             }
             //四星-前四組選6
             //四星-後四組選6
-            playTypeID_204123,
-            playTypeID_204223 ->{
+            playTypeID_204123, playTypeID_204223 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_set6).toList()
             }
             //四星-前四組選4
             //四星-後四組選4
-            playTypeID_204124,
-            playTypeID_204224 ->{
+            playTypeID_204124, playTypeID_204224 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_set4).toList()
             }
             //四星-後四複式
             //四星-後四組合
-            playTypeID_204200,
-            playTypeID_204210 ->{
+            playTypeID_204200, playTypeID_204210 ->{
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fourStar_last).toList()
             }
@@ -194,8 +184,7 @@ object BetItemUtil {
             //---------------------------------------------三星---------------------------------------------
             //前三-直選複式
             //前三-直選組合
-            playTypeID_203100,
-            playTypeID_203110 -> {
+            playTypeID_203100, playTypeID_203110 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.frontThree).toList()
             }
@@ -208,9 +197,7 @@ object BetItemUtil {
             //前三-直选和值
             //中三-直选和值
             //後三-直选和值
-            playTypeID_203102,
-            playTypeID_203202,
-            playTypeID_203302 -> {
+            playTypeID_203102, playTypeID_203202, playTypeID_203302 -> {
                 itemType = BetItemType.SUM_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSum).toList()
             }
@@ -218,9 +205,7 @@ object BetItemUtil {
             //前三-直選跨度
             //中三-直選跨度
             //後三-直選跨度
-            playTypeID_203103,
-            playTypeID_203203,
-            playTypeID_203303 -> {
+            playTypeID_203103, playTypeID_203203, playTypeID_203303 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSpan).toList()
             }
@@ -228,9 +213,7 @@ object BetItemUtil {
             //前三-組三復式
             //中三-組三復式
             //後三-組三復式
-            playTypeID_203123,
-            playTypeID_203223,
-            playTypeID_203323 -> {
+            playTypeID_203123, playTypeID_203223, playTypeID_203323 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.threeSet3).toList()
             }
@@ -241,9 +224,7 @@ object BetItemUtil {
             //前三-組六複式
             //中三-組六複式
             //後三-組六複式
-            playTypeID_203124,
-            playTypeID_203224,
-            playTypeID_203324 -> {
+            playTypeID_203124, playTypeID_203224, playTypeID_203324 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.threeSet6).toList()
             }
@@ -258,52 +239,42 @@ object BetItemUtil {
             //前三-組選合值
             //中三-組選合值
             //後三-組選合值
-            playTypeID_203131,
-            playTypeID_203231,
-            playTypeID_203331 -> {
+            playTypeID_203131, playTypeID_203231, playTypeID_203331 -> {
                 itemType = BetItemType.SET_SUM_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSum).toList()
             }
             //前三-組選包膽
             //中三-組選包膽
             //後三-組選包膽
-            playTypeID_203133,
-            playTypeID_203233,
-            playTypeID_203333 -> {
+            playTypeID_203133, playTypeID_203233, playTypeID_203333 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betBaodan).toList()
             }
             //前三-和值尾数
             //中三-和值尾数
             //後三-和值尾数
-            playTypeID_203134,
-            playTypeID_203234,
-            playTypeID_203334 -> {
+            playTypeID_203134, playTypeID_203234, playTypeID_203334 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.threeLastSum).toList()
             }
             //前三-特殊号码(豹子,顺子, 对子)
             //中三-特殊号码(豹子,顺子, 对子)
             //後三-特殊号码(豹子,顺子, 对子)
-            playTypeID_203135,
-            playTypeID_203235,
-            playTypeID_203335 -> {
+            playTypeID_203135, playTypeID_203235, playTypeID_203335 -> {
                 itemType = BetItemType.SPECIAL_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.threeSpecial).toList()
             }
 
             //中三-直選複式
             //中三-直選組合
-            playTypeID_203200,
-            playTypeID_203210 -> {
+            playTypeID_203200, playTypeID_203210 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.middleThree).toList()
             }
 
             //後三-直選複式
             //後三-直選組合
-            playTypeID_203300,
-            playTypeID_203310 -> {
+            playTypeID_203300, playTypeID_203310 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.lastThree).toList()
             }
@@ -322,48 +293,41 @@ object BetItemUtil {
             }
             //前二-直選單式
             //後二-直選單式
-            playTypeID_202101,
-            playTypeID_202201 -> {
+            playTypeID_202101, playTypeID_202201 -> {
 
             }
             //前二-直選和值
             //後二-直選和值
-            playTypeID_202102,
-            playTypeID_202202 -> {
+            playTypeID_202102, playTypeID_202202 -> {
                 itemType = BetItemType.TWO_SUM_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSum).toList()
             }
             //前二-直選跨度
             //後二-直選跨度
-            playTypeID_202103,
-            playTypeID_202203 -> {
+            playTypeID_202103, playTypeID_202203 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSpan).toList()
             }
             //前二-組選複式
             //後二-組選複式
-            playTypeID_202110,
-            playTypeID_202210 -> {
+            playTypeID_202110, playTypeID_202210 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSet).toList()
             }
             //前二-組選單式
             //後二-組選單式
-            playTypeID_202120,
-            playTypeID_202220 -> {
+            playTypeID_202120, playTypeID_202220 -> {
 
             }
             //前二-組選和值
             //後二-組選和值
-            playTypeID_202131,
-            playTypeID_202231 -> {
+            playTypeID_202131, playTypeID_202231 -> {
                 itemType = BetItemType.TWO_SET_SUM_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betSum).toList()
             }
             //前二-組選包膽
             //後二-組選包膽
-            playTypeID_202133,
-            playTypeID_202233 -> {
+            playTypeID_202133, playTypeID_202233 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.betBaodan).toList()
             }
@@ -501,7 +465,7 @@ object BetItemUtil {
         return Triple(itemType, betArray, itemSecondType)
     }
 
-    private fun getBetArray(betItemType:BetItemType, stringArray: List<String>, betArray: ArrayList<BetData>){
+    private fun getBetArray(betItemType: BetItemType, stringArray: List<String>, betArray: ArrayList<BetData>){
 
         when(betItemType){
             BetItemType.DEFAULT_BET_TYPE,
