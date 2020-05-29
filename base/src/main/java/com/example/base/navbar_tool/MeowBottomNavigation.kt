@@ -9,11 +9,13 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.LayoutDirection
 import android.view.Gravity
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.example.base.R
+import com.example.base.visible
 import kotlinx.android.synthetic.main.item_cell_view.view.*
 import kotlin.math.abs
 
@@ -199,6 +201,7 @@ class MeowBottomNavigation : FrameLayout {
                 var subCell = ItemView(context)
                 // TODO 加入 cell's item
                 subCell.let {
+//                    it.visibility = View.INVISIBLE
                     it.tag = "Nav$index"
                     it.id = item.id
                     it.setResource(item.icon)

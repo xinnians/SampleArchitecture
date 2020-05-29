@@ -8,6 +8,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -300,12 +301,14 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
     }
 
     fun disableCell() {
+        Log.d("msg", "disableCell isEnableCell: " + isEnabledCell)
         if (isEnabledCell)
             animateProgress(false)
         isEnabledCell = false
     }
 
     fun enableCell(isAnimate: Boolean = true) {
+        Log.d("msg", "enableCell isEnableCell: " + isEnabledCell)
         if (!isEnabledCell)
             animateProgress(true, isAnimate)
         isEnabledCell = true
