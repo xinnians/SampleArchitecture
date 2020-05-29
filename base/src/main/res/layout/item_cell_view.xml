@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/meow_cell_circle"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageButton
+        android:id="@+id/btn_item"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#00000000"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/ic_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:background="@drawable/bagde_circle"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        tools:ignore="RtlHardcoded,SpUsage"
+        android:textDirection="ltr"
+        android:minWidth="16dp"
+        android:textSize="8dp"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toTopOf="@+id/btn_item"
+        app:layout_constraintRight_toRightOf="@+id/btn_item"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ededed">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -35,11 +36,21 @@
         app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
 
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+    <com.example.base.navbar_tool.MeowBottomNavigation
+        android:id="@+id/meowNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:mbn_circleColor="#ffffff"
+        app:mbn_backgroundBottomColor="#ffffff"
+        app:mbn_countBackgroundColor="#ff0000"
+        app:mbn_countTextColor="#ffffff"
+        app:mbn_defaultIconColor="#424242"
+        app:mbn_rippleColor="#2f424242"
+        app:mbn_selectedIconColor="#424242"
+        app:mbn_shadowColor="#00ffff22"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
