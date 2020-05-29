@@ -384,6 +384,7 @@ enum class BetItemType(val typeNumber: Int){
     NONE(-1),
     //預設
     DEFAULT_BET_TYPE(0),
+    //0-27
     SUM_BET_TYPE(1),
     // 1-26
     SET_SUM_BET_TYPE(2),

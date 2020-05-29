@@ -4,6 +4,8 @@ data class BetSelectNumber(var playTypeCode:String = "", var betNumber:String = 
 
 data class BetData(var displayTitle: String, var unitMap: HashMap<String,Boolean>, var isSelect: Boolean = false, var isDataSet: Boolean = false)
 
+data class BetUnit(var unitName: String,var unitValue: Int, var isSelect: Boolean)
+
 //-----------------------------------------------快3-獎金盤---------------------------------------------
 
 //兩不同號標準

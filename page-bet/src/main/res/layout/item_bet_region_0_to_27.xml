@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutBetRegion"
+    android:layout_width="@dimen/dp_335"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_9"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:background="@drawable/bg_white_10_corner"
+    android:elevation="@dimen/dp_2">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_32"
+        android:background="@drawable/bg_darkgray_10_top_corner"
+        android:gravity="center"
+        android:text="千位"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/sp_17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/layoutBetFunctionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvBetUnit0"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_17"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBetUnit1"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_17"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBetUnit2"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_17"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBetUnit3"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_17"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toEndOf="@id/tvBetUnit2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBetUnit4"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_17"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toEndOf="@id/tvBetUnit3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBetUnit5"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit6"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit7" />
+
+            <TextView
+                android:id="@+id/tvBetUnit6"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit7"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit7" />
+
+            <TextView
+                android:id="@+id/tvBetUnit7"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBetUnit2" />
+
+            <TextView
+                android:id="@+id/tvBetUnit8"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toEndOf="@id/tvBetUnit7"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit7" />
+
+            <TextView
+                android:id="@+id/tvBetUnit9"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toEndOf="@id/tvBetUnit8"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit7" />
+
+            <TextView
+                android:id="@+id/tvBetUnit10"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="10"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit11"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit11" />
+
+            <TextView
+                android:id="@+id/tvBetUnit11"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="11"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit12"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit12" />
+
+            <TextView
+                android:id="@+id/tvBetUnit12"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="12"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBetUnit7" />
+
+            <TextView
+                android:id="@+id/tvBetUnit15"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="15"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit16"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit16" />
+
+            <TextView
+                android:id="@+id/tvBetUnit16"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="16"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit17"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit17" />
+
+            <TextView
+                android:id="@+id/tvBetUnit17"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="17"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBetUnit12" />
+
+            <TextView
+                android:id="@+id/tvBetUnit20"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="20"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit21"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit21" />
+
+            <TextView
+                android:id="@+id/tvBetUnit21"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="21"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit22"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit22" />
+
+            <TextView
+                android:id="@+id/tvBetUnit22"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                app:layout_constraintTop_toBottomOf="@id/tvBetUnit17"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:textSize="@dimen/sp_18"
+                android:textColor="#666666"
+                android:text="22"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvBetUnit25"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="25"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit26"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit26" />
+
+            <TextView
+                android:id="@+id/tvBetUnit26"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginEnd="@dimen/dp_14"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:gravity="center"
+                android:text="26"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toStartOf="@id/tvBetUnit27"
+                app:layout_constraintTop_toTopOf="@id/tvBetUnit27" />
+
+            <TextView
+                android:id="@+id/tvBetUnit27"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                app:layout_constraintTop_toBottomOf="@id/tvBetUnit22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dp_13"
+                android:background="@drawable/bg_white_circle_gray_stroke"
+                android:textSize="@dimen/sp_18"
+                android:textColor="#666666"
+                android:text="27"
+                android:gravity="center"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBetFunctionBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_42"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvFunctionAll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="全"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvFunctionBig"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunctionBig"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="大"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvFunctionSmall"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tvFunctionAll"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunctionSmall"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="小"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvFunctionOdd"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tvFunctionBig"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunctionOdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="奇"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvFunctionEven"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tvFunctionSmall"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunctionEven"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="偶"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvFunctionClear"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tvFunctionOdd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunctionClear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="清"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/tvFunctionEven"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

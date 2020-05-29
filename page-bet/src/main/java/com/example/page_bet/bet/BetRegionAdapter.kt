@@ -14,6 +14,7 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
 
     init {
         addItemType(BetItemType.DEFAULT_BET_TYPE.typeNumber, R.layout.item_bet_region_default)
+        addItemType(BetItemType.SUM_BET_TYPE.typeNumber, R.layout.item_bet_region_0_to_27)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleLotteryEntity?) {

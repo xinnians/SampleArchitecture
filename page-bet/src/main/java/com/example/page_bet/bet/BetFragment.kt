@@ -11,6 +11,7 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetItemUtil.getTypeData
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
+import com.example.repository.constant.BetItemType
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import kotlinx.android.synthetic.main.fragment_bet.*
@@ -32,6 +33,7 @@ class BetFragment : BaseFragment() {
 
     private var mGameID: Int = -1
     private var mGameTypeID: Int = -1
+    private var mCurrentBetItemType: BetItemType = BetItemType.NONE
 
     private var mBetPositionAdapter: BetPositionAdapter? = null
     private var mBetRegionAdapter: BetRegionAdapter? = null
@@ -80,10 +82,16 @@ class BetFragment : BaseFragment() {
             }
             mBetPositionAdapter?.data?.get(position)?.getData()?.isSelect = true
             mBetPositionAdapter?.notifyDataSetChanged()
+
+            //在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
+            mBetPositionAdapter?.data?.get(position)?.let {
+                var data = listOf(MultipleLotteryEntity(mCurrentBetItemType,it.getData()!!))
+                setBetRegionDisplay(data)
+            }
         }
         rvBetPositionSelect.adapter = mBetPositionAdapter
 
-        var layout = LinearLayoutManager(context)
+        var layout = ScrollableLinearLayoutManager(context,false)
         layout.orientation = LinearLayoutManager.VERTICAL
         rvBetRegion.layoutManager = layout
         mBetRegionAdapter = BetRegionAdapter(listOf())
@@ -199,6 +207,7 @@ class BetFragment : BaseFragment() {
                     var result = getTypeData(context!!, playTypeCode.toString())
                     Log.e("Ian", "getTypeData: $result")
                     //根據typeData顯示投注單位選擇，可以根據list的長度來判斷該顯示什麼樣式的投注單位選擇
+                    mCurrentBetItemType = result.first
                     var oriList = result.second
                     var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
 

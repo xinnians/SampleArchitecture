@@ -75,6 +75,7 @@ object BetItemUtil {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = context.resources.getStringArray(R.array.fiveStar).toList()
 
+
 //                for (text in stringArray){
 //                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForZeroToNine.clone() as HashMap<String, Boolean>))
 //                }
