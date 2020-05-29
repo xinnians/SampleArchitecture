@@ -2,9 +2,16 @@ package com.example.repository.model.bet
 
 data class BetSelectNumber(var playTypeCode:String = "", var betNumber:String = "")
 
-data class BetData(var displayTitle: String, var unitMap: HashMap<String,Boolean>, var isSelect: Boolean = false, var isDataSet: Boolean = false)
+data class BetData(var displayTitle: String, var unitList: ArrayList<BetUnit>, var isSelect: Boolean = false, var isDataSet: Boolean = false)
 
-data class BetUnit(var unitName: String,var unitValue: Int, var isSelect: Boolean)
+data class BetUnit(var unitName: String,var unitValue: Int, var isSelect: Boolean = false, var displayMode:BetUnitDisplayMode )
+
+enum class BetUnitDisplayMode(val typeNumber: Int){
+    ONLY_NUMBER(1),
+    ONE_CHAR(2),
+    TWO_CHAR(3),
+    THREE_CHAR(4)
+}
 
 //-----------------------------------------------快3-獎金盤---------------------------------------------
 

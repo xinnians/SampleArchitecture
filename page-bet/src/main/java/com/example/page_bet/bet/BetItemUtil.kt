@@ -5,12 +5,26 @@ import android.content.Context
 import com.example.page_bet.R
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetData
+import com.example.repository.model.bet.BetUnit
+import com.example.repository.model.bet.BetUnitDisplayMode
 
 object BetItemUtil {
 
     private var hashMapForZeroToNine = hashMapOf(
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
         "5" to false, "6" to false, "7" to false, "8" to false, "9" to false)
+
+    private var templateForZeroToNine = arrayListOf(
+        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("1",1,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("2",2,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("3",3,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("4",4,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("5",5,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("6",6,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("7",7,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("8",8,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("9",9,false,BetUnitDisplayMode.ONLY_NUMBER))
 
     private var hashMapForZeroToTwentyseven = hashMapOf(
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
@@ -20,6 +34,36 @@ object BetItemUtil {
         "20" to false, "21" to false, "22" to false, "23" to false, "24" to false,
         "25" to false, "26" to false, "27" to false)
 
+    private var templateForZeroToTwentyseven = arrayListOf(
+        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("1",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("2",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("3",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("4",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("5",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("6",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("7",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("8",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("9",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("10",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("11",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("12",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("13",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("14",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("15",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("16",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("17",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("18",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("19",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("20",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("21",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("22",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("23",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("24",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("25",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("26",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("27",0,false,BetUnitDisplayMode.ONLY_NUMBER))
+
     private var hashMapForOneToTwentySix = hashMapOf(
         "1" to false, "2" to false, "3" to false, "4" to false,
         "5" to false, "6" to false, "7" to false, "8" to false, "9" to false,
@@ -27,6 +71,36 @@ object BetItemUtil {
         "15" to false, "16" to false, "17" to false, "18" to false, "19" to false,
         "20" to false, "21" to false, "22" to false, "23" to false, "24" to false,
         "25" to false, "26" to false)
+
+    private var templateForZeroToTwentySix = arrayListOf(
+        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("1",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("2",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("3",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("4",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("5",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("6",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("7",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("8",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("9",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("10",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("11",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("12",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("13",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("14",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("15",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("16",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("17",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("18",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("19",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("20",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("21",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("22",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("23",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("24",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("25",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("26",0,false,BetUnitDisplayMode.ONLY_NUMBER),
+        BetUnit("27",0,false,BetUnitDisplayMode.ONLY_NUMBER))
 
     private var hashMapForOneTwoThree = hashMapOf(
         "1" to false, "2" to false, "3" to false)
@@ -521,5 +595,11 @@ object BetItemUtil {
             }
         }
 
+    }
+
+    private fun getBetUnitList(start: Int,end: Int){
+        for (index in start..end){
+
+        }
     }
 }
