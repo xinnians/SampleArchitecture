@@ -78,14 +78,14 @@ class MainFragment : BaseFragment() {
         meowNavBar.let {
             it.add(MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home,
                 arrayListOf(
-                    MeowBottomNavigation.Model(ID_SUB_MESSAGE, R.drawable.ic_message),
+                    MeowBottomNavigation.Model(ID_SUB_HOME, R.drawable.ic_home),
                     MeowBottomNavigation.Model(ID_SUB_EXPLORE, R.drawable.ic_explore),
-                    MeowBottomNavigation.Model(ID_SUB_NOTIFICATION, R.drawable.ic_notification),
-                    MeowBottomNavigation.Model(ID_SUB_HOME, R.drawable.ic_home)
+                    MeowBottomNavigation.Model(ID_SUB_MESSAGE, R.drawable.ic_message),
+                    MeowBottomNavigation.Model(ID_SUB_NOTIFICATION, R.drawable.ic_notification)
                 )))
-            it.add(MeowBottomNavigation.Model(ID_ACCOUNT, R.drawable.ic_account))
-            it.add(MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore))
-            it.add(MeowBottomNavigation.Model(ID_MESSAGE, R.drawable.ic_message))
+            it.add(MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_account))
+            it.add(MeowBottomNavigation.Model(ID_MESSAGE, R.drawable.ic_explore))
+            it.add(MeowBottomNavigation.Model(ID_ACCOUNT, R.drawable.ic_message))
             it.add(MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification))
             it.add(MeowBottomNavigation.Model(ID_NOTIFICATION_1, R.drawable.ic_notification))
             // navBar icon 加入 badgeNumber
@@ -97,6 +97,7 @@ class MainFragment : BaseFragment() {
             // 初始設定自動彈出第一個 NavBar icon
             it.show(ID_HOME)
             it.setOnShowListener {
+                Log.d("msg", "id: ${it.id}")
                 Log.d("msg", "onShowListener")
             }
             it.setOnClickMenuListener {

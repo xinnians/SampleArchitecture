@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.util.LayoutDirection
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
