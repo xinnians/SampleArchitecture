@@ -35,6 +35,7 @@ class MainFragment : BaseFragment() {
         private const val ID_SUB_NOTIFICATION = 10
     }
 
+    private var isHide = true
     private lateinit var mMainViewModel: MainViewModel
 
     private val navigation: MainNavigation by lazy {
@@ -53,6 +54,7 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        setListener()
     }
 
     override fun onAttach(context: Context) {
@@ -111,5 +113,16 @@ class MainFragment : BaseFragment() {
             })
         }
 
+    }
+
+    private fun setListener() {
+//        ctbTitleBar.let {
+//            it.money = "1,000,000.000"
+//            it.showTime = 5000
+//            it.showBack = true
+//            it.backListener(View.OnClickListener { navigation.backToLoginPage() }
+//
+//            )
+//        }
     }
 }

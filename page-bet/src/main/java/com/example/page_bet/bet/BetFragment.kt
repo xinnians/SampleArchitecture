@@ -7,6 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
+import com.example.base.AppInjector
+import com.example.base.BaseFragment
+import com.example.base.observeNotNull
+import com.example.base.timer
+import com.example.base.widget.CustomSwitch
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetItemUtil.getTypeData
@@ -50,6 +55,7 @@ class BetFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        setListener()
     }
 
     private fun init() {
@@ -234,5 +240,21 @@ class BetFragment : BaseFragment() {
 
     private fun setBetRegionDisplay(data: List<MultipleLotteryEntity>) {
         mBetRegionAdapter?.setNewData(data)
+    }
+
+    private fun setListener() {
+        csPlayType.switchType = CustomSwitch.GAME_TYPE
+        csPlayType.setOnSwitchCallListener(object : CustomSwitch.OnSwitchCall{
+            override fun onCall(type: Boolean) {
+
+            }
+        })
+
+        csPlayRate.switchType = CustomSwitch.GAME_RATE
+        csPlayRate.setOnSwitchCallListener(object : CustomSwitch.OnSwitchCall{
+            override fun onCall(type: Boolean) {
+
+            }
+        })
     }
 }

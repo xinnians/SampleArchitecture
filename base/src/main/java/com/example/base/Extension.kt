@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,6 +53,10 @@ fun Context.toast(message: CharSequence): Toast = Toast
     .apply {
         show()
     }
+
+fun Fragment.drawable(resId: Int) = requireContext().drawable(resId)
+
+fun Context.drawable(resId: Int) = ContextCompat.getDrawable(this, resId)
 
 //fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
 //    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }
