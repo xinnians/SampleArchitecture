@@ -8,15 +8,18 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.example.base.R
@@ -181,12 +184,8 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
 //                d.shape = GradientDrawable.OVAL
                 d.shape = GradientDrawable.RING
                 ViewCompat.setBackground(mSubItemList[i], d)
-
                 ViewCompat.setElevation(mSubItemList[i], if (subProgress > 0.7f) dipf(context, subProgress * 4f) else 0f)
-
-//                Log.e("Ian","[subProgress] i:$i, result:${(1f - progress) * measuredHeight}, measuredHeight:$measuredHeight , 1f - progress=${1f - subProgress}")
                 mSubItemList[i].y = (1f - subProgress) * measuredHeight + nextY - mSubItemList[i].measuredHeight
-//                Log.e("Ian","[subProgress] subProgress:$subProgress, i:$i, mSubItemList[i].y:${mSubItemList[i].y}")
                 nextY = nextY - mSubItemList[i].measuredHeight - mButtonSpacing
             }
         }
@@ -301,14 +300,14 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
     }
 
     fun disableCell() {
-        Log.d("msg", "disableCell isEnableCell: " + isEnabledCell)
+//        Log.d("msg", "disableCell isEnableCell: " + isEnabledCell)
         if (isEnabledCell)
             animateProgress(false)
         isEnabledCell = false
     }
 
     fun enableCell(isAnimate: Boolean = true) {
-        Log.d("msg", "enableCell isEnableCell: " + isEnabledCell)
+//        Log.d("msg", "enableCell isEnableCell: " + isEnabledCell)
         if (!isEnabledCell)
             animateProgress(true, isAnimate)
         isEnabledCell = true
@@ -340,6 +339,9 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
+//                    for(item in mSubItemList) {
+//                        item.visibility = View.VISIBLE
+//                    }
                 }
 
             })
@@ -348,7 +350,6 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
     }
 
     private fun animateSubProgress(enableCell: Boolean) {
-//        Log.i("Ian","[animateSubProgress] call. enableCell:$enableCell")
         val d = if (enableCell) duration else 250
         val anim = ValueAnimator.ofFloat(0f, 1f)
         anim.apply {
@@ -369,44 +370,27 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
-
         var buttonsHorizontalCenter = measuredWidth / 2
 
-        var nextY = mViewHeight - mBaseBlockHeight - mButtonSpacing
-
+        /**
+         * 要將動畫初始位置放在螢幕外面，開始跑動畫再進入畫面
+          */
+        var nextY = mViewHeight - mBaseBlockHeight - mButtonSpacing + measuredHeight
         for (i in 0..childCount) {
             var child = getChildAt(i)
-//            try {
-//                Log.e("Ian","[onLayout] index:$i, tag:${child.tag}, childCount:$childCount")
-//            }catch (e: Exception){
-//                Log.e("Ian","[onLayout] Exception:$e")
-//            }
-
             child?.let {
-//                Log.e("Ian","[onLayout] index:$i, tag:${child.tag}, childCount:$childCount, measuredWidth:${it.measuredWidth}, measuredHeight:${it.measuredHeight}, mViewWidth:$mViewWidth, buttonsHorizontalCenter:$buttonsHorizontalCenter" )
-//                if(it.tag.toString().contains("FrameLayout")){
-//                    var childX = buttonsHorizontalCenter - it.measuredWidth/2
-//                    var childY = (nextY - it.measuredHeight)
-//                    it.layout(childX,childY,childX+it.measuredWidth,childY+it.measuredHeight)
-//                    Log.e("Ian","[layoutPosition] left:$childX, top:$childY, right:${childX+it.measuredWidth}, bottom:${childY+it.measuredHeight}")
-//                    nextY = (childY - mButtonSpacing)
-//                }
                 if (it.tag.toString().contains("Nav")) {
+                    /**
+                     * 先隱藏子項目
+                     */
+//                    it.visibility = View.INVISIBLE
                     var childX = buttonsHorizontalCenter - it.measuredWidth / 2
                     var childY = (nextY - it.measuredHeight).toInt()
                     it.layout(childX, childY, childX + it.measuredWidth, childY + it.measuredHeight)
 //                    Log.e("Ian","[layoutPosition] left:$childX, top:$childY, right:${childX+it.measuredWidth}, bottom:${childY+it.measuredHeight}")
                     val collapsedTranslation: Float = fl.y - childY.toFloat()
                     val expandedTranslation = 0f
-//                    it.translationY = if (mExpanded) expandedTranslation else collapsedTranslation
-//                    it.alpha = if (mExpanded) 1f else 0f
-
                     //子view的動畫相關
-//                    val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams(dip(context,20),dip(context,20)))
-//                    params.mCollapseDir.setFloatValues(expandedTranslation, collapsedTranslation)
-//                    params.mExpandDir.setFloatValues(collapsedTranslation, expandedTranslation)
-//                    it.layoutParams = params
-//                    params.setAnimationsTarget(it)
                     if (!mSubItemList.contains(it))
                         mSubItemList.add(it)
 
