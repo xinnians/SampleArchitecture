@@ -6,14 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.recyclerview.widget.RecyclerView
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
+import com.example.base.carousel_layout_tool.CarouselLayoutManager
+import com.example.base.carousel_layout_tool.CarouselZoomPostLayoutListener
+import com.example.base.carousel_layout_tool.CenterScrollListener
+import com.example.base.carousel_layout_tool.DefaultChildSelectionListener
 import com.example.base.navbar_tool.MeowBottomNavigation
 import com.example.base.observeNotNull
+import com.example.page_main.adapter.CarouselAdapter
 import com.example.repository.model.ViewState
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
+import java.util.*
 
 class MainFragment : BaseFragment() {
 
@@ -54,10 +62,48 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        val names = arrayOf("彩票", "棋盤", "真人視訊", "百家樂", "麻將")
+        val adapter = CarouselAdapter(names)
+        initRecyclerView(view.findViewById(R.id.recycle_view), CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true), adapter)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+    }
+
+    private fun initRecyclerView(recyclerView:RecyclerView, layoutManager:CarouselLayoutManager, adapter:CarouselAdapter) {
+        // enable zoom effect. this line can be customized
+        layoutManager.setPostLayoutListener(CarouselZoomPostLayoutListener())
+        layoutManager.maxVisibleItems = 1
+        recyclerView.setLayoutManager(layoutManager)
+        // we expect only fixed sized item for now
+        recyclerView.setHasFixedSize(true)
+        // sample adapter with random data
+        recyclerView.setAdapter(adapter)
+        // enable center post scrolling
+        // enable center post scrolling
+        recyclerView.addOnScrollListener(CenterScrollListener())
+        // enable center post touching on item and item click listener
+        DefaultChildSelectionListener.initCenterItemListener(object: DefaultChildSelectionListener.OnCenterItemClickListener {
+            @Override
+            override fun onCenterItemClicked(
+                recyclerView: RecyclerView,
+                carouselLayoutManager: CarouselLayoutManager,
+                v: View
+            ) {
+                // TODO
+                var position = recyclerView.getChildAdapterPosition(v)
+
+            }
+        }, recyclerView, layoutManager)
+        layoutManager.addOnItemSelectionListener(object : CarouselLayoutManager.OnCenterItemSelectionListener{
+            @Override
+            override fun onCenterItemChanged(adapterPosition: Int) {
+                if(CarouselLayoutManager.INVALID_POSITION != adapterPosition) {
+                    //TODO
+                }
+            }
+        })
     }
 
     private fun init() {
