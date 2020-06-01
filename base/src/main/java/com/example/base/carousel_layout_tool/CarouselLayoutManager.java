@@ -497,7 +497,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
         final int centerItem = Math.round(absCurrentScrollPosition);
 
         if (mCircleLayout && 1 < mItemsCount) {
-            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 3, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
+            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 1, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
             Log.d("msg", "layoutCount: " + layoutCount);
             mLayoutHelper.initLayoutOrder(layoutCount);
 
