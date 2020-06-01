@@ -28,7 +28,8 @@ class SampleAPI : BaseAPI() {
 
     init {
 //        val url = "https://newsapi.org/v1/"
-        val url = "https://dev-inum-webapi.yjtech.tw/"
+//        val url = "https://dev-inum-webapi.yjtech.tw/"
+        val url = "https://qat-inum-webapi.yjtech.tw/"
         val client = getOkHttpClient()
 
         val retrofit = Retrofit.Builder()

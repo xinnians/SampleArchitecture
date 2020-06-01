@@ -71,8 +71,7 @@ class BetFragment : BaseFragment() {
             mGameTypeID = it.getInt(TAG_GAME_TYPE, -1)
         }
         refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
-        refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-            ?: "empty", mGameID, mGameTypeID)
+        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID, mGameTypeID)
 
         //TODO 要先判斷該遊戲有沒有官方跟信用的玩法支援再依此更新官方/信用的顯示資訊，目前該處只有直接去撈官方玩法，所以遇到只有支援信用的遊戲時會顯示空畫面
         initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
@@ -95,11 +94,12 @@ class BetFragment : BaseFragment() {
 
             //在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
             mBetPositionAdapter?.data?.get(position)?.let {
-                var data = listOf(MultipleLotteryEntity(mCurrentBetItemType,it.getData()!!))
+                var data = listOf(MultipleLotteryEntity(mCurrentBetItemType.unitDisplayMode,it.getData()!!))
                 setBetRegionDisplay(data)
             }
         }
         rvBetPositionSelect.adapter = mBetPositionAdapter
+        mBetPositionAdapter?.bindToRecyclerView(rvBetPositionSelect)
 
         var layout = ScrollableLinearLayoutManager(context,false)
         layout.orientation = LinearLayoutManager.VERTICAL
@@ -173,6 +173,7 @@ class BetFragment : BaseFragment() {
             when (state) {
                 is ViewState.Success -> {
                     initPlayTypeDialog(state.data)
+                    initDefaultSelect()
                 }
                 is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
                 is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
@@ -232,9 +233,11 @@ class BetFragment : BaseFragment() {
 //                    Log.e("Ian","itemType:${modifyList?.get(0)?.itemType}, Data:${modifyList?.get(0)?.getData()}")
 
                     mBetPositionAdapter?.setNewData(modifyList)
+                    mBetPositionAdapter?.setFirstItemSelect()
 
                     //TODO 在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
-                    mBetRegionAdapter?.setNewData(listOf(MultipleLotteryEntity(result.first, result.second[0])))
+//                    Log.e("Ian","[PlayTypeDialog.OnPlayTypeSelectListener] result.second[0]:${result.second[0]}")
+//                    mBetRegionAdapter?.setNewData(listOf(MultipleLotteryEntity(result.first.unitDisplayMode, result.second[0])))
 
                 }
 
@@ -285,5 +288,67 @@ class BetFragment : BaseFragment() {
 
             }
         })
+    }
+
+    private fun initDefaultSelect(){
+        Log.e("Ian","[initDefaultSelect] call.")
+        var defaultPlayTypeCode: Int = -1
+        var defaultPlayTypeName: String
+        var betTypeDisplayName: String = ""
+        var betGroupDisplayName: String = ""
+        var playTypeDisplayName: String = ""
+
+        mViewModel.playTypeInfoList?.data?.betTypeGroupList?.get(0)?.let {betTypeGroup ->
+            betTypeGroup.betTypeEntityList?.get(0)?.let { betTypeEntity ->
+                betTypeDisplayName = betTypeEntity.betTypeDisplayName
+                betTypeEntity.mobileBetGroupEntityList?.get(0)?.let {betGroupEntity ->
+                    betGroupDisplayName = betGroupEntity.betGroupDisplayName
+                    betGroupEntity.playTypeInfoEntityList?.get(0)?.let {playTypeInfoEntity ->
+                        playTypeDisplayName = playTypeInfoEntity.displayName
+                        defaultPlayTypeName = "$betTypeDisplayName $betGroupDisplayName $playTypeDisplayName"
+                        defaultPlayTypeCode = playTypeInfoEntity.playTypeCode
+                    }
+                }
+            }
+        }
+
+//        mViewModel.playTypeInfoList?.data?.betTypeGroupList?.forEach {betTypeGroup ->
+//            betTypeGroup.betTypeEntityList.forEach { betTypeEntity ->
+//                betTypeDisplayName = betTypeEntity.betTypeDisplayName
+//                betTypeEntity.mobileBetGroupEntityList.forEach {betGroupEntity ->
+//                    betGroupDisplayName = betGroupEntity.betGroupDisplayName
+//                    betGroupEntity.playTypeInfoEntityList.forEach {playTypeInfoEntity ->
+//                        playTypeDisplayName = playTypeInfoEntity.displayName
+//                        defaultPlayTypeName = "$betTypeDisplayName $betGroupDisplayName $playTypeDisplayName"
+//                        defaultPlayTypeCode = playTypeInfoEntity.playTypeCode
+//                        break
+//                    }
+//                    break
+//                }
+//                break
+//            }
+//            break
+//        }
+
+        context?.let {
+            var result = getTypeData(it, defaultPlayTypeCode.toString())
+            mCurrentBetItemType = result.first
+            var oriList = result.second
+            var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
+
+            //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
+            if (oriList.isNotEmpty()) {
+                for (item in oriList) {
+                    modifyList.add(MultiplePlayTypePositionItem(oriList.size, item))
+                }
+            } else {
+                modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
+            }
+//                    Log.e("Ian","itemType:${modifyList?.get(0)?.itemType}, Data:${modifyList?.get(0)?.getData()}")
+
+            mBetPositionAdapter?.setNewData(modifyList)
+            Log.e("Ian","[initDefaultSelect] end.")}
+
+            mBetPositionAdapter?.setFirstItemSelect()
     }
 }

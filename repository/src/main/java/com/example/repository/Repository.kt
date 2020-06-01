@@ -17,7 +17,7 @@ class Repository(private val sampleService: SampleService) {
 
     companion object {
         const val test = "tttttt"
-        const val isFakeMode = false
+        const val isFakeMode = true
     }
 
     private var fakeGameMenuResponse: GameMenuResponse = GameMenuResponse(

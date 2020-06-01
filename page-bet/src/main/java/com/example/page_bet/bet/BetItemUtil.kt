@@ -6,7 +6,6 @@ import com.example.page_bet.R
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetData
 import com.example.repository.model.bet.BetUnit
-import com.example.repository.model.bet.BetUnitDisplayMode
 
 object BetItemUtil {
 
@@ -33,6 +32,32 @@ object BetItemUtil {
 
     private var hashMapForOneTwoThree = hashMapOf(
         "1" to false, "2" to false, "3" to false)
+
+    private var templateThreeChar: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("小小小",1,displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小小大",2,displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小大小",3,displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小大大",4,displayMode = BetUnitDisplayMode.THREE_CHAR)
+    )
+
+    private var templateTwoChar: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("十個",1,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百個",2,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百十",3,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千個",4,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千十",5,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千百",6,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬個",7,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬十",8,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬百",9,displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬千",10,displayMode = BetUnitDisplayMode.TWO_CHAR)
+    )
+
+    private var templateOneChar: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("龍",1,displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("虎",2,displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("和",3,displayMode = BetUnitDisplayMode.ONE_CHAR)
+    )
 
     private var hashMapForZeroToEighteen = hashMapOf(
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
@@ -494,11 +519,11 @@ object BetItemUtil {
                 }
 
             }
-//            BetItemType.SPECIAL_BET_TYPE -> {
-//                for (text in stringArray){
-//                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
-//                }
-//            }
+            BetItemType.SPECIAL_BET_TYPE -> {
+                for (text in stringArray){
+                    betArray.add(BetData(displayTitle = text,unitList = templateOneChar.clone() as ArrayList<BetUnit>))
+                }
+            }
             BetItemType.TWO_SUM_BET_TYPE,
             BetItemType.ANY_TWO_SUM_BET_TYPE-> {
                 for (text in stringArray){

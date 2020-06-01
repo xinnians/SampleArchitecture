@@ -380,38 +380,44 @@ const val playTypeID_204023 = "204023"
 //任選四-組選4
 const val playTypeID_204024 = "204024"
 
-enum class BetItemType(val typeNumber: Int){
-    NONE(-1),
+enum class BetItemType(val typeNumber: Int,val unitDisplayMode: BetUnitDisplayMode){
+    NONE(-1,BetUnitDisplayMode.ONLY_NUMBER),
     //預設
-    DEFAULT_BET_TYPE(0),
+    DEFAULT_BET_TYPE(0, BetUnitDisplayMode.ONLY_NUMBER),
     //0-27
-    SUM_BET_TYPE(1),
+    SUM_BET_TYPE(1,BetUnitDisplayMode.ONLY_NUMBER),
     // 1-26
-    SET_SUM_BET_TYPE(2),
+    SET_SUM_BET_TYPE(2,BetUnitDisplayMode.ONLY_NUMBER),
 
-    SPECIAL_BET_TYPE(3),
+    SPECIAL_BET_TYPE(3, BetUnitDisplayMode.ONE_CHAR),
     // 0-18
-    TWO_SUM_BET_TYPE(4),
+    TWO_SUM_BET_TYPE(4,BetUnitDisplayMode.ONLY_NUMBER),
 
-    TWO_SET_SUM_BET_TYPE(5),
+    TWO_SET_SUM_BET_TYPE(5,BetUnitDisplayMode.ONLY_NUMBER),
     //比大小 1-4
-    SIZE_SINGLE_DOUBLE_BET_TYPE(6),
+    SIZE_SINGLE_DOUBLE_BET_TYPE(6,BetUnitDisplayMode.ONE_CHAR),
     //龍虎和 0-9
-    DRAGON_TIGER_POSITION_BET_TYPE(7),
+    DRAGON_TIGER_POSITION_BET_TYPE(7,BetUnitDisplayMode.ONLY_NUMBER),
     //龍虎和 1-3
-    DRAGON_TIGER_NUMBER_BET_TYPE(8),
+    DRAGON_TIGER_NUMBER_BET_TYPE(8,BetUnitDisplayMode.ONE_CHAR),
     //任三組選和值 1-26
-    ANY_THREE_SET_SUM_BET_TYPE(9),
+    ANY_THREE_SET_SUM_BET_TYPE(9,BetUnitDisplayMode.ONLY_NUMBER),
     //任三直選和值 0-27
-    ANY_THREE_SUM_BET_TYPE(10),
+    ANY_THREE_SUM_BET_TYPE(10,BetUnitDisplayMode.ONLY_NUMBER),
     //任二直選和值 0-18
-    ANY_TWO_SUM_BET_TYPE(11),
+    ANY_TWO_SUM_BET_TYPE(11,BetUnitDisplayMode.ONLY_NUMBER),
     //任二組選和值 1-17
-    ANY_TWO_SET_SUM_BET_TYPE(12),
+    ANY_TWO_SET_SUM_BET_TYPE(12,BetUnitDisplayMode.ONLY_NUMBER),
     //任二組選 0-9
-    ANY_TWO_SET_BET_TYPE(13),
+    ANY_TWO_SET_BET_TYPE(13,BetUnitDisplayMode.ONLY_NUMBER),
     //任三組選 0-9
-    ANY_THREE_SET(14),
+    ANY_THREE_SET(14,BetUnitDisplayMode.ONLY_NUMBER),
     //任四組選 0-9
-    ANY_FOUR_SET(15)
+    ANY_FOUR_SET(15,BetUnitDisplayMode.ONLY_NUMBER)
 }
+
+enum class BetUnitDisplayMode(val typeNumber: Int){
+    ONLY_NUMBER(1),
+    ONE_CHAR(2),
+    TWO_CHAR(3),
+    THREE_CHAR(4)}

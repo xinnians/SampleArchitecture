@@ -37,26 +37,16 @@ class BetPositionAdapter(data: List<MultiplePlayTypePositionItem>) : BaseMultiIt
                     it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_gray_25_corner)
                 }
             }
-//            when (it.itemViewType) {
-//                1 -> {
-//
-//                }
-//                2 -> {
-//
-//                }
-//                3 -> {
-//
-//                }
-//                4 -> { q
-//
-//                }
-//                5 -> {
-//
-//                }
-//                else -> {
-//
-//                }
-//            }
         }
+    }
+
+    fun setFirstItemSelect(){
+        data?.let {
+            if(it.size>0){
+                it[0].getData()?.isSelect = true
+            }
+        }
+        getViewByPosition(0,R.id.tvPosition)?.callOnClick()
+        onItemChildClickListener?.onItemChildClick(this,getViewByPosition(0,R.id.tvPosition),0)
     }
 }

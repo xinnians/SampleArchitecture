@@ -5,13 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.repository.Repository
 import com.example.repository.model.base.ViewState
+import com.example.repository.model.base.ViewState.Success
 import com.example.repository.model.bet.BetTypeEntity
 import com.example.repository.model.bet.IssueInfoResponse
 import com.example.repository.model.bet.LastIssueResultResponse
+import com.example.repository.model.bet.PlayTypeInfoResponse
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class BetViewModel(var repository: Repository) : ViewModel(){
+
+    var playTypeInfoList: PlayTypeInfoResponse? = null
 
 //    private val newsArticles: LiveData<ViewState<List<NewsArticles>>> = repository.getNewsArticles().asLiveData()
 //
@@ -34,7 +39,8 @@ class BetViewModel(var repository: Repository) : ViewModel(){
         return repository.getPlayTypeInfoList(token, gameId).flatMapConcat{ state ->
             flow<ViewState<List<BetTypeEntity>>> {
                 when (state) {
-                    is ViewState.Success -> {
+                    is Success -> {
+                        playTypeInfoList = state.data
                         var betTypeList: ArrayList<BetTypeEntity> = arrayListOf()
                         if(!state.data.data.betTypeGroupList.isNullOrEmpty()){
                             for (item in state.data.data.betTypeGroupList) {
