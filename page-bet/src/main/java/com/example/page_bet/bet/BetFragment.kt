@@ -1,10 +1,12 @@
 package com.example.page_bet.bet
 
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
 import com.example.base.AppInjector
@@ -43,6 +45,8 @@ class BetFragment : BaseFragment() {
     private var mBetPositionAdapter: BetPositionAdapter? = null
     private var mBetRegionAdapter: BetRegionAdapter? = null
 
+    private var isShow = true
+
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
     }
@@ -68,7 +72,7 @@ class BetFragment : BaseFragment() {
         }
         refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
         refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-                                   ?: "empty", mGameID, mGameTypeID)
+            ?: "empty", mGameID, mGameTypeID)
 
         //TODO 要先判斷該遊戲有沒有官方跟信用的玩法支援再依此更新官方/信用的顯示資訊，目前該處只有直接去撈官方玩法，所以遇到只有支援信用的遊戲時會顯示空畫面
         initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
@@ -124,9 +128,9 @@ class BetFragment : BaseFragment() {
                                 if (time <= 0) {
                                     this.cancel()
                                     refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value
-                                                                ?: "empty", mGameID)
+                                        ?: "empty", mGameID)
                                     refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-                                                               ?: "empty", mGameID, mGameTypeID)
+                                        ?: "empty", mGameID, mGameTypeID)
                                 }
                             }
                         }
@@ -243,6 +247,31 @@ class BetFragment : BaseFragment() {
     }
 
     private fun setListener() {
+        val showRow5 = ConstraintSet()
+        val hideRow5 = ConstraintSet()
+        showRow5.clone(layoutBetMain)
+        hideRow5.clone(layoutBetMain)
+        tvLabel.onClick {
+            if (isShow) {
+                TransitionManager.beginDelayedTransition(layoutBetMain)
+                hideRow5.apply {
+                    clear(R.id.layoutRow5_1, ConstraintSet.START)
+                    clear(R.id.layoutRow5_1, ConstraintSet.END)
+                    clear(R.id.layoutRow5_1, ConstraintSet.BOTTOM)
+                    connect(R.id.layoutRow5_1, ConstraintSet.TOP, R.id.layoutRow5, ConstraintSet.TOP)
+                    connect(R.id.layoutRow5_1, ConstraintSet.START, R.id.layoutRow5, ConstraintSet.START)
+                    connect(R.id.layoutRow5_1, ConstraintSet.END, R.id.layoutRow5, ConstraintSet.END)
+                }.applyTo(layoutBetMain)
+                tvLabel.text = "Show"
+                isShow = false
+            } else {
+                TransitionManager.beginDelayedTransition(layoutBetMain)
+                showRow5.applyTo(layoutBetMain)
+                tvLabel.text = "Hide"
+                isShow = true
+            }
+        }
+
         csPlayType.switchType = CustomSwitch.GAME_TYPE
         csPlayType.setOnSwitchCallListener(object : CustomSwitch.OnSwitchCall{
             override fun onCall(type: Boolean) {
