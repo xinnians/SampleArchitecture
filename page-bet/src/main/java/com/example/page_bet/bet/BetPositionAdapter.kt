@@ -31,7 +31,7 @@ class BetPositionAdapter(data: List<MultiplePlayTypePositionItem>) : BaseMultiIt
                 it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_white_25_corner_dark_stroke)
             }else{
                 it.setTextColor(R.id.tvPosition,mContext.getColor(R.color.colorLittleGray))
-                if(item?.getData()?.unitMap?.containsValue(true) == true){
+                if(item?.getData()?.isDataSet == true){
                     it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_darkgray_25_corner)
                 }else{
                     it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_gray_25_corner)
@@ -47,7 +47,7 @@ class BetPositionAdapter(data: List<MultiplePlayTypePositionItem>) : BaseMultiIt
 //                3 -> {
 //
 //                }
-//                4 -> {
+//                4 -> { q
 //
 //                }
 //                5 -> {

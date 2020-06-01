@@ -217,7 +217,7 @@ class BetFragment : BaseFragment() {
                             modifyList.add(MultiplePlayTypePositionItem(oriList.size, item))
                         }
                     } else {
-                        modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", HashMap())))
+                        modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
                     }
 //                    Log.e("Ian","itemType:${modifyList?.get(0)?.itemType}, Data:${modifyList?.get(0)?.getData()}")
 

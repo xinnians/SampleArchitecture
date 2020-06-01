@@ -14,17 +14,6 @@ object BetItemUtil {
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
         "5" to false, "6" to false, "7" to false, "8" to false, "9" to false)
 
-    private var templateForZeroToNine = arrayListOf(
-        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("1",1,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("2",2,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("3",3,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("4",4,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("5",5,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("6",6,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("7",7,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("8",8,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("9",9,false,BetUnitDisplayMode.ONLY_NUMBER))
 
     private var hashMapForZeroToTwentyseven = hashMapOf(
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
@@ -34,36 +23,6 @@ object BetItemUtil {
         "20" to false, "21" to false, "22" to false, "23" to false, "24" to false,
         "25" to false, "26" to false, "27" to false)
 
-    private var templateForZeroToTwentyseven = arrayListOf(
-        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("1",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("2",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("3",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("4",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("5",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("6",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("7",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("8",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("9",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("10",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("11",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("12",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("13",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("14",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("15",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("16",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("17",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("18",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("19",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("20",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("21",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("22",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("23",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("24",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("25",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("26",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("27",0,false,BetUnitDisplayMode.ONLY_NUMBER))
-
     private var hashMapForOneToTwentySix = hashMapOf(
         "1" to false, "2" to false, "3" to false, "4" to false,
         "5" to false, "6" to false, "7" to false, "8" to false, "9" to false,
@@ -71,36 +30,6 @@ object BetItemUtil {
         "15" to false, "16" to false, "17" to false, "18" to false, "19" to false,
         "20" to false, "21" to false, "22" to false, "23" to false, "24" to false,
         "25" to false, "26" to false)
-
-    private var templateForZeroToTwentySix = arrayListOf(
-        BetUnit("0",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("1",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("2",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("3",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("4",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("5",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("6",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("7",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("8",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("9",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("10",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("11",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("12",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("13",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("14",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("15",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("16",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("17",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("18",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("19",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("20",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("21",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("22",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("23",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("24",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("25",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("26",0,false,BetUnitDisplayMode.ONLY_NUMBER),
-        BetUnit("27",0,false,BetUnitDisplayMode.ONLY_NUMBER))
 
     private var hashMapForOneTwoThree = hashMapOf(
         "1" to false, "2" to false, "3" to false)
@@ -548,58 +477,76 @@ object BetItemUtil {
             BetItemType.ANY_THREE_SET,
             BetItemType.ANY_FOUR_SET-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForZeroToNine.clone() as HashMap<String, Boolean>))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,9)))
                 }
             }
             //0-27
             BetItemType.SUM_BET_TYPE,
             BetItemType.ANY_THREE_SUM_BET_TYPE-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForZeroToTwentyseven.clone() as HashMap<String, Boolean>))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,27)))
                 }
             }
             BetItemType.SET_SUM_BET_TYPE,
             BetItemType.ANY_THREE_SET_SUM_BET_TYPE -> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToTwentySix.clone() as HashMap<String, Boolean>))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,26)))
                 }
 
             }
-            BetItemType.SPECIAL_BET_TYPE -> {
-                for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
-                }
-            }
+//            BetItemType.SPECIAL_BET_TYPE -> {
+//                for (text in stringArray){
+//                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
+//                }
+//            }
             BetItemType.TWO_SUM_BET_TYPE,
             BetItemType.ANY_TWO_SUM_BET_TYPE-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForZeroToEighteen.clone() as HashMap<String, Boolean>))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,18)))
                 }
             }
             BetItemType.TWO_SET_SUM_BET_TYPE,
             BetItemType.ANY_TWO_SET_SUM_BET_TYPE -> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToSeventeen.clone() as HashMap<String, Boolean>))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,17)))
                 }
             }
-            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {
-                for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToFour.clone() as HashMap<String, Boolean>))
-                }
-            }
-            BetItemType.DRAGON_TIGER_POSITION_BET_TYPE -> {
-                if(stringArray.size == 2){
-                    betArray.add(BetData(displayTitle = stringArray[0],unitMap = hashMapForZeroToNine.clone() as HashMap<String, Boolean>))
-                    betArray.add(BetData(displayTitle = stringArray[1],unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
-                }
+//            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {
+//                for (text in stringArray){
+//                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToFour.clone() as HashMap<String, Boolean>))
+//                }
+//            }
+//            BetItemType.DRAGON_TIGER_POSITION_BET_TYPE -> {
+//                if(stringArray.size == 2){
+//                    betArray.add(BetData(displayTitle = stringArray[0],unitMap = hashMapForZeroToNine.clone() as HashMap<String, Boolean>))
+//                    betArray.add(BetData(displayTitle = stringArray[1],unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
+//                }
+//            }
+            else -> {
+
             }
         }
 
     }
 
-    private fun getBetUnitList(start: Int,end: Int){
-        for (index in start..end){
+    private fun getBetUnitList(type: BetUnitDisplayMode,start: Int = 0,end: Int = 0): ArrayList<BetUnit>{
+        var list = arrayListOf<BetUnit>()
+        when (type){
+            BetUnitDisplayMode.ONLY_NUMBER -> {
+                for (index in start..end){
+                    list.add(BetUnit(index.toString(),index,false,BetUnitDisplayMode.ONLY_NUMBER))
+                }
+            }
+            BetUnitDisplayMode.ONE_CHAR -> {
 
+            }
+            BetUnitDisplayMode.TWO_CHAR -> {
+
+            }
+            BetUnitDisplayMode.THREE_CHAR -> {
+
+            }
         }
+        return list
     }
 }

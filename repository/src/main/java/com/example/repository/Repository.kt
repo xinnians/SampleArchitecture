@@ -17,7 +17,63 @@ class Repository(private val sampleService: SampleService) {
 
     companion object {
         const val test = "tttttt"
+        const val isFakeMode = false
     }
+
+    private var fakeGameMenuResponse: GameMenuResponse = GameMenuResponse(
+        listOf(
+            GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
+                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
+                ), "Hot", 134
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
+                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
+                ), "Favorite", 7
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(110001, "北京PK10", 1, 1, -60),
+                    GameMenuResponse.Data.GameInfoEntity(110002, "幸运飞艇", 1, 1, -30)
+                ), "北京賽車", 1
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(220004, "俄罗斯1.5分彩", 1, 2, -10),
+                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
+                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10),
+                    GameMenuResponse.Data.GameInfoEntity(220001, "支付宝彩", 1, 2, -30),
+                    GameMenuResponse.Data.GameInfoEntity(210004, "新疆时时彩", 1, 2, -120),
+                    GameMenuResponse.Data.GameInfoEntity(210003, "天津时时彩", 1, 2, -120),
+                    GameMenuResponse.Data.GameInfoEntity(210001, "欢乐生肖", 1, 2, -25)
+                ), "时时彩", 2
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(310003, "山东11选5", 1, 3, -60),
+                    GameMenuResponse.Data.GameInfoEntity(310002, "广东11选5", 1, 3, -60),
+                    GameMenuResponse.Data.GameInfoEntity(310001, "江西11选5", 1, 3, -60)
+                ), "11选5", 3
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(410005, "上海快三", 1, 4, -120),
+                    GameMenuResponse.Data.GameInfoEntity(410004, "北京快三", 1, 4, -120),
+                    GameMenuResponse.Data.GameInfoEntity(410003, "广西快三", 1, 4, -120),
+                    GameMenuResponse.Data.GameInfoEntity(410002, "安徽快三", 1, 4, -120),
+                    GameMenuResponse.Data.GameInfoEntity(410001, "江苏快三", 1, 4, -90)
+                ), "快三", 4
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(54000001, "六合彩60秒-01", 1, 5, -10),
+                    GameMenuResponse.Data.GameInfoEntity(510001, "香港六合彩", 1, 5, -900)
+                ), "六合彩", 5
+            ), GameMenuResponse.Data(
+                listOf(
+                    GameMenuResponse.Data.GameInfoEntity(620001, "新西兰幸运28", 1, 6, -5),
+                    GameMenuResponse.Data.GameInfoEntity(610001, "北京幸运28", 1, 6, -30)
+                ), "幸运28", 6
+            )
+        )
+    )
 
     /**
      * Fetch the news articles from database if exist else fetch from web
@@ -44,7 +100,7 @@ class Repository(private val sampleService: SampleService) {
     fun getLoginResult(): Flow<ViewState<LoginResponse.Data>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.getLoginResult(LoginRequest("test123","test123"))
+            val result = sampleService.getLoginResult(LoginRequest("test123", "test123"))
             emit(ViewState.success(result.data))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
@@ -54,7 +110,7 @@ class Repository(private val sampleService: SampleService) {
     fun getGameMenu(token: String): Flow<ViewState<GameMenuResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.getGameMenu(token)
+            val result = if (isFakeMode) fakeGameMenuResponse else sampleService.getGameMenu(token)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
