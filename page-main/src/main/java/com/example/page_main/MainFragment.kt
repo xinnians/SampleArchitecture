@@ -74,12 +74,11 @@ class MainFragment : BaseFragment() {
         // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(CarouselZoomPostLayoutListener())
         layoutManager.maxVisibleItems = 1
-        recyclerView.setLayoutManager(layoutManager)
+        recyclerView.layoutManager = layoutManager
         // we expect only fixed sized item for now
         recyclerView.setHasFixedSize(true)
         // sample adapter with random data
-        recyclerView.setAdapter(adapter)
-        // enable center post scrolling
+        recyclerView.adapter = adapter
         // enable center post scrolling
         recyclerView.addOnScrollListener(CenterScrollListener())
         // enable center post touching on item and item click listener
