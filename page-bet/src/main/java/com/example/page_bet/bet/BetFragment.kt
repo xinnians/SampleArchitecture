@@ -209,6 +209,10 @@ class BetFragment : BaseFragment() {
 
     private fun initPlayTypeDialog(data: List<BetTypeEntity>) {
         if (mPlayTypeDialog == null) mPlayTypeDialog = context?.let {
+
+            //讓玩法選擇預設顯示第一個類別，否則一開始點進去會白白的，比較不輕易近人
+            if(data.isNotEmpty()) data[0].isSelect = true
+
             PlayTypeDialog(it, data, object : PlayTypeDialog.OnPlayTypeSelectListener {
                 override fun onSelect(playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String) {
                     Log.e("Ian", "[onPlayTypeSelectListener] playTypeCode:$playTypeCode, playTypeName:$playTypeName, betGroupName:$betGroupName, betTypeName:$betTypeName")

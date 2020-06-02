@@ -36,7 +36,7 @@ class PlayTypeDialog(context: Context, var data: List<BetTypeEntity>, listener: 
 
         init()
         initBetTypeView()
-        initBetGroupView(null)
+        initBetGroupView(if (data.isNotEmpty()) data[0].mobileBetGroupEntityList else null)
     }
 
     private fun init(){
