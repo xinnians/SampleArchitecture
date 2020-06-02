@@ -29,19 +29,18 @@ class MainFragment : BaseFragment() {
         /**
          * NavigationBar ID
          */
-        private const val ID_HOME = 1
-        private const val ID_EXPLORE = 2
-        private const val ID_MESSAGE = 3
-        private const val ID_ACCOUNT = 4
-        private const val ID_NOTIFICATION = 5
-        private const val ID_NOTIFICATION_1 = 6
+        private const val ID_NOTICE = 1
+        private const val ID_ACTIVIT = 2
+        private const val ID_DEPOSIT = 3
+        private const val ID_TRANSATION = 4
+        private const val ID_USER = 5
+        private const val ID_HOME = 6
         /**
          * subCells ID
          */
-        private const val ID_SUB_HOME = 7
-        private const val ID_SUB_EXPLORE = 8
-        private const val ID_SUB_MESSAGE = 9
-        private const val ID_SUB_NOTIFICATION = 10
+        private const val ID_SUB_MESSAGE = 7
+        private const val ID_SUB_ANNOUNCEMENT = 8
+        private const val ID_SUB_CS = 9
     }
 
     private lateinit var mMainViewModel: MainViewModel
@@ -71,6 +70,7 @@ class MainFragment : BaseFragment() {
         super.onAttach(context)
     }
 
+    // 輪播 recyclerView
     private fun initRecyclerView(recyclerView:RecyclerView, layoutManager:CarouselLayoutManager, adapter:CarouselAdapter) {
         // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(CarouselZoomPostLayoutListener())
@@ -80,7 +80,6 @@ class MainFragment : BaseFragment() {
         recyclerView.setHasFixedSize(true)
         // sample adapter with random data
         recyclerView.setAdapter(adapter)
-        // enable center post scrolling
         // enable center post scrolling
         recyclerView.addOnScrollListener(CenterScrollListener())
         // enable center post touching on item and item click listener
@@ -119,36 +118,41 @@ class MainFragment : BaseFragment() {
                 }
 
             }
-
-        Log.e("[MainFragment]","lotteryToken: ${getSharedViewModel().lotteryToken.value}")
+        // 領紅包按鈕
+        btnRedBag.setOnClickListener {
+            //TODO
+        }
+        // 每日簽到按鈕
+        btnDailySign.setOnClickListener {
+            //TODO
+        }
+        // NavitationBar 按鈕
         meowNavBar.let {
-            it.add(MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home,
+            it.add(MeowBottomNavigation.Model(ID_NOTICE, R.drawable.ic_notice,
                 arrayListOf(
-                    MeowBottomNavigation.Model(ID_SUB_HOME, R.drawable.ic_home),
-                    MeowBottomNavigation.Model(ID_SUB_EXPLORE, R.drawable.ic_explore),
                     MeowBottomNavigation.Model(ID_SUB_MESSAGE, R.drawable.ic_message),
-                    MeowBottomNavigation.Model(ID_SUB_NOTIFICATION, R.drawable.ic_notification)
+                    MeowBottomNavigation.Model(ID_SUB_ANNOUNCEMENT, R.drawable.ic_announcement),
+                    MeowBottomNavigation.Model(ID_SUB_CS, R.drawable.ic_cs)
                 )))
-            it.add(MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_account))
-            it.add(MeowBottomNavigation.Model(ID_MESSAGE, R.drawable.ic_explore))
-            it.add(MeowBottomNavigation.Model(ID_ACCOUNT, R.drawable.ic_message))
-            it.add(MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification))
-            it.add(MeowBottomNavigation.Model(ID_NOTIFICATION_1, R.drawable.ic_notification))
+            it.add(MeowBottomNavigation.Model(ID_ACTIVIT, R.drawable.ic_activity))
+            it.add(MeowBottomNavigation.Model(ID_DEPOSIT, R.drawable.ic_deposit))
+            it.add(MeowBottomNavigation.Model(ID_TRANSATION, R.drawable.ic_transaction))
+            it.add(MeowBottomNavigation.Model(ID_USER, R.drawable.ic_user))
+            it.add(MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home))
             // navBar icon 加入 badgeNumber
-            it.setCount(ID_HOME, "222")
-            it.setCount(ID_NOTIFICATION, "")
+            it.setCount(ID_NOTICE, "222")
+//            it.setCount(ID_NOTIFICATION, "")
             // subCells icon 加入 badgeNumber
-            it.setSubItemBadgeDraw(ID_SUB_HOME, "222")
             it.setSubItemBadgeDraw(ID_SUB_MESSAGE, "")
             // 初始設定自動彈出第一個 NavBar icon
-            it.show(ID_HOME)
+            it.show(ID_NOTICE)
             it.setOnShowListener {
 //                Log.d("msg", "id: ${it.id}")
 //                Log.d("msg", "onShowListener")
             }
             it.setOnClickMenuListener {
                 when(it.id) {
-                    ID_MESSAGE -> navigation.goToBetMenuPage()
+                    ID_ACTIVIT -> navigation.goToBetMenuPage()
                 }
             }
             it.setOnReselectListener {  }

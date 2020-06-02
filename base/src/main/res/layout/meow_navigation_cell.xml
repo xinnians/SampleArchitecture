@@ -16,10 +16,20 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        android:elevation="6dp"
-        android:padding="8dp"
+        android:padding="6dp"
         tools:targetApi="lollipop"
         android:tag="FrameLayout">
+
+        <View
+            android:id="@+id/view_selected"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/meow_cell_circle">
+
+        </View>
+
 
         <com.example.base.navbar_tool.CellImageView
             android:id="@+id/iv"
@@ -27,9 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="10dp"
-            app:meow_imageview_size="20dp"
+            app:meow_imageview_size="25dp"
             android:background="@drawable/meow_cell_circle"
             android:tag="iv"/>
+
 
         <TextView
             android:id="@+id/tv_count"
