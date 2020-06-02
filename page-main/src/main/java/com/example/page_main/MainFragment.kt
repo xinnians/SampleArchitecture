@@ -64,7 +64,7 @@ class MainFragment : BaseFragment() {
         init()
         val names = arrayOf("彩票", "棋盤", "真人視訊", "百家樂", "麻將")
         val adapter = CarouselAdapter(names)
-        initRecyclerView(view.findViewById(R.id.recycle_view), CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true), adapter)
+        initRecyclerView(view.findViewById(R.id.recycle_view), CarouselLayoutManager(CarouselLayoutManager.VERTICAL, false), adapter)
     }
 
     override fun onAttach(context: Context) {
@@ -143,8 +143,8 @@ class MainFragment : BaseFragment() {
             // 初始設定自動彈出第一個 NavBar icon
             it.show(ID_HOME)
             it.setOnShowListener {
-                Log.d("msg", "id: ${it.id}")
-                Log.d("msg", "onShowListener")
+//                Log.d("msg", "id: ${it.id}")
+//                Log.d("msg", "onShowListener")
             }
             it.setOnClickMenuListener {
                 when(it.id) {
