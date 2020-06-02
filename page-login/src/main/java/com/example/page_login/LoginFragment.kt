@@ -8,17 +8,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import com.example.base.*
 import com.example.base.widget.CustomEditTextView
 import com.example.repository.model.base.ViewState
 import kotlinx.android.synthetic.main.fragment_login.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
+import java.util.concurrent.Executor
 
 class LoginFragment : BaseFragment() {
     private var isAccount = false
     private var isPws = false
-
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var mViewModel: LoginViewModel
 
     private lateinit var prefStore: PreferenceStore
@@ -35,6 +40,18 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefStore = PreferenceStore(requireActivity())
+
+        if (BiometricUtil.isHardwareAvailable(requireActivity())) {
+            Log.d("Mori", "支援生物辨識")
+        } else {
+            Log.e("Mori", "不不不支援生物辨識")
+        }
+
+        if (BiometricUtil.hasBiometricEnrolled(requireActivity())) {
+            Log.d("Mori", "已註冊生物識別")
+        } else {
+            Log.e("Mori", "還沒有註冊生物識別")
+        }
     }
 
     override fun onResume() {
@@ -118,8 +135,6 @@ class LoginFragment : BaseFragment() {
             prefStore.remember = cbRemember.isChecked
         }
 
-
-
         ivTestPlay.onClick {
             toast("試玩版開發中")
         }
@@ -146,5 +161,40 @@ class LoginFragment : BaseFragment() {
         tvRegisterMsg.onClick {
             navigation.registerPage()
         }
+
+        ivBioLogin.onClick {
+            executor = ContextCompat.getMainExecutor(requireActivity())
+            biometricPrompt = BiometricPrompt(requireActivity(), executor,
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationError(errorCode: Int,
+                                                       errString: CharSequence) {
+                        super.onAuthenticationError(errorCode, errString)
+                        toast("Authentication error: $errString")
+                    }
+
+                    override fun onAuthenticationSucceeded(
+                        result: BiometricPrompt.AuthenticationResult) {
+                        super.onAuthenticationSucceeded(result)
+                        toast("登入成功")
+                        navigation.mainPage()
+                    }
+
+                    override fun onAuthenticationFailed() {
+                        super.onAuthenticationFailed()
+                        toast("Authentication failed")
+                    }
+                })
+
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("登入APP")
+                .setSubtitle("透過生物辨識登入")
+                .setNegativeButtonText("使用帳號密碼登入")
+                .build()
+
+            biometricPrompt.authenticate(promptInfo)
+        }
     }
+
+
+
 }

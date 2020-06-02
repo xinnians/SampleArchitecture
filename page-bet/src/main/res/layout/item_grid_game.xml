@@ -20,6 +20,7 @@
         android:gravity="center"
         android:textColor="#434343"
         android:text="騰訊分分彩"
+        app:autoSizeMinTextSize="@dimen/sp_6"
         app:autoSizeMaxTextSize="@dimen/sp_14"
         app:autoSizeTextType="uniform"
         />
