@@ -319,6 +319,16 @@ class BetFragment : BaseFragment() {
                 val zoomInTransition = AutoTransition()
                 zoomInTransition.addListener(object : Transition.TransitionListener{
                     override fun onTransitionEnd(transition: Transition?) {
+
+                        var layout = ScrollableLinearLayoutManager(context,true)
+                        layout.orientation = LinearLayoutManager.VERTICAL
+                        rvBetRegion.layoutManager = layout
+
+                        var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
+                        mBetPositionAdapter?.data?.forEach {
+                            list.add(MultipleLotteryEntity(mCurrentBetItemType.unitDisplayMode,it.getData()!!,true))
+                        }
+                        setBetRegionDisplay(list)
                     }
 
                     override fun onTransitionResume(transition: Transition?) {

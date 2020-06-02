@@ -21,16 +21,21 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
         addItemType(BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_region_one_char)
         addItemType(BetUnitDisplayMode.TWO_CHAR.typeNumber, R.layout.item_bet_region_twp_char)
         addItemType(BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char)
+        addItemType(10+BetUnitDisplayMode.ONLY_NUMBER.typeNumber, R.layout.item_bet_region_only_number_full)
+        addItemType(10+BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_region_one_char_full)
+        addItemType(10+BetUnitDisplayMode.TWO_CHAR.typeNumber, R.layout.item_bet_region_twp_char_full)
+        addItemType(10+BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char_full)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleLotteryEntity?) {
         helper?.let {
-            Log.e("Ian", "[BetRegionAdapter] convert item:${item?.getData()}")
-            it.setText(R.id.tvTitle, item?.getData()?.displayTitle ?: "empty")
+            Log.e("Ian", "[BetRegionAdapter] convert item:${item?.data}")
+            it.setText(R.id.tvTitle, item?.data?.displayTitle ?: "empty")
             var spanCount: Int = 0
             var displayMode: BetUnitDisplayMode = BetUnitDisplayMode.ONLY_NUMBER
             when (it.itemViewType) {
-                BetUnitDisplayMode.ONLY_NUMBER.typeNumber -> {
+                BetUnitDisplayMode.ONLY_NUMBER.typeNumber,
+                10+BetUnitDisplayMode.ONLY_NUMBER.typeNumber -> {
                     spanCount = 5
                     displayMode = BetUnitDisplayMode.ONLY_NUMBER
                 }
@@ -52,22 +57,22 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
                 var unitAdapter: BetUnitAdapter = BetUnitAdapter(listOf(),it.adapterPosition)
                 recyclerView.adapter = unitAdapter
                 var resultList: ArrayList<MultipleBetUnit> = arrayListOf()
-                item?.getData()?.unitList?.forEach { betUnit ->
+                item?.data?.unitList?.forEach { betUnit ->
                     resultList.add(MultipleBetUnit(displayMode, betUnit))
                 }
                 unitAdapter.setNewData(resultList)
                 unitAdapter.setOnItemChildClickListener { adapter, view, position ->
-                    mData[unitAdapter.parentPostion].getData()?.unitList?.get(position)?.isSelect =
-                        mData[unitAdapter.parentPostion].getData()?.unitList?.get(position)?.isSelect == false
+                    mData[unitAdapter.parentPostion].data?.unitList?.get(position)?.isSelect =
+                        mData[unitAdapter.parentPostion].data?.unitList?.get(position)?.isSelect == false
                     var isDataSet = false
-                    mData[unitAdapter.parentPostion].getData()?.unitList?.let { list ->
+                    mData[unitAdapter.parentPostion].data?.unitList?.let { list ->
                         for(item in list ){
                             if(item.isSelect){
                                 isDataSet = true
                             }
                         }
                     }
-                    mData[unitAdapter.parentPostion].getData()?.isDataSet = isDataSet
+                    mData[unitAdapter.parentPostion].data?.isDataSet = isDataSet
 
                     onUnitClickListener?.onUnitClick()
                     unitAdapter.notifyDataSetChanged()
@@ -83,4 +88,5 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
     fun setOnUnitClickListener(listener: OnUnitClickListener){
         this.onUnitClickListener = listener
     }
+
 }
