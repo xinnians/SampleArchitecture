@@ -6,10 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.example.repository.Repository
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.base.ViewState.Success
-import com.example.repository.model.bet.BetTypeEntity
-import com.example.repository.model.bet.IssueInfoResponse
-import com.example.repository.model.bet.LastIssueResultResponse
-import com.example.repository.model.bet.PlayTypeInfoResponse
+import com.example.repository.model.bet.*
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -58,6 +55,10 @@ class BetViewModel(var repository: Repository) : ViewModel(){
                 }
             }
         }.asLiveData()
+    }
+
+    fun getLotteryHistoricalRecord(token: String, gameId: Int): LiveData<ViewState<HistoricalResponse>>{
+        return repository.getLotteryHistoricalRecord(token, gameId).asLiveData()
     }
 
 }

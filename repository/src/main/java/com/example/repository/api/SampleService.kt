@@ -1,10 +1,7 @@
 package com.example.repository.api
 
 import com.example.repository.model.*
-import com.example.repository.model.bet.GameMenuResponse
-import com.example.repository.model.bet.IssueInfoResponse
-import com.example.repository.model.bet.LastIssueResultResponse
-import com.example.repository.model.bet.PlayTypeInfoResponse
+import com.example.repository.model.bet.*
 import retrofit2.http.*
 
 interface SampleService {
@@ -50,4 +47,15 @@ interface SampleService {
     @GET("/api/Games/PlayTypeInfoList/{gameId}")
     suspend fun playTypeInfoList(@Header("Authorization") token: String,
                          @Path("gameId") gameId: Int): PlayTypeInfoResponse
+
+    /**
+     * 取得開獎號碼歷史數據
+     * @param token String
+     * @param gameId int
+     * @param pageSize int
+     * */
+    @GET("api/Draw/HistoricalData/{gameId}")
+    suspend fun historical(@Header("Authorization") token: String,
+                   @Path("gameId") gameId: Int,
+                   @Query("pageSize") page: Int): HistoricalResponse
 }

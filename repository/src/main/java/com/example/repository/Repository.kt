@@ -3,10 +3,7 @@ package com.example.repository
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
-import com.example.repository.model.bet.GameMenuResponse
-import com.example.repository.model.bet.IssueInfoResponse
-import com.example.repository.model.bet.LastIssueResultResponse
-import com.example.repository.model.bet.PlayTypeInfoResponse
+import com.example.repository.model.bet.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -141,6 +138,16 @@ class Repository(private val sampleService: SampleService) {
         return flow {
             emit(ViewState.loading())
             val result = sampleService.playTypeInfoList(token, gameId)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getLotteryHistoricalRecord(token: String, gameId: Int, pageSize: Int = 10): Flow<ViewState<HistoricalResponse>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.historical(token,gameId,pageSize)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))

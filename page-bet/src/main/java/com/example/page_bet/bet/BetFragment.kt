@@ -17,6 +17,7 @@ import com.example.base.widget.CustomSwitch
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetItemUtil.getTypeData
+import com.example.page_bet.bet.lottery_record.LotteryRecordDialog
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
 import com.example.repository.constant.BetItemType
 import com.example.repository.model.base.ViewState
@@ -37,6 +38,7 @@ class BetFragment : BaseFragment() {
 
     private lateinit var mViewModel: BetViewModel
     private var mPlayTypeDialog: PlayTypeDialog? = null
+    private var mLotteryHistoryDialog: LotteryRecordDialog? = null
 
     private var mGameID: Int = -1
     private var mGameTypeID: Int = -1
@@ -186,6 +188,23 @@ class BetFragment : BaseFragment() {
         }
     }
 
+    private fun initHistoryRecord(token: String, gameId: Int){
+        mViewModel.getLotteryHistoricalRecord(token, gameId).observeNotNull(this){ state ->
+            when (state) {
+                is ViewState.Success -> {
+                    Log.e("Ian","[getLotteryHistoricalRecord] success: ${state.data}")
+                    var list: MutableList<MultipleHistoryRecord> = mutableListOf()
+                    state.data.data.forEach {
+                        list.add(MultipleHistoryRecord(mGameTypeID,it))
+                    }
+                    initHistoryDialog(list)
+                }
+                is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+                is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+            }
+        }
+    }
+
     private fun getDisplayTime(second: Int): String {
         var h = 0
         var d = 0
@@ -254,6 +273,11 @@ class BetFragment : BaseFragment() {
         }
     }
 
+    private fun initHistoryDialog(list: MutableList<MultipleHistoryRecord>){
+        mLotteryHistoryDialog = context?.let { LotteryRecordDialog(list, it) }
+        mLotteryHistoryDialog?.show()
+    }
+
     private fun setBetRegionDisplay(data: List<MultipleLotteryEntity>) {
         mBetRegionAdapter?.setNewData(data)
     }
@@ -297,6 +321,10 @@ class BetFragment : BaseFragment() {
 
             }
         })
+
+        ivMoreIssueHistory.setOnClickListener {
+            initHistoryRecord(getSharedViewModel().lotteryToken.value?:"empty",mGameID)
+        }
     }
 
     private fun initDefaultSelect(){

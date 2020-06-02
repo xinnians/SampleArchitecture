@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_22"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginEnd="@dimen/dp_22">
+
+    <TextView
+        android:id="@+id/tvIssueNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_17"
+        android:gravity="center"
+        android:text="20200309期"
+        android:textColor="#7b7b7b"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutIssueResult"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintTop_toBottomOf="@id/tvIssueNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvPosition1"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="1"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPlus1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:gravity="center"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition1"
+            android:layout_marginStart="@dimen/dp_2"/>
+
+        <TextView
+            android:id="@+id/tvPosition2"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPlus1"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="2"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvPlus2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:gravity="center"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition2"
+            android:layout_marginStart="@dimen/dp_2"/>
+
+        <TextView
+            android:id="@+id/tvPosition3"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPlus2"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/tvEqual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="="
+            android:gravity="center"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition3"
+            android:layout_marginStart="@dimen/dp_2"/>
+
+        <TextView
+            android:id="@+id/tvPosition4"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvEqual"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/bg_gray_circle_button"
+            android:text="4"
+            android:gravity="center"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#000000"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewGrayLine"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_0_5"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintTop_toBottomOf="@id/layoutIssueResult"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#acacac"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
