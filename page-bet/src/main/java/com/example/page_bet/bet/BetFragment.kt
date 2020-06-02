@@ -105,6 +105,11 @@ class BetFragment : BaseFragment() {
         layout.orientation = LinearLayoutManager.VERTICAL
         rvBetRegion.layoutManager = layout
         mBetRegionAdapter = BetRegionAdapter(listOf())
+        mBetRegionAdapter?.setOnUnitClickListener(object: BetRegionAdapter.OnUnitClickListener{
+            override fun onUnitClick() {
+
+            }
+        })
         rvBetRegion.adapter = mBetRegionAdapter
 
     }
