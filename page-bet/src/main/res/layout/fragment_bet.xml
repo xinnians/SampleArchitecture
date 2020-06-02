@@ -7,7 +7,7 @@
     android:background="#f4f4f4"
     android:id="@+id/layoutBetMain">
 
-    <com.example.resource.ToolBar
+    <com.example.base.widget.CustomTitleBar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_66"
@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_5">
-        
+
         <TextView
             android:id="@+id/ivGameName"
             android:layout_width="@dimen/dp_47"
@@ -40,6 +40,7 @@
             android:lineHeight="@dimen/sp_12"
             android:text="新疆時時彩"
             app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/sp_6"
             app:autoSizeMaxTextSize="@dimen/sp_12"
             />
 
@@ -62,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
-            
+
             <TextView
                 android:id="@+id/tvCurrentIssueNumber"
                 android:layout_width="wrap_content"
@@ -105,7 +106,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_7"
         android:background="@drawable/bg_white_left_corner_button">
-        
+
         <ImageView
             android:id="@+id/ivMoreIssueHistory"
             android:layout_width="@dimen/dp_17"
@@ -151,7 +152,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_7"
         android:background="@color/colorWhite">
-        
+
         <TextView
             android:id="@+id/tvGamePlayType"
             android:layout_width="wrap_content"
@@ -164,7 +165,7 @@
             android:gravity="center"
             android:textColor="#525252"
             android:textSize="@dimen/sp_12"/>
-        
+
         <ImageView
             android:id="@+id/ivPlayTypeSelect"
             android:layout_width="@dimen/dp_17"
@@ -208,7 +209,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/layoutRow3"
-        app:layout_constraintBottom_toTopOf="@id/layoutRow5_1"
+        app:layout_constraintBottom_toTopOf="@id/layoutRow5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -221,7 +222,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -414,7 +414,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/layoutRow5_3"
             android:background="@color/colorWhite">
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_17"
