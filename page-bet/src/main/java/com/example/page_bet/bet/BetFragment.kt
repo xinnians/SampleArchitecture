@@ -1,6 +1,8 @@
 package com.example.page_bet.bet
 
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.Transition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,6 +50,7 @@ class BetFragment : BaseFragment() {
     private var mBetRegionAdapter: BetRegionAdapter? = null
 
     private var isShow = true
+    private var isZoomIn = false
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -283,26 +286,103 @@ class BetFragment : BaseFragment() {
     }
 
     private fun setListener() {
-        val showRow5 = ConstraintSet()
-        val hideRow5 = ConstraintSet()
-        showRow5.clone(layoutBetMain)
-        hideRow5.clone(layoutBetMain)
+        val zoomIn = ConstraintSet()
+        val zoomOut = ConstraintSet()
+
+        btnZoom.onClick {
+            if (isZoomIn) {
+                //恢復原來大小
+                val zoomOutTransition = AutoTransition()
+                zoomOutTransition.addListener(object : Transition.TransitionListener{
+                    override fun onTransitionEnd(transition: Transition?) {
+                    }
+
+                    override fun onTransitionResume(transition: Transition?) {
+                    }
+
+                    override fun onTransitionPause(transition: Transition?) {
+                    }
+
+                    override fun onTransitionCancel(transition: Transition?) {
+                    }
+
+                    override fun onTransitionStart(transition: Transition?) {
+                    }
+                })
+                TransitionManager.beginDelayedTransition(layoutBetMain, zoomOutTransition)
+                zoomOut.apply {
+                    toolbar.visible()
+                    clTopRow2.visible()
+                    clTopRow3.visible()
+                    csPlayType.visible()
+                }
+                zoomOut.applyTo(clTopLayout)
+                isZoomIn = false
+            } else {
+                //放大投注區
+                val zoomInTransition = AutoTransition()
+                zoomInTransition.addListener(object : Transition.TransitionListener{
+                    override fun onTransitionEnd(transition: Transition?) {
+                    }
+
+                    override fun onTransitionResume(transition: Transition?) {
+                    }
+
+                    override fun onTransitionPause(transition: Transition?) {
+                    }
+
+                    override fun onTransitionCancel(transition: Transition?) {
+                    }
+
+                    override fun onTransitionStart(transition: Transition?) {
+                    }
+                })
+                TransitionManager.beginDelayedTransition(layoutBetMain, zoomInTransition)
+                zoomIn.apply {
+                    clear(R.id.toolbar)
+                    toolbar.gone()
+                    clear(R.id.clTopRow2)
+                    clTopRow2.gone()
+                    clear(R.id.clTopRow3)
+                    clTopRow3.gone()
+                    clear(R.id.csPlayType)
+                    csPlayType.gone()
+                    clear(R.id.btnZoom)
+                    clear(R.id.tvCurrentIssueLeftTime)
+                    clear(R.id.tvCurrentIssueNumber)
+
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP, R.id.ivGameName, ConstraintSet.TOP)
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.ivGameName, ConstraintSet.START)
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM, R.id.ivGameName, ConstraintSet.BOTTOM)
+                    setMargin(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, 10)
+                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
+                    connect(R.id.btnZoom, ConstraintSet.TOP, R.id.clTopLayout, ConstraintSet.TOP)
+                    connect(R.id.btnZoom, ConstraintSet.END, R.id.clTopLayout, ConstraintSet.END)
+                    setMargin(R.id.tvCurrentIssueNumber, ConstraintSet.START, 10)
+
+                }.applyTo(clTopLayout)
+                isZoomIn = true
+            }
+        }
+
+        val showRate = ConstraintSet()
+        val hideRate = ConstraintSet()
+        showRate.clone(clUnderLayout)
+        hideRate.clone(clUnderLayout)
         tvLabel.onClick {
             if (isShow) {
-                TransitionManager.beginDelayedTransition(layoutBetMain)
-                hideRow5.apply {
-                    clear(R.id.layoutRow5_1, ConstraintSet.START)
-                    clear(R.id.layoutRow5_1, ConstraintSet.END)
-                    clear(R.id.layoutRow5_1, ConstraintSet.BOTTOM)
-                    connect(R.id.layoutRow5_1, ConstraintSet.TOP, R.id.layoutRow5, ConstraintSet.TOP)
-                    connect(R.id.layoutRow5_1, ConstraintSet.START, R.id.layoutRow5, ConstraintSet.START)
-                    connect(R.id.layoutRow5_1, ConstraintSet.END, R.id.layoutRow5, ConstraintSet.END)
-                }.applyTo(layoutBetMain)
+                TransitionManager.beginDelayedTransition(clUnderLayout)
+                hideRate.apply {
+                    clear(R.id.clRateLayout)
+                    connect(R.id.clRateLayout, ConstraintSet.TOP, R.id.clBottomLayout, ConstraintSet.TOP)
+                    connect(R.id.clRateLayout, ConstraintSet.START, R.id.clBottomLayout, ConstraintSet.START)
+                    connect(R.id.clRateLayout, ConstraintSet.END, R.id.clBottomLayout, ConstraintSet.END)
+                }.applyTo(clUnderLayout)
                 tvLabel.text = "Show"
                 isShow = false
             } else {
-                TransitionManager.beginDelayedTransition(layoutBetMain)
-                showRow5.applyTo(layoutBetMain)
+                TransitionManager.beginDelayedTransition(clUnderLayout)
+                showRate.applyTo(clUnderLayout)
                 tvLabel.text = "Hide"
                 isShow = true
             }
