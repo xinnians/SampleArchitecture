@@ -302,37 +302,23 @@ class BetFragment : BaseFragment() {
         var betGroupDisplayName: String = ""
         var playTypeDisplayName: String = ""
 
-        mViewModel.playTypeInfoList?.data?.betTypeGroupList?.get(0)?.let {betTypeGroup ->
-            betTypeGroup.betTypeEntityList?.get(0)?.let { betTypeEntity ->
-                betTypeDisplayName = betTypeEntity.betTypeDisplayName
-                betTypeEntity.mobileBetGroupEntityList?.get(0)?.let {betGroupEntity ->
-                    betGroupDisplayName = betGroupEntity.betGroupDisplayName
-                    betGroupEntity.playTypeInfoEntityList?.get(0)?.let {playTypeInfoEntity ->
-                        playTypeDisplayName = playTypeInfoEntity.displayName
-                        defaultPlayTypeName = "$betTypeDisplayName $betGroupDisplayName $playTypeDisplayName"
-                        defaultPlayTypeCode = playTypeInfoEntity.playTypeCode
+        try {
+            mViewModel.playTypeInfoList?.data?.betTypeGroupList?.get(0)?.let {betTypeGroup ->
+                betTypeGroup.betTypeEntityList?.get(0)?.let { betTypeEntity ->
+                    betTypeDisplayName = betTypeEntity.betTypeDisplayName
+                    betTypeEntity.mobileBetGroupEntityList?.get(0)?.let {betGroupEntity ->
+                        betGroupDisplayName = betGroupEntity.betGroupDisplayName
+                        betGroupEntity.playTypeInfoEntityList?.get(0)?.let {playTypeInfoEntity ->
+                            playTypeDisplayName = playTypeInfoEntity.displayName
+                            defaultPlayTypeName = "$betTypeDisplayName $betGroupDisplayName $playTypeDisplayName"
+                            defaultPlayTypeCode = playTypeInfoEntity.playTypeCode
+                        }
                     }
                 }
             }
+        }catch (e: Exception){
+            Log.e("[initDefaultSelect]","exception: ${e.message}")
         }
-
-//        mViewModel.playTypeInfoList?.data?.betTypeGroupList?.forEach {betTypeGroup ->
-//            betTypeGroup.betTypeEntityList.forEach { betTypeEntity ->
-//                betTypeDisplayName = betTypeEntity.betTypeDisplayName
-//                betTypeEntity.mobileBetGroupEntityList.forEach {betGroupEntity ->
-//                    betGroupDisplayName = betGroupEntity.betGroupDisplayName
-//                    betGroupEntity.playTypeInfoEntityList.forEach {playTypeInfoEntity ->
-//                        playTypeDisplayName = playTypeInfoEntity.displayName
-//                        defaultPlayTypeName = "$betTypeDisplayName $betGroupDisplayName $playTypeDisplayName"
-//                        defaultPlayTypeCode = playTypeInfoEntity.playTypeCode
-//                        break
-//                    }
-//                    break
-//                }
-//                break
-//            }
-//            break
-//        }
 
         context?.let {
             var result = getTypeData(it, defaultPlayTypeCode.toString())
