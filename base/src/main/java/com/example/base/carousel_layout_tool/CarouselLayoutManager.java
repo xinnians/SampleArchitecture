@@ -99,7 +99,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
     @CallSuper
     @SuppressWarnings("unused")
     public void setMaxVisibleItems(final int maxVisibleItems) {
-        Log.d("msg", "setMaxVisibleItems");
         if (0 >= maxVisibleItems) {
             throw new IllegalArgumentException("maxVisibleItems can't be less then 1");
         }
@@ -199,7 +198,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
     @Override
     @Nullable
     public PointF computeScrollVectorForPosition(final int targetPosition) {
-        Log.d("msg", "computeScrollVectorForPosition");
         if (0 == getChildCount()) {
             return null;
         }
@@ -268,23 +266,17 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
         final int resultScroll;
         if (mCircleLayout) {
             resultScroll = diff;
-
             mLayoutHelper.mScrollOffset += resultScroll;
-
             final int maxOffset = getScrollItemSize() * mItemsCount;
-            Log.d("msg", "getScrollItemSize: " + getScrollItemSize());
-            Log.d("msg", "maxOffset: " + maxOffset);
             while (0 > mLayoutHelper.mScrollOffset) {
                 mLayoutHelper.mScrollOffset += maxOffset;
             }
             while (mLayoutHelper.mScrollOffset > maxOffset) {
                 mLayoutHelper.mScrollOffset -= maxOffset;
             }
-
             mLayoutHelper.mScrollOffset -= resultScroll;
         } else {
             final int maxOffset = getMaxScrollOffset();
-            Log.d("msg", "maxOffset: " + maxOffset);
             if (0 > mLayoutHelper.mScrollOffset + diff) {
                 resultScroll = -mLayoutHelper.mScrollOffset; //to make it 0
             } else if (mLayoutHelper.mScrollOffset + diff > maxOffset) {
@@ -410,7 +402,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
     }
 
     private void fillDataVertical(final RecyclerView.Recycler recycler, final int width, final int height) {
-        Log.d("msg", "fillDataVertical");
         final int start = (width - mDecoratedChildWidth) / 2;
         final int end = start + mDecoratedChildWidth;
 
@@ -491,14 +482,11 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
      * @see #getCurrentScrollPosition()
      */
     private void generateLayoutOrder(final float currentScrollPosition, @NonNull final RecyclerView.State state) {
-        Log.d("msg", "generateLayoutOrder");
         mItemsCount = state.getItemCount();
         final float absCurrentScrollPosition = makeScrollPositionInRange0ToCount(currentScrollPosition, mItemsCount);
         final int centerItem = Math.round(absCurrentScrollPosition);
-
         if (mCircleLayout && 1 < mItemsCount) {
-            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 1, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
-            Log.d("msg", "layoutCount: " + layoutCount);
+            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 3, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
             mLayoutHelper.initLayoutOrder(layoutCount);
 
             final int countLayoutHalf = layoutCount / 2;
@@ -515,18 +503,26 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
             mLayoutHelper.setLayoutOrder(layoutCount - 1, centerItem, centerItem - absCurrentScrollPosition);
 
         } else {
-            final int firstVisible = Math.max(centerItem - mLayoutHelper.mMaxVisibleItems - 1, 0);
-            final int lastVisible = Math.min(centerItem + mLayoutHelper.mMaxVisibleItems + 1, mItemsCount - 1);
+            /**
+             * 設定為不輪播
+             */
+            // 不顯示最上面的 item，畫面上固定只顯示三個
+//            final int firstVisible = Math.max(centerItem - mLayoutHelper.mMaxVisibleItems - 1, 0);
+            final int firstVisible = Math.max(centerItem - mLayoutHelper.mMaxVisibleItems, 0);
+            // 不顯示最下面的 item，畫面上固定只顯示三個
+//            final int lastVisible = Math.min(centerItem + mLayoutHelper.mMaxVisibleItems + 1, mItemsCount - 1);
+            int lastVisible = Math.min(centerItem + mLayoutHelper.mMaxVisibleItems, mItemsCount - 1);
             final int layoutCount = lastVisible - firstVisible + 1;
-
             mLayoutHelper.initLayoutOrder(layoutCount);
-
             for (int i = firstVisible; i <= lastVisible; ++i) {
                 if (i == centerItem) {
+                    // 中間的 item
                     mLayoutHelper.setLayoutOrder(layoutCount - 1, i, i - absCurrentScrollPosition);
                 } else if (i < centerItem) {
+                    // 下面的 item
                     mLayoutHelper.setLayoutOrder(i - firstVisible, i, i - absCurrentScrollPosition);
                 } else {
+                    // 上面的 item
                     mLayoutHelper.setLayoutOrder(layoutCount - (i - centerItem) - 1, i, i - absCurrentScrollPosition);
                 }
             }

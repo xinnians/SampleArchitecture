@@ -152,8 +152,9 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
 
             iv.color = if (progress == 1f) selectedIconColor else defaultIconColor
             val scale = (1f - progress) * (-0.2f) + 1f
-            iv.scaleX = scale
-            iv.scaleY = scale
+            // 調整讓選擇的 item 不會變大
+            iv.scaleX = 0.8f
+            iv.scaleY = 0.8f
 
             val d = GradientDrawable()
             d.setColor(circleColor)
@@ -339,9 +340,6 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
-//                    for(item in mSubItemList) {
-//                        item.visibility = View.VISIBLE
-//                    }
                 }
 
             })

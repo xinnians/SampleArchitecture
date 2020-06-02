@@ -14,16 +14,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_50"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintTop_toBottomOf="@id/toolBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnRedBag"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="13dp"
+        android:background="@drawable/meow_cell_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolBar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="領紅包"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnDailySign"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="13dp"
+        android:padding="2dp"
+        android:background="@drawable/meow_cell_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnRedBag">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:lines="2"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="每日\n簽到"/>
+    </RelativeLayout>
 
     <com.example.base.navbar_tool.MeowBottomNavigation
         android:id="@+id/meowNavBar"
@@ -36,10 +79,9 @@
         app:mbn_backgroundBottomColor="#ffffff"
         app:mbn_countBackgroundColor="#ff0000"
         app:mbn_countTextColor="#ffffff"
-        app:mbn_defaultIconColor="#424242"
+        app:mbn_defaultIconColor="#FF000000"
         app:mbn_rippleColor="#2f424242"
-        app:mbn_selectedIconColor="#424242"
-        app:mbn_shadowColor="#00ffff22"
-        />
+        app:mbn_selectedIconColor="#FF000000"
+        app:mbn_shadowColor="#00ffff22" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

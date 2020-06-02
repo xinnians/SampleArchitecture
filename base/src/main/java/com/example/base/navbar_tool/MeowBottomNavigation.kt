@@ -200,7 +200,7 @@ class MeowBottomNavigation : FrameLayout {
             var index = 0
             for (item in model.subList) {
                 var subCell = ItemView(context)
-                // TODO 加入 cell's item
+                // 加入 cell's item
                 subCell.let {
 //                    it.visibility = View.INVISIBLE
                     it.tag = "Nav$index"
