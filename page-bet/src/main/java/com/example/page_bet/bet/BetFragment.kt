@@ -297,6 +297,11 @@ class BetFragment : BaseFragment() {
                 val zoomOutTransition = AutoTransition()
                 zoomOutTransition.addListener(object : Transition.TransitionListener{
                     override fun onTransitionEnd(transition: Transition?) {
+                        var layout = ScrollableLinearLayoutManager(context,false)
+                        layout.orientation = LinearLayoutManager.VERTICAL
+                        rvBetRegion.layoutManager = layout
+
+                        mBetPositionAdapter?.setFirstItemSelect()
                     }
 
                     override fun onTransitionResume(transition: Transition?) {
