@@ -378,10 +378,6 @@ class MeowBottomNavigationCell : RelativeLayout, LayoutContainer {
             var child = getChildAt(i)
             child?.let {
                 if (it.tag.toString().contains("Nav")) {
-                    /**
-                     * 先隱藏子項目
-                     */
-//                    it.visibility = View.INVISIBLE
                     var childX = buttonsHorizontalCenter - it.measuredWidth / 2
                     var childY = (nextY - it.measuredHeight).toInt()
                     it.layout(childX, childY, childX + it.measuredWidth, childY + it.measuredHeight)

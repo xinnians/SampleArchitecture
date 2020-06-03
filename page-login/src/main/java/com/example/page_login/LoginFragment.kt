@@ -1,5 +1,6 @@
 package com.example.page_login
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.color
 import com.example.base.*
 import com.example.base.widget.CustomEditTextView
@@ -35,10 +37,10 @@ class LoginFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_login)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefStore = PreferenceStore(requireActivity())
+        (activity as BaseActivity?)?.hideBottomNav()
     }
 
     override fun onResume() {
