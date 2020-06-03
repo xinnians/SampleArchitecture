@@ -24,6 +24,7 @@ import com.example.page_bet.bet.play_type_select.PlayTypeDialog
 import com.example.repository.constant.BetItemType
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -287,9 +288,17 @@ class BetFragment : BaseFragment() {
 
     private fun setListener() {
         val zoomIn = ConstraintSet()
+        val zoomInTopRow = ConstraintSet()
         val zoomOut = ConstraintSet()
+        val zoomOutTopRow = ConstraintSet()
+        val mainInLayout = ConstraintSet()
+        val mainOutLayout = ConstraintSet()
+        mainInLayout.clone(layoutBetMain)
+        mainOutLayout.clone(layoutBetMain)
         zoomIn.clone(clTopLayout)
         zoomOut.clone(clTopLayout)
+        zoomInTopRow.clone(layoutCurrentIssueInfo)
+        zoomOutTopRow.clone(layoutCurrentIssueInfo)
 
         btnZoom.onClick {
             if (isZoomIn) {
@@ -318,6 +327,9 @@ class BetFragment : BaseFragment() {
                 })
                 TransitionManager.beginDelayedTransition(layoutBetMain, zoomOutTransition)
                 zoomOut.applyTo(clTopLayout)
+                zoomOutTopRow.applyTo(layoutCurrentIssueInfo)
+                mainOutLayout.applyTo(layoutBetMain)
+                btnZoom.background = drawable(R.drawable.bg_zoom_in)
                 isZoomIn = false
             } else {
                 //放大投注區
@@ -334,6 +346,7 @@ class BetFragment : BaseFragment() {
                             list.add(MultipleLotteryEntity(mCurrentBetItemType.unitDisplayMode,it.getData()!!,true))
                         }
                         setBetRegionDisplay(list)
+
                     }
 
                     override fun onTransitionResume(transition: Transition?) {
@@ -349,48 +362,16 @@ class BetFragment : BaseFragment() {
                     }
                 })
                 TransitionManager.beginDelayedTransition(layoutBetMain, zoomInTransition)
-                zoomIn.apply {
-                    clear(R.id.toolbar, ConstraintSet.TOP)
-                    clear(R.id.toolbar, ConstraintSet.START)
-                    clear(R.id.toolbar, ConstraintSet.END)
-                    clear(R.id.toolbar, ConstraintSet.BOTTOM)
-                    constrainWidth(R.id.toolbar, 0)
-                    constrainHeight(R.id.toolbar, 0)
-                    setVisibility(R.id.toolbar, ConstraintSet.INVISIBLE)
-                    clear(R.id.clTopRow2, ConstraintSet.TOP)
-                    clear(R.id.clTopRow2, ConstraintSet.START)
-                    clear(R.id.clTopRow2, ConstraintSet.END)
-                    clear(R.id.clTopRow2, ConstraintSet.BOTTOM)
-                    constrainWidth(R.id.clTopRow2, 0)
-                    constrainHeight(R.id.clTopRow2, 0)
-                    setVisibility(R.id.clTopRow2, ConstraintSet.INVISIBLE)
-                    clear(R.id.clTopRow3, ConstraintSet.TOP)
-                    clear(R.id.clTopRow3, ConstraintSet.START)
-                    clear(R.id.clTopRow3, ConstraintSet.END)
-                    clear(R.id.clTopRow3, ConstraintSet.BOTTOM)
-                    constrainWidth(R.id.clTopRow3, 0)
-                    constrainHeight(R.id.clTopRow3, 0)
-                    setVisibility(R.id.clTopRow3, ConstraintSet.INVISIBLE)
-//                    clear(R.id.csPlayType, ConstraintSet.TOP)
-//                    clear(R.id.csPlayType, ConstraintSet.START)
-//                    clear(R.id.csPlayType, ConstraintSet.END)
-//                    clear(R.id.csPlayType, ConstraintSet.BOTTOM)
-//                    csPlayType.invisible()
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.clTopLayout, ConstraintSet.START)
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.clTopLayout, ConstraintSet.START)
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.clTopLayout, ConstraintSet.START)
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.clTopLayout, ConstraintSet.START)
+                zoomInView(zoomIn, R.id.toolbar, 1).applyTo(clTopLayout)
+                zoomInView(zoomIn, R.id.clTopRow2, 1).applyTo(clTopLayout)
+                zoomInView(zoomIn, R.id.clTopRow3, 1).applyTo(clTopLayout)
+                zoomInView(zoomInTopRow, R.id.csPlayType, 1).applyTo(layoutCurrentIssueInfo)
 
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP, R.id.ivGameName, ConstraintSet.TOP)
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.ivGameName, ConstraintSet.START)
-//                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM, R.id.ivGameName, ConstraintSet.BOTTOM)
-//                    setMargin(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, 10)
-//                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
-//                    connect(R.id.btnZoom, ConstraintSet.TOP, R.id.clTopLayout, ConstraintSet.TOP)
-//                    connect(R.id.btnZoom, ConstraintSet.END, R.id.clTopLayout, ConstraintSet.END)
-//                    setMargin(R.id.tvCurrentIssueNumber, ConstraintSet.START, 10)
+                zoomInView(zoomInTopRow, R.id.tvCurrentIssueLeftTime, 2).applyTo(layoutCurrentIssueInfo)
+                zoomInView(zoomInTopRow, R.id.tvCurrentIssueNumber, 3).applyTo(layoutCurrentIssueInfo)
 
-                }.applyTo(clTopLayout)
+                zoomInView(mainInLayout, R.id.btnZoom, 4).applyTo(layoutBetMain)
+                btnZoom.background = drawable(R.drawable.bg_zoom_out)
                 isZoomIn = true
             }
         }
@@ -434,6 +415,44 @@ class BetFragment : BaseFragment() {
 
         ivMoreIssueHistory.setOnClickListener {
             initHistoryRecord(getSharedViewModel().lotteryToken.value?:"empty",mGameID)
+        }
+    }
+
+    private fun zoomInView(set: ConstraintSet, resId: Int, type: Int): ConstraintSet {
+        return set.apply {
+            clear(resId, ConstraintSet.TOP)
+            clear(resId, ConstraintSet.START)
+            clear(resId, ConstraintSet.BOTTOM)
+            clear(resId, ConstraintSet.END)
+            when (type) {
+                1 -> {
+                    constrainWidth(resId, 0)
+                    constrainHeight(resId, 0)
+                    setVisibility(resId, ConstraintSet.INVISIBLE)
+                }
+
+                2 -> {
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP, R.id.layoutCurrentIssueInfo, ConstraintSet.TOP)
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.layoutCurrentIssueInfo, ConstraintSet.START)
+                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM, R.id.layoutCurrentIssueInfo, ConstraintSet.BOTTOM)
+                    setMargin(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                }
+
+                3 -> {
+                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
+                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.TOP, R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP)
+                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.BOTTOM, R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM)
+                    setMargin(R.id.tvCurrentIssueNumber, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                }
+
+                4 -> {
+                    connect(R.id.btnZoom, ConstraintSet.TOP, R.id.layoutBetMain, ConstraintSet.TOP)
+                    connect(R.id.btnZoom, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
+                    setMargin(R.id.btnZoom, ConstraintSet.END, dpToPx(26f, requireContext()).toInt())
+                    setMargin(R.id.btnZoom, ConstraintSet.TOP, dpToPx(5f, requireContext()).toInt())
+                }
+            }
+
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.example.base.R
+import com.example.base.gone
 import com.example.base.onClick
 import com.example.base.visible
 import kotlinx.android.synthetic.main.custom_switch.view.*
@@ -31,7 +32,7 @@ class CustomSwitch  @JvmOverloads constructor(
         resetGameType.clone(clSwitch1)
 
         var gameType = true
-        tvLeft1.onClick {
+        clSwitch1.onClick {
             if (!gameType) {
                 TransitionManager.beginDelayedTransition(clSwitch1)
                 resetGameType.applyTo(clSwitch1)
@@ -39,11 +40,7 @@ class CustomSwitch  @JvmOverloads constructor(
                 tvRight1.setTextColor(Color.parseColor("#adadad"))
                 gameType = true
                 listener?.onCall(gameType)
-            }
-        }
-
-        tvRight1.onClick {
-            if (gameType) {
+            } else {
                 TransitionManager.beginDelayedTransition(clSwitch1)
                 setView(applyGameType, R.id.view1, R.id.clSwitch1).applyTo(clSwitch1)
                 tvRight1.setTextColor(Color.parseColor("#ffffff"))
@@ -58,7 +55,7 @@ class CustomSwitch  @JvmOverloads constructor(
         val resetGameRate = ConstraintSet()
         applyGameRate.clone(clSwitch2)
         resetGameRate.clone(clSwitch2)
-        tvLeft2.onClick {
+        clSwitch2.onClick {
             if (!gameRate) {
                 TransitionManager.beginDelayedTransition(clSwitch2)
                 resetGameRate.applyTo(clSwitch2)
@@ -66,11 +63,7 @@ class CustomSwitch  @JvmOverloads constructor(
                 tvRight2.setTextColor(Color.parseColor("#000000"))
                 gameRate = true
                 listener?.onCall(gameRate)
-            }
-        }
-
-        tvRight2.onClick {
-            if (gameRate) {
+            } else {
                 TransitionManager.beginDelayedTransition(clSwitch2)
                 setView(applyGameRate, R.id.view2, R.id.clSwitch2).applyTo(clSwitch2)
                 tvRight2.setTextColor(Color.parseColor("#ffffff"))
@@ -102,11 +95,11 @@ class CustomSwitch  @JvmOverloads constructor(
         set(type) {
             when (type) {
                 GAME_TYPE -> {
-                    clSwitch1.visible()
+                    clSwitch2.gone()
                 }
 
                 GAME_RATE -> {
-                    clSwitch2.visible()
+                    clSwitch1.gone()
                 }
             }
         }

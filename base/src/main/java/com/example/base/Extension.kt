@@ -1,25 +1,20 @@
 package com.example.base
 
 import android.content.Context
-
-import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AlertDialog
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.IdRes
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 inline fun unless(codition: Boolean, crossinline block: () -> Unit) {
     if (codition) {
@@ -57,6 +52,17 @@ fun Context.toast(message: CharSequence): Toast = Toast
 fun Fragment.drawable(resId: Int) = requireContext().drawable(resId)
 
 fun Context.drawable(resId: Int) = ContextCompat.getDrawable(this, resId)
+
+/**
+ * Covert dp to px
+ * @param dp
+ * @param context
+ * @return pixel
+ */
+fun dpToPx(dp: Float, context: Context): Float {
+    val density = context.resources.displayMetrics.density
+    return (dp * density).roundToInt().toFloat()
+}
 
 //fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
 //    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }
@@ -144,6 +150,8 @@ fun closeSoftKeyboard(mEditText: EditText, mContext: Context) {
     val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
 }
+
+
 
 var extensionProgress: AlertDialog? = null
 

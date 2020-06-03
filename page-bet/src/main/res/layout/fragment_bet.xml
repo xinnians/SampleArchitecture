@@ -26,6 +26,88 @@
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTopRow1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/ivGameName"
+                android:layout_width="@dimen/dp_47"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp_20"
+                android:background="@drawable/bg_gray_stroke_button"
+                android:gravity="center"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/colorWhite"
+                android:padding="@dimen/dp_5"
+                android:lineHeight="@dimen/sp_12"
+                android:text="新疆時時彩"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="@dimen/sp_6"
+                app:autoSizeMaxTextSize="@dimen/sp_12"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCurrentIssueInfo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivGameName"
+                android:layout_marginStart="@dimen/dp_11"
+                android:background="@drawable/bg_white_left_corner_button">
+
+                <com.example.base.widget.CustomSwitch
+                    android:id="@+id/csPlayType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/tvCurrentIssueLeftTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/csPlayType"
+                    app:layout_constraintEnd_toStartOf="@id/tvCurrentIssueNumber"
+                    android:layout_marginStart="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_26"
+                    android:text="00:00:00"
+                    android:textSize="@dimen/sp_16"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    />
+
+                <TextView
+                    android:id="@+id/tvCurrentIssueNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/dp_36"
+                    android:text="0200309期"
+                    android:textSize="@dimen/sp_12"
+                    android:gravity="center"
+                    android:textColor="#7b7b7b"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clTopRow2"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_40"
@@ -134,87 +216,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clTopRow1"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/dp_5">
 
-            <TextView
-                android:id="@+id/ivGameName"
-                android:layout_width="@dimen/dp_47"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/dp_20"
-                android:background="@drawable/bg_gray_stroke_button"
-                android:gravity="center"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/colorWhite"
-                android:padding="@dimen/dp_5"
-                android:lineHeight="@dimen/sp_12"
-                android:text="新疆時時彩"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="@dimen/sp_6"
-                app:autoSizeMaxTextSize="@dimen/sp_12"
-                />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutCurrentIssueInfo"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivGameName"
-                android:layout_marginStart="@dimen/dp_11"
-                android:background="@drawable/bg_white_left_corner_button">
-
-                <com.example.base.widget.CustomSwitch
-                    android:id="@+id/csPlayType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/tvCurrentIssueLeftTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/csPlayType"
-                    app:layout_constraintEnd_toStartOf="@id/tvCurrentIssueNumber"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:layout_marginEnd="@dimen/dp_26"
-                    android:text="00:00:00"
-                    android:textSize="@dimen/sp_16"
-                    android:gravity="center"
-                    android:textColor="#000000"
-                    />
-
-                <TextView
-                    android:id="@+id/tvCurrentIssueNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="@dimen/dp_36"
-                    android:text="0200309期"
-                    android:textSize="@dimen/sp_12"
-                    android:gravity="center"
-                    android:textColor="#7b7b7b"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

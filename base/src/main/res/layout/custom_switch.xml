@@ -63,7 +63,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/radius_switch_board_2"
-        android:visibility="gone"
         >
 
         <View
