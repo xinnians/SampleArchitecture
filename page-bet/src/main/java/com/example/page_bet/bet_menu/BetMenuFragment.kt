@@ -20,6 +20,11 @@ import com.example.repository.model.base.ViewState
 import kotlinx.android.synthetic.main.fragment_bet_menu.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
+/**
+ * 開啟該頁後會跟後台要遊戲選單列表(BetMenuViewModel.getGameMenuResult)，但目前沒有當期開獎時間欄位所以時間暫時顯示00:00:00
+ * 要到遊戲選單列表後，會存一份在shareViewModel(基於application的viewModel)，提供其他頁面使用(ex:開獎中心頁面就會需要用到)
+ * 點擊任一項目會帶著該項目的gameId,gameName,gameTypeId進BetFragment
+ */
 class BetMenuFragment : BaseFragment() {
 
     private lateinit var mBetMenuViewModel: BetMenuViewModel
@@ -29,9 +34,7 @@ class BetMenuFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_bet_menu, container, false)
@@ -61,25 +64,25 @@ class BetMenuFragment : BaseFragment() {
                         rvGameList.adapter = adapter
 
                         adapter.setOnItemChildClickListener { adapter, view, position ->
-                            when(view.id){
+                            when (view.id) {
                                 R.id.ivEdit -> {
                                     navigation.toGameFavoritePage()
                                 }
-                                R.id.rvGameList -> {
-                                    Log.e("Ian","[rvGameList] click.")
+                                R.id.tvLotteryCenter -> {
+                                    navigation.toLotteryCenterPage()
                                 }
                                 else -> {
 
                                 }
                             }
                         }
-                        adapter.setOnGameClickListener( object : OnGameClick{
+                        adapter.setOnGameClickListener(object : OnGameClick {
                             override fun onClick(msg: GameMenuResponse.Data.GameInfoEntity) {
-                                Log.e("Ian","[OnGameClick] click. msg:$msg")
+                                Log.e("Ian", "[OnGameClick] click. msg:$msg")
                                 var bundle = Bundle()
-                                bundle.putInt(TAG_GAME_ID,msg.gameId)
-                                bundle.putString(TAG_GAME_NAME,msg.gameName)
-                                bundle.putInt(TAG_GAME_TYPE,msg.gameTypeId)
+                                bundle.putInt(TAG_GAME_ID, msg.gameId)
+                                bundle.putString(TAG_GAME_NAME, msg.gameName)
+                                bundle.putInt(TAG_GAME_TYPE, msg.gameTypeId)
                                 navigation.toBetPage(bundle)
                             }
                         })

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.example.resource.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_66"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tlLotteryType"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_62"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tabMode="scrollable"
+        app:layout_scrollFlags="scroll"
+        app:tabIndicatorColor="#525252"
+        app:tabIndicatorHeight="@dimen/dp_3"
+        app:tabIndicatorFullWidth="false"
+        app:tabSelectedTextColor="#000000"
+        app:tabTextColor="#acacac">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabRacing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="racing"
+            android:text="北京賽車"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="time_lottery"
+            android:text="時時彩"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="choose"
+            android:text="11選5"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="hurry"
+            android:text="快三"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="六合彩"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="lucky"
+            android:text="幸運28"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="開獎中心"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
