@@ -4,25 +4,26 @@ import android.util.Log
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
+import com.example.repository.constant.GameTypeId
 import com.example.repository.model.bet.MultipleIssueResultItem
 
 class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
     BaseMultiItemQuickAdapter<MultipleIssueResultItem, BaseViewHolder>(data) {
 
     init {
-        addItemType(MultipleIssueResultItem.TIME_LOTTERY, R.layout.item_issue_time_lottery)
-        addItemType(MultipleIssueResultItem.RACING, R.layout.item_issue_racing)
-        addItemType(MultipleIssueResultItem.HURRY_THREE, R.layout.item_issue_hurry_three)
-        addItemType(MultipleIssueResultItem.MARX_SIX, R.layout.item_issue_marx_six)
-        addItemType(MultipleIssueResultItem.LUCKY, R.layout.item_issue_lucky)
-        addItemType(MultipleIssueResultItem.CHOOSE, R.layout.item_issue_choose)
+        addItemType(GameTypeId.TIME_LOTTERY.typeId, R.layout.item_issue_time_lottery)
+        addItemType(GameTypeId.RACING.typeId, R.layout.item_issue_racing)
+        addItemType(GameTypeId.HURRY_THREE.typeId, R.layout.item_issue_hurry_three)
+        addItemType(GameTypeId.MARX_SIX.typeId, R.layout.item_issue_marx_six)
+        addItemType(GameTypeId.LUCKY.typeId, R.layout.item_issue_lucky)
+        addItemType(GameTypeId.CHOOSE.typeId, R.layout.item_issue_choose)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleIssueResultItem?) {
         helper?.let {
             Log.e("Ian", "[IssueResultAdapter] itemViewType:${it.itemViewType}")
             when (it.itemViewType) {
-                MultipleIssueResultItem.TIME_LOTTERY -> {
+                GameTypeId.TIME_LOTTERY.typeId -> {
                     if (data.size >= 1 && data[0].getDataList().size >= 5) {
                         data[0].getDataList().let { list ->
                             it.setText(R.id.tvPosition1, list[0])
@@ -33,7 +34,7 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                         }
                     }
                 }
-                MultipleIssueResultItem.RACING -> {
+                GameTypeId.RACING.typeId -> {
                     if (data.size >= 1 && data[0].getDataList().size >= 10) {
                         data[0].getDataList().let { list ->
                             it.setText(R.id.tvPosition1, list[0])
@@ -49,7 +50,7 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                         }
                     }
                 }
-                MultipleIssueResultItem.CHOOSE -> {
+                GameTypeId.CHOOSE.typeId -> {
                     if (data.size >= 1 && data[0].getDataList().size >= 5) {
                         data[0].getDataList().let { list ->
                             it.setText(R.id.tvPosition1, list[0])
@@ -60,7 +61,7 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                         }
                     }
                 }
-                MultipleIssueResultItem.LUCKY -> {
+                GameTypeId.LUCKY.typeId -> {
                     if (data.size >= 1 && data[0].getDataList().size >= 3) {
                         data[0].getDataList().let { list ->
                             it.setText(R.id.tvPosition1, list[0])
@@ -70,7 +71,7 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                         }
                     }
                 }
-                MultipleIssueResultItem.MARX_SIX -> {
+                GameTypeId.MARX_SIX.typeId -> {
                     if (data.size >= 1 && data[0].getDataList().size >= 7) {
                         data[0].getDataList().let { list ->
                             it.setText(R.id.tvPosition1, list[0])
@@ -83,7 +84,7 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                         }
                     }
                 }
-                MultipleIssueResultItem.HURRY_THREE -> {
+                GameTypeId.HURRY_THREE.typeId -> {
                     //TODO 骰子圖先跳過
                 }
             }

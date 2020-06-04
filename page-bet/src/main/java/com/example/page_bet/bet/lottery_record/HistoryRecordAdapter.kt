@@ -4,17 +4,18 @@ import android.util.Log
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.page_bet.R
+import com.example.repository.constant.GameTypeId
 import com.example.repository.model.bet.MultipleHistoryRecord
 
 class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiItemQuickAdapter<MultipleHistoryRecord, BaseViewHolder>(data) {
 
     init {
-        addItemType(MultipleHistoryRecord.TIME_LOTTERY, R.layout.item_history_time_lottery)
-        addItemType(MultipleHistoryRecord.RACING, R.layout.item_history_racing)
-        addItemType(MultipleHistoryRecord.HURRY_THREE, R.layout.item_history_hurry_three)
-        addItemType(MultipleHistoryRecord.MARX_SIX, R.layout.item_history_marx_six)
-        addItemType(MultipleHistoryRecord.LUCKY, R.layout.item_history_lucky)
-        addItemType(MultipleHistoryRecord.CHOOSE, R.layout.item_history_choose)
+        addItemType(GameTypeId.TIME_LOTTERY.typeId, R.layout.item_history_time_lottery)
+        addItemType(GameTypeId.RACING.typeId, R.layout.item_history_racing)
+        addItemType(GameTypeId.HURRY_THREE.typeId, R.layout.item_history_hurry_three)
+        addItemType(GameTypeId.MARX_SIX.typeId, R.layout.item_history_marx_six)
+        addItemType(GameTypeId.LUCKY.typeId, R.layout.item_history_lucky)
+        addItemType(GameTypeId.CHOOSE.typeId, R.layout.item_history_choose)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleHistoryRecord?) {
@@ -22,7 +23,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
             Log.e("Ian", "[HistoryRecordAdapter] itemViewType:${it.itemViewType}")
             it.setText(R.id.tvIssueNumber,item?.data?.issueNum)
             when (it.itemViewType) {
-                MultipleHistoryRecord.TIME_LOTTERY -> {
+                GameTypeId.TIME_LOTTERY.typeId -> {
                     item?.data?.winNum?.split(",")?.let { list ->
                         if(list.size>=5){
                             it.setText(R.id.tvPosition1, list[0])
@@ -33,7 +34,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
                         }
                     }
                 }
-                MultipleHistoryRecord.RACING -> {
+                GameTypeId.RACING.typeId -> {
                     item?.data?.winNum?.split(",")?.let { list ->
                         if(list.size>=10){
                             it.setText(R.id.tvPosition1, list[0])
@@ -49,7 +50,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
                         }
                     }
                 }
-                MultipleHistoryRecord.CHOOSE -> {
+                GameTypeId.CHOOSE.typeId -> {
                     item?.data?.winNum?.split(",")?.let { list ->
                         if(list.size>=5){
                             it.setText(R.id.tvPosition1, list[0])
@@ -60,7 +61,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
                         }
                     }
                 }
-                MultipleHistoryRecord.LUCKY -> {
+                GameTypeId.LUCKY.typeId -> {
                     item?.data?.winNum?.split(",")?.let { list ->
                         if(list.size>=4){
                             it.setText(R.id.tvPosition1, list[0])
@@ -70,7 +71,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
                         }
                     }
                 }
-                MultipleHistoryRecord.MARX_SIX -> {
+                GameTypeId.MARX_SIX.typeId -> {
                     item?.data?.winNum?.split(",")?.let { list ->
                         if(list.size>=7){
                             it.setText(R.id.tvPosition1, list[0])
@@ -83,7 +84,7 @@ class HistoryRecordAdapter(data: MutableList<MultipleHistoryRecord>): BaseMultiI
                         }
                     }
                 }
-                MultipleHistoryRecord.HURRY_THREE -> {
+                GameTypeId.HURRY_THREE.typeId -> {
                     //TODO 骰子圖先跳過
                 }
                 else -> {

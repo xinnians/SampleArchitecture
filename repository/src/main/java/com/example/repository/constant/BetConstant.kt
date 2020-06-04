@@ -1,7 +1,5 @@
 package com.example.repository.constant
 
-
-
 //-----------------------------------------------快3-獎金盤---------------------------------------------
 
 //兩不同號標準
@@ -380,6 +378,7 @@ const val playTypeID_204023 = "204023"
 //任選四-組選4
 const val playTypeID_204024 = "204024"
 
+//TODO 因應目前設定，感覺上不用再區分成這麼多種類型，應該可以以數字或字數來區分就好
 enum class BetItemType(val typeNumber: Int,val unitDisplayMode: BetUnitDisplayMode){
     NONE(-1,BetUnitDisplayMode.ONLY_NUMBER),
     //預設
@@ -421,3 +420,12 @@ enum class BetUnitDisplayMode(val typeNumber: Int){
     ONE_CHAR(2),
     TWO_CHAR(3),
     THREE_CHAR(4)}
+
+enum class GameTypeId(val typeId: Int){
+    RACING(1),
+    TIME_LOTTERY(2),
+    CHOOSE(3),
+    HURRY_THREE(4),
+    MARX_SIX(5),
+    LUCKY(6)
+}
