@@ -92,11 +92,11 @@ class MainActivity : BaseActivity() {
             it.add(MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home))
             // navBar icon 加入 badgeNumber
 //            it.setCount(ID_NOTICE, "222")
-//            it.setCount(ID_NOTIFICATION, "")
+            it.setCount(ID_NOTICE, "")
             // subCells icon 加入 badgeNumber
-            it.setSubItemBadgeDraw(ID_SUB_MESSAGE, "")
+            it.setSubItemBadgeDraw(ID_SUB_MESSAGE, "3")
             // 初始設定自動彈出第一個 NavBar icon
-            it.show(ID_NOTICE)
+            it.show(ID_HOME)
             it.setOnShowListener {
 //                Log.d("msg", "id: ${it.id}")
 //                Log.d("msg", "onShowListener")
