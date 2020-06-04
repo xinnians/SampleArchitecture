@@ -3,7 +3,7 @@ package com.example.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-open class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var mSharedViewModel: SharedViewModel
 
@@ -12,4 +12,7 @@ open class BaseActivity : AppCompatActivity() {
 
         mSharedViewModel = AppInjector.obtainViewModel(application)
     }
+
+    abstract fun hideBottomNav()
+    abstract fun showBottomNav()
 }

@@ -21,6 +21,10 @@ class CarouselAdapter(val gameNames: Array<String>): RecyclerView.Adapter<Carous
         holder?.tvName.text = gameNames.get(position)
     }
 
+    fun getItem(index: Int) : String{
+        return gameNames.get(index)
+    }
+
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
 //        val tvStationId = view.findViewById<TextView>(R.id.tv_item_id)

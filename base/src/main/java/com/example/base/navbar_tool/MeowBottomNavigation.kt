@@ -28,16 +28,11 @@ class MeowBottomNavigation : FrameLayout {
     var models = ArrayList<Model>()
     var cells = ArrayList<MeowBottomNavigationCell>()
     var subItems = ArrayList<ItemView>()
-
-    //        private set
     private var callListenerWhenIsSelected = false
-
     private var selectedId = -1
-
     private var onClickedListener: IBottomNavigationListener = {}
     private var onShowListener: IBottomNavigationListener = {}
     private var onReselectListener: IBottomNavigationListener = {}
-
     private var heightCell = 0
     private var isAnimating = false
 
@@ -95,7 +90,10 @@ class MeowBottomNavigation : FrameLayout {
     private lateinit var bezierView: BezierView
 
     init {
-        heightCell = dip(context, 72)
+        /**
+         * bottomNavBar 的高度
+         */
+        heightCell = dip(context, 74)
     }
 
     constructor(context: Context) : super(context) {
@@ -143,7 +141,6 @@ class MeowBottomNavigation : FrameLayout {
             orientation = LinearLayout.HORIZONTAL
             clipChildren = false
             clipToPadding = false
-
         }
 
         bezierView = BezierView(context)
@@ -154,7 +151,6 @@ class MeowBottomNavigation : FrameLayout {
             color = backgroundBottomColor
             shadowColor = this@MeowBottomNavigation.shadowColor
         }
-
         addView(bezierView)
         addView(ll_cells)
         allowDraw = true

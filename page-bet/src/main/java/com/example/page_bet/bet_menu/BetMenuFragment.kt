@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
+import com.example.base.BaseActivity
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
@@ -38,7 +39,7 @@ class BetMenuFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as BaseActivity?)?.hideBottomNav()
         init()
     }
 

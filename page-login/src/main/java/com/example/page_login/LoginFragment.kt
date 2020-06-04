@@ -1,5 +1,6 @@
 package com.example.page_login
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -36,11 +37,9 @@ class LoginFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_login)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefStore = PreferenceStore(requireActivity())
-
         if (BiometricUtil.isHardwareAvailable(requireActivity())) {
             Log.d("Mori", "支援生物辨識")
         } else {
@@ -52,6 +51,7 @@ class LoginFragment : BaseFragment() {
         } else {
             Log.e("Mori", "還沒有註冊生物識別")
         }
+        (activity as BaseActivity?)?.hideBottomNav()
     }
 
     override fun onResume() {
