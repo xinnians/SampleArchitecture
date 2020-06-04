@@ -167,7 +167,7 @@ class BetFragment : BaseFragment() {
     //刷新最新開獎資訊
     private fun refreshLastIssueResult(token: String, gameId: Int, gameTypeId: Int) {
         Log.e("Ian", "[refreshLastIssueResult] token:$token, gameId:$gameId gameTypeId:$gameTypeId")
-        mViewModel.getLastIssueResult(token, gameId).observeNotNull(this) { state ->
+        mViewModel.getLastIssueResult(token, arrayListOf(gameId)).observeNotNull(this) { state ->
             when (state) {
                 is ViewState.Success -> {
                     //TODO 根據gametype切換adapter中的item顯示

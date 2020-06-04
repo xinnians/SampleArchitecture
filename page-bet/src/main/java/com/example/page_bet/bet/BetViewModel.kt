@@ -28,7 +28,7 @@ class BetViewModel(var repository: Repository) : ViewModel(){
         return repository.getIssueInfo(token, gameId).asLiveData()
     }
 
-    fun getLastIssueResult(token:String, gameId: Int): LiveData<ViewState<LastIssueResultResponse>>{
+    fun getLastIssueResult(token:String, gameId: ArrayList<Int>): LiveData<ViewState<LastIssueResultResponse>>{
         return repository.getLastIssueResult(token, gameId).asLiveData()
     }
 
