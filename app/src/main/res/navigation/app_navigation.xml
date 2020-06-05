@@ -60,4 +60,16 @@
         android:id="@+id/registerFragment"
         android:name="com.example.page_login.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/depositFragment2"
+        android:name="com.example.page_deposit.DepositFragment"
+        android:label="DepositFragment" />
+    <action
+        android:id="@+id/action_global_depositFragment2"
+        app:destination="@id/depositFragment2"
+        app:popUpTo="@id/app_navigation" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:popUpTo="@id/app_navigation"/>
 </navigation>

@@ -10,6 +10,7 @@ import com.example.base.SharedViewModel
 import com.example.page_bet.bet.BetViewModel
 import com.example.page_bet.bet_menu.BetMenuViewModel
 import com.example.page_bet.game_favorite.GameFavoriteViewModel
+import com.example.page_deposit.DepositViewModel
 import com.example.page_login.LoginViewModel
 import com.example.page_main.MainViewModel
 import com.example.repository.Repository
@@ -42,6 +43,7 @@ class ViewModelFactory(
                 isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = mRepository!!)
                 isAssignableFrom(BetMenuViewModel::class.java) -> BetMenuViewModel(repository = mRepository!!)
                 isAssignableFrom(GameFavoriteViewModel::class.java) -> GameFavoriteViewModel()
+                isAssignableFrom(DepositViewModel::class.java) -> DepositViewModel(repository = mRepository!!)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             } as T
         }

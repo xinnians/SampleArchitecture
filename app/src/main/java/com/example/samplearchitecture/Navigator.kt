@@ -2,10 +2,11 @@ package com.example.samplearchitecture
 
 import android.os.Bundle
 import com.example.page_bet.BetNavigation
+import com.example.page_deposit.DepositNavigation
 import com.example.page_login.LoginNavigation
 import com.example.page_main.MainNavigation
 
-internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, MainNavigation {
+internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, MainNavigation, DepositNavigation {
     override fun toBetPage(gameInfo: Bundle) {
         navController?.navigate(R.id.action_betMenuFragment_to_betFragment, gameInfo)
     }
@@ -46,5 +47,12 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
         navController?.navigate(R.id.action_loginFragment_to_mainFragment)
     }
 
-
+    // 首頁
+    fun homePage() {
+        navController?.navigate(R.id.action_global_mainFragment)
+    }
+    // 儲值頁面
+    fun depositPage() {
+        navController?.navigate(R.id.action_global_depositFragment2)
+    }
 }

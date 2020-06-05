@@ -105,10 +105,10 @@ class MainActivity : BaseActivity() {
                 // BottomNav 項目
                 when(it.id) {
                     ID_ACTIVIT -> {}
-                    ID_DEPOSIT -> {}
+                    ID_DEPOSIT -> {navigator.depositPage()}
                     ID_TRANSATION -> {}
                     ID_USER -> {}
-                    ID_HOME -> {}
+                    ID_HOME -> {navigator.homePage()}
                     else -> {}
                 }
             }
