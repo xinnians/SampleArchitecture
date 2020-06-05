@@ -53,6 +53,10 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
     }
     // 儲值頁面
     fun depositPage() {
-        navController?.navigate(R.id.action_global_depositFragment2)
+        navController?.navigate(R.id.action_global_depositFragment)
+    }
+    // 使用者頁面
+    fun userPage() {
+        navController?.navigate(R.id.action_global_userFragment)
     }
 }

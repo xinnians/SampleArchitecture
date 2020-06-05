@@ -107,7 +107,7 @@ class MainActivity : BaseActivity() {
                     ID_ACTIVIT -> {}
                     ID_DEPOSIT -> {navigator.depositPage()}
                     ID_TRANSATION -> {}
-                    ID_USER -> {}
+                    ID_USER -> {navigator.userPage()}
                     ID_HOME -> {navigator.homePage()}
                     else -> {}
                 }

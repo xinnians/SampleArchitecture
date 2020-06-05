@@ -16,6 +16,10 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:popUpTo="@id/app_navigation"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.page_login.LoginFragment"
@@ -61,15 +65,19 @@
         android:name="com.example.page_login.RegisterFragment"
         android:label="RegisterFragment" />
     <fragment
-        android:id="@+id/depositFragment2"
+        android:id="@+id/depositFragment"
         android:name="com.example.page_deposit.DepositFragment"
         android:label="DepositFragment" />
     <action
-        android:id="@+id/action_global_depositFragment2"
-        app:destination="@id/depositFragment2"
+        android:id="@+id/action_global_depositFragment"
+        app:destination="@id/depositFragment"
         app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.page_user.UserFragment"
+        android:label="fragment_user" />
     <action
-        android:id="@+id/action_global_mainFragment"
-        app:destination="@id/mainFragment"
-        app:popUpTo="@id/app_navigation"/>
+        android:id="@+id/action_global_userFragment"
+        app:destination="@id/userFragment"
+        app:popUpTo="@id/app_navigation" />
 </navigation>
