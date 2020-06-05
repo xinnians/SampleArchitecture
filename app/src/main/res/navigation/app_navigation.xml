@@ -88,5 +88,13 @@
         android:id="@+id/action_global_transationFragment"
         app:destination="@id/transationFragment"
         app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/giftFragment"
+        android:name="com.example.page_gift.GiftFragment"
+        android:label="fragment_gift"/>
+    <action
+        android:id="@+id/action_global_giftFragment"
+        app:destination="@id/giftFragment"
+        app:popUpTo="@id/app_navigation" />
 
 </navigation>
