@@ -59,4 +59,8 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
     fun userPage() {
         navController?.navigate(R.id.action_global_userFragment)
     }
+    // 轉帳頁面
+    fun transationPage() {
+        navController?.navigate(R.id.action_global_transationFragment)
+    }
 }

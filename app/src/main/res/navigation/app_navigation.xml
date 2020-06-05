@@ -80,4 +80,13 @@
         android:id="@+id/action_global_userFragment"
         app:destination="@id/userFragment"
         app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/transationFragment"
+        android:name="com.example.page_transation.TransationFragment"
+        android:label="fragment_transation"/>
+    <action
+        android:id="@+id/action_global_transationFragment"
+        app:destination="@id/transationFragment"
+        app:popUpTo="@id/app_navigation" />
+
 </navigation>

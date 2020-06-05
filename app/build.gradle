@@ -48,6 +48,7 @@ dependencies {
     implementation project(':repository')
     implementation project(':page-deposit')
     implementation project(':page-user')
+    implementation project(':page-transation')
 
     implementation "androidx.navigation:navigation-fragment:2.2.2"
     implementation "androidx.navigation:navigation-ui:2.2.2"

@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
                 when(it.id) {
                     ID_ACTIVIT -> {}
                     ID_DEPOSIT -> {navigator.depositPage()}
-                    ID_TRANSATION -> {}
+                    ID_TRANSATION -> {navigator.transationPage()}
                     ID_USER -> {navigator.userPage()}
                     ID_HOME -> {navigator.homePage()}
                     else -> {}
