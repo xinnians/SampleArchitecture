@@ -45,6 +45,7 @@ class BetMenuAdapter(data: MutableList<MultipleMenuItem>) :
                     it.addOnClickListener(R.id.ivEdit)
                 }
                 MultipleMenuItem.NORMAL -> {
+                    it.addOnClickListener(R.id.tvLotteryCenter)
                 }
                 else -> {
 

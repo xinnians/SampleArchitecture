@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_betMenuFragment_to_betFragment"
             app:destination="@id/betFragment" />
+        <action
+            android:id="@+id/action_betMenuFragment_to_lotteryCenterFragment"
+            app:destination="@id/lotteryCenterFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameFavoriteFragment"
@@ -58,4 +61,8 @@
         android:id="@+id/registerFragment"
         android:name="com.example.page_login.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/lotteryCenterFragment"
+        android:name="com.example.page_bet.lottery_center.LotteryCenterFragment"
+        android:label="LotteryCenterFragment" />
 </navigation>

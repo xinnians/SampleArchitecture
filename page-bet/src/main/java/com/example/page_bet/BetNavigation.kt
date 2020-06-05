@@ -7,4 +7,5 @@ interface BetNavigation {
     fun toBetPage(gameInfo: Bundle)
     fun toGameFavoritePage()
     fun goBackToBetMenuPage()
+    fun toLotteryCenterPage()
 }

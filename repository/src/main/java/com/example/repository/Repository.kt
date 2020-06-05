@@ -1,5 +1,6 @@
 package com.example.repository
 
+import android.util.Log
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
@@ -124,10 +125,16 @@ class Repository(private val sampleService: SampleService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getLastIssueResult(token: String, gameId: Int): Flow<ViewState<LastIssueResultResponse>> {
+    fun getLastIssueResult(token: String, gameId: ArrayList<Int>): Flow<ViewState<LastIssueResultResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.lastIssueResult(token, gameId)
+            var queryParameter = ""
+            gameId.forEach {
+                queryParameter+=it
+                queryParameter+=","
+            }
+            queryParameter = queryParameter.substring(0,queryParameter.length-1)
+            val result = sampleService.lastIssueResult(token, queryParameter)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
