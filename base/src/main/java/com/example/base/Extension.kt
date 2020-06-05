@@ -104,8 +104,8 @@ fun getDateTime(millionsecond: Long): String {
     return sdf.format(date)
 }
 
-fun convertMillionSecond(time: String): Long {
-    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(time).time
+fun convertDate(time: String): Long {
+    return SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.getDefault()).parse(time).time
 }
 
 fun getMonAndDay(date: String): String {
