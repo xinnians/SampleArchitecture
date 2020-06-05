@@ -9,7 +9,6 @@ import com.example.repository.model.base.ViewState.Success
 import com.example.repository.model.bet.*
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 class BetViewModel(var repository: Repository) : ViewModel(){
 

@@ -11,11 +11,10 @@ import com.example.base.BaseFragment
 import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
-import com.example.page_bet.bet.IssueResultAdapter
 import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
-import com.example.repository.model.bet.MultipleIssueResultItem
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_lottery_center.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
@@ -28,6 +27,7 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 class LotteryCenterFragment : BaseFragment() {
 
     private lateinit var mLotteryCenterViewModel: LotteryCenterViewModel
+    private var mAdapter: ViewPagerAdapter? = null
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -44,8 +44,8 @@ class LotteryCenterFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
         initView()
+        initData()
     }
 
     private fun initView() {
@@ -60,15 +60,25 @@ class LotteryCenterFragment : BaseFragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 Log.e("Ian", "[onTabSelected] tab:${tab?.position}")
-                tab?.position?.let { tabPosition ->
-                    mCurrentGameType = GameTypeId.values().first { it.typeId == (tabPosition + 1) }
-                }
+//                tab?.position?.let { tabPosition ->
+//                    mCurrentGameType = GameTypeId.values().first { it.typeId == (tabPosition + 1) }
+//                    mAdapter?.setNewData(mLotteryCenterViewModel.getIssueInfoList(mCurrentGameType))
+//                }
 
                 Log.e("Ian", "[onTabSelected] CurrentGameType: $mCurrentGameType")
 
             }
-
         })
+
+        mAdapter= ViewPagerAdapter()
+//        var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
+//        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+//
+//        rvGameIssueInfo.layoutManager = layoutManager
+        vpGameIssueInfo.adapter = mAdapter
+        TabLayoutMediator(tlLotteryType,vpGameIssueInfo) { tab: TabLayout.Tab, i: Int ->
+            tab.text = GameTypeId.values()[i].chineseName
+        }.attach()
     }
 
     private fun initData() {
@@ -82,17 +92,9 @@ class LotteryCenterFragment : BaseFragment() {
             when (state) {
                 is ViewState.Success -> {
                     Log.e("Ian","${state.data.data}")
-                    var adapter: IssueResultAdapter = IssueResultAdapter(mutableListOf())
-                    var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
-                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-
-                    rvGameIssueInfo.layoutManager = layoutManager
-                    rvGameIssueInfo.adapter = adapter
-                    var data: MutableList<MultipleIssueResultItem> = mutableListOf()
-                    state.data.data?.forEach {
-                        data.add(MultipleIssueResultItem(GameTypeId.LUCKY.typeId,it))
-                    }
-                    adapter.setNewData(data)
+//                    mAdapter?.setNewData(mLotteryCenterViewModel.getIssueInfoList(mCurrentGameType))
+                    mAdapter?.mData = mLotteryCenterViewModel.getAllIssueInfoList()
+                    mAdapter?.notifyDataSetChanged()
                 }
                 is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
                 is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")

@@ -6,7 +6,7 @@ import com.example.repository.constant.GameTypeId
 open class MultipleIssueResultItem : MultiItemEntity {
 
     private var itemType = GameTypeId.TIME_LOTTERY.typeId
-    private var data: LastIssueResultResponse.Data? = null
+    var data: LastIssueResultResponse.Data? = null
 
     constructor(itemType: Int = GameTypeId.TIME_LOTTERY.typeId, data: LastIssueResultResponse.Data){
         this.itemType = itemType

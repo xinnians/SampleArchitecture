@@ -24,8 +24,8 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
             Log.e("Ian", "[IssueResultAdapter] itemViewType:${it.itemViewType}")
             when (it.itemViewType) {
                 GameTypeId.TIME_LOTTERY.typeId -> {
-                    if (data.size >= 1 && data[0].getDataList().size >= 5) {
-                        data[0].getDataList().let { list ->
+                    item?.getDataList()?.let { list ->
+                        if(list.size >=5) {
                             it.setText(R.id.tvPosition1, list[0])
                             it.setText(R.id.tvPosition2, list[1])
                             it.setText(R.id.tvPosition3, list[2])
@@ -35,8 +35,8 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                     }
                 }
                 GameTypeId.RACING.typeId -> {
-                    if (data.size >= 1 && data[0].getDataList().size >= 10) {
-                        data[0].getDataList().let { list ->
+                    item?.getDataList()?.let { list ->
+                        if(list.size >= 10) {
                             it.setText(R.id.tvPosition1, list[0])
                             it.setText(R.id.tvPosition2, list[1])
                             it.setText(R.id.tvPosition3, list[2])
@@ -51,8 +51,8 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                     }
                 }
                 GameTypeId.CHOOSE.typeId -> {
-                    if (data.size >= 1 && data[0].getDataList().size >= 5) {
-                        data[0].getDataList().let { list ->
+                    item?.getDataList()?.let { list ->
+                        if (list.size >= 5) {
                             it.setText(R.id.tvPosition1, list[0])
                             it.setText(R.id.tvPosition2, list[1])
                             it.setText(R.id.tvPosition3, list[2])
@@ -62,8 +62,8 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                     }
                 }
                 GameTypeId.LUCKY.typeId -> {
-                    if (data.size >= 1 && data[0].getDataList().size >= 3) {
-                        data[0].getDataList().let { list ->
+                    item?.getDataList()?.let { list ->
+                        if (list.size >= 3) {
                             it.setText(R.id.tvPosition1, list[0])
                             it.setText(R.id.tvPosition2, list[1])
                             it.setText(R.id.tvPosition3, list[2])
@@ -72,8 +72,8 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                     }
                 }
                 GameTypeId.MARX_SIX.typeId -> {
-                    if (data.size >= 1 && data[0].getDataList().size >= 7) {
-                        data[0].getDataList().let { list ->
+                    item?.getDataList()?.let { list ->
+                        if (list.size >= 7) {
                             it.setText(R.id.tvPosition1, list[0])
                             it.setText(R.id.tvPosition2, list[1])
                             it.setText(R.id.tvPosition3, list[2])
@@ -86,6 +86,9 @@ class IssueResultAdapter(data: MutableList<MultipleIssueResultItem>) :
                 }
                 GameTypeId.HURRY_THREE.typeId -> {
                     //TODO 骰子圖先跳過
+                }
+                else -> {
+
                 }
             }
         }

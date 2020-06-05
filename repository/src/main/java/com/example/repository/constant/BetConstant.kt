@@ -421,11 +421,11 @@ enum class BetUnitDisplayMode(val typeNumber: Int){
     TWO_CHAR(3),
     THREE_CHAR(4)}
 
-enum class GameTypeId(val typeId: Int){
-    RACING(1),
-    TIME_LOTTERY(2),
-    CHOOSE(3),
-    HURRY_THREE(4),
-    MARX_SIX(5),
-    LUCKY(6)
+enum class GameTypeId(val typeId: Int,var chineseName: String){
+    RACING(1,"北京賽車"),
+    TIME_LOTTERY(2,"時時彩"),
+    CHOOSE(3,"11選5"),
+    HURRY_THREE(4,"快三"),
+    MARX_SIX(5,"六合彩"),
+    LUCKY(6,"幸運28")
 }
