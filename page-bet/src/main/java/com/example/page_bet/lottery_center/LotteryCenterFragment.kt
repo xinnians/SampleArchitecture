@@ -13,6 +13,7 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
+import com.example.repository.model.bet.MultipleIssueResultItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_lottery_center.*
@@ -71,6 +72,10 @@ class LotteryCenterFragment : BaseFragment() {
         })
 
         mAdapter= ViewPagerAdapter()
+        mAdapter!!.setResultAction {
+            Log.d("msg", "reult win: ${it.data?.winNum}")
+            navigation.toLotteryResultPage()
+        }
 //        var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 //        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 //

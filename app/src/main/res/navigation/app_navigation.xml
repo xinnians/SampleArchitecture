@@ -102,5 +102,13 @@
     <fragment
         android:id="@+id/lotteryCenterFragment"
         android:name="com.example.page_bet.lottery_center.LotteryCenterFragment"
-        android:label="LotteryCenterFragment" />
+        android:label="LotteryCenterFragment" >
+        <action
+            android:id="@+id/action_lotteryCenterFragment_to_lotteryResultFragment"
+            app:destination="@id/lotteryResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lotteryResultFragment"
+        android:name="com.example.page_bet.lottery_result.LotteryResultFragment"
+        android:label="LotteryResultFragment"/>
 </navigation>
