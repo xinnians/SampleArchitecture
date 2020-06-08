@@ -24,6 +24,12 @@ class GameIssueInfoAdapter(data: MutableList<MultipleIssueResultItem>) :
             Log.e("Ian", "[IssueResultAdapter] itemViewType:${it.itemViewType}")
             it.setText(R.id.tvGameName, item?.data?.gameId?.toString())
             it.setText(R.id.tvIssueNumber, "第${item?.data?.issueNum}期")
+            it.addOnClickListener(R.id.constrainViewRecing)
+            it.addOnClickListener(R.id.constrainViewTimeLottery)
+            it.addOnClickListener(R.id.constrainViewHurryHhree)
+            it.addOnClickListener(R.id.constrainViewMarxSix)
+            it.addOnClickListener(R.id.constrainViewLucky)
+            it.addOnClickListener(R.id.constrainViewChoose)
             when (it.itemViewType) {
                 GameTypeId.TIME_LOTTERY.typeId -> {
                     item?.getDataList()?.let { list ->

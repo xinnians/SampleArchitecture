@@ -16,6 +16,10 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:popUpTo="@id/app_navigation"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.page_login.LoginFragment"
@@ -23,6 +27,8 @@
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -62,7 +68,47 @@
         android:name="com.example.page_login.RegisterFragment"
         android:label="RegisterFragment" />
     <fragment
+        android:id="@+id/depositFragment"
+        android:name="com.example.page_deposit.DepositFragment"
+        android:label="DepositFragment" />
+    <action
+        android:id="@+id/action_global_depositFragment"
+        app:destination="@id/depositFragment"
+        app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.page_user.UserFragment"
+        android:label="fragment_user" />
+    <action
+        android:id="@+id/action_global_userFragment"
+        app:destination="@id/userFragment"
+        app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/transationFragment"
+        android:name="com.example.page_transation.TransationFragment"
+        android:label="fragment_transation"/>
+    <action
+        android:id="@+id/action_global_transationFragment"
+        app:destination="@id/transationFragment"
+        app:popUpTo="@id/app_navigation" />
+    <fragment
+        android:id="@+id/giftFragment"
+        android:name="com.example.page_gift.GiftFragment"
+        android:label="fragment_gift"/>
+    <action
+        android:id="@+id/action_global_giftFragment"
+        app:destination="@id/giftFragment"
+        app:popUpTo="@id/app_navigation" />
+    <fragment
         android:id="@+id/lotteryCenterFragment"
         android:name="com.example.page_bet.lottery_center.LotteryCenterFragment"
-        android:label="LotteryCenterFragment" />
+        android:label="LotteryCenterFragment" >
+        <action
+            android:id="@+id/action_lotteryCenterFragment_to_lotteryResultFragment"
+            app:destination="@id/lotteryResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lotteryResultFragment"
+        android:name="com.example.page_bet.lottery_result.LotteryResultFragment"
+        android:label="LotteryResultFragment"/>
 </navigation>

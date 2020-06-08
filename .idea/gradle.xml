@@ -13,8 +13,12 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/page-bet" />
+            <option value="$PROJECT_DIR$/page-deposit" />
+            <option value="$PROJECT_DIR$/page-gift" />
             <option value="$PROJECT_DIR$/page-login" />
             <option value="$PROJECT_DIR$/page-main" />
+            <option value="$PROJECT_DIR$/page-transation" />
+            <option value="$PROJECT_DIR$/page-user" />
             <option value="$PROJECT_DIR$/repository" />
             <option value="$PROJECT_DIR$/resource" />
           </set>

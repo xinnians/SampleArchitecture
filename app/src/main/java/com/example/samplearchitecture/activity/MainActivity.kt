@@ -19,7 +19,7 @@ class MainActivity : BaseActivity() {
          * NavigationBar ID
          */
         private const val ID_NOTICE = 1
-        private const val ID_ACTIVIT = 2
+        private const val ID_GIFT = 2
         private const val ID_DEPOSIT = 3
         private const val ID_TRANSATION = 4
         private const val ID_USER = 5
@@ -85,18 +85,18 @@ class MainActivity : BaseActivity() {
                         MeowBottomNavigation.Model(ID_SUB_ANNOUNCEMENT, R.drawable.ic_announcement),
                         MeowBottomNavigation.Model(ID_SUB_CS, R.drawable.ic_cs)
                     )))
-            it.add(MeowBottomNavigation.Model(ID_ACTIVIT, R.drawable.ic_activity))
+            it.add(MeowBottomNavigation.Model(ID_GIFT, R.drawable.ic_gift))
             it.add(MeowBottomNavigation.Model(ID_DEPOSIT, R.drawable.ic_deposit))
             it.add(MeowBottomNavigation.Model(ID_TRANSATION, R.drawable.ic_transaction))
             it.add(MeowBottomNavigation.Model(ID_USER, R.drawable.ic_user))
             it.add(MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home))
             // navBar icon 加入 badgeNumber
 //            it.setCount(ID_NOTICE, "222")
-//            it.setCount(ID_NOTIFICATION, "")
+            it.setCount(ID_NOTICE, "")
             // subCells icon 加入 badgeNumber
-            it.setSubItemBadgeDraw(ID_SUB_MESSAGE, "")
+            it.setSubItemBadgeDraw(ID_SUB_MESSAGE, "3")
             // 初始設定自動彈出第一個 NavBar icon
-            it.show(ID_NOTICE)
+            it.show(ID_HOME)
             it.setOnShowListener {
 //                Log.d("msg", "id: ${it.id}")
 //                Log.d("msg", "onShowListener")
@@ -104,11 +104,11 @@ class MainActivity : BaseActivity() {
             it.setOnClickMenuListener {
                 // BottomNav 項目
                 when(it.id) {
-                    ID_ACTIVIT -> {}
-                    ID_DEPOSIT -> {}
-                    ID_TRANSATION -> {}
-                    ID_USER -> {}
-                    ID_HOME -> {}
+                    ID_GIFT -> {navigator.giftPage()}
+                    ID_DEPOSIT -> {navigator.depositPage()}
+                    ID_TRANSATION -> {navigator.transationPage()}
+                    ID_USER -> {navigator.userPage()}
+                    ID_HOME -> {navigator.homePage()}
                     else -> {}
                 }
             }
