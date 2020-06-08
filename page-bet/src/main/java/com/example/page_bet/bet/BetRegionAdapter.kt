@@ -54,8 +54,9 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
             }
             it.getView<RecyclerView>(R.id.rvBetUnit).let { recyclerView ->
                 recyclerView.layoutManager = GridLayoutManager(mContext, spanCount)
-                var unitAdapter: BetUnitAdapter = BetUnitAdapter(listOf(),it.adapterPosition)
+                var unitAdapter: BetUnitAdapter = BetUnitAdapter(listOf(),it.layoutPosition)
                 recyclerView.adapter = unitAdapter
+
                 var resultList: ArrayList<MultipleBetUnit> = arrayListOf()
                 item?.data?.unitList?.forEach { betUnit ->
                     resultList.add(MultipleBetUnit(displayMode, betUnit))

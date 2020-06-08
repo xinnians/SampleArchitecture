@@ -45,6 +45,7 @@ class BetFragment : BaseFragment() {
 
     private var mGameID: Int = -1
     private var mGameTypeID: Int = -1
+    private var mCurrentPlayTypeID: String = ""
     private var mCurrentBetItemType: BetItemType = BetItemType.NONE
 
     private var mBetPositionAdapter: BetPositionAdapter? = null
@@ -113,7 +114,12 @@ class BetFragment : BaseFragment() {
         mBetRegionAdapter = BetRegionAdapter(listOf())
         mBetRegionAdapter?.setOnUnitClickListener(object: BetRegionAdapter.OnUnitClickListener{
             override fun onUnitClick() {
-
+                //TODO 投注按鈕被點擊，應該將目前的投注選擇過正則，判斷是否該顯示注數及允許投注與否
+                var selectNumber = BetCountUtil.getBetSelectNumber(mCurrentPlayTypeID.toInt(),
+                    mBetPositionAdapter!!.data)
+                var count = BetCountUtil.getBetCount(selectNumber)
+                Log.e("Ian","selectNumber:$selectNumber")
+                Log.e("Ian","count:$count")
             }
         })
         rvBetRegion.adapter = mBetRegionAdapter
@@ -245,6 +251,8 @@ class BetFragment : BaseFragment() {
                 override fun onSelect(playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String) {
                     Log.e("Ian", "[onPlayTypeSelectListener] playTypeCode:$playTypeCode, playTypeName:$playTypeName, betGroupName:$betGroupName, betTypeName:$betTypeName")
                     tvGamePlayType.text = "$betTypeName $betGroupName $playTypeName"
+                    //儲存目前的playTypeCode，以便計算注數等判斷
+                    mCurrentPlayTypeID = playTypeCode.toString()
                     //TODO change投注欄位的ui
 
                     var result = getTypeData(context!!, playTypeCode.toString())
@@ -483,6 +491,7 @@ class BetFragment : BaseFragment() {
         }
 
         context?.let {
+            mCurrentPlayTypeID = defaultPlayTypeCode.toString()
             var result = getTypeData(it, defaultPlayTypeCode.toString())
             mCurrentBetItemType = result.first
             var oriList = result.second
