@@ -32,13 +32,13 @@ interface SampleService {
     suspend fun issueInfo(@Header("Authorization") token: String,
                   @Path("gameId") gameId: Int): IssueInfoResponse
     /**
-     * 取得多個遊戲最新開獎結果
+     * 取得(單/多)個遊戲最新開獎結果
      * @param token String
      * @param gameId int
      * */
     @GET("/api/Draw/LatestIssueResult")
     suspend fun lastIssueResult(@Header("Authorization") token: String,
-                          @Query("gameIdList") gameId: Int): LastIssueResultResponse
+                          @Query("gameIdList", encoded = true) gameId: String): LastIssueResultResponse
 
     /**
      * Mobile獎金盤-遊戲玩法清單資訊
@@ -58,4 +58,6 @@ interface SampleService {
     suspend fun historical(@Header("Authorization") token: String,
                    @Path("gameId") gameId: Int,
                    @Query("pageSize") page: Int): HistoricalResponse
+
+
 }

@@ -19,6 +19,10 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
         navController?.popBackStack()
     }
 
+    override fun toLotteryCenterPage() {
+        navController?.navigate(R.id.action_betMenuFragment_to_lotteryCenterFragment)
+    }
+
     override fun registerPage() {
         navController?.navigate(R.id.action_loginFragment_to_registerFragment)
     }

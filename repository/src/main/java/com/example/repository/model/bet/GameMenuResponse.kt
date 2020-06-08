@@ -11,7 +11,7 @@ data class GameMenuResponse(
 ) : BaseResult() {
     data class Data(
         @SerializedName("gameInfoEntityList")
-        val gameInfoEntityList: List<GameInfoEntity>,
+        var gameInfoEntityList: List<GameInfoEntity>,
         @SerializedName("gameTypeDisplayName")
         val gameTypeDisplayName: String,
         @SerializedName("id")

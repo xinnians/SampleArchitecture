@@ -9,7 +9,6 @@ import com.example.repository.model.base.ViewState.Success
 import com.example.repository.model.bet.*
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 class BetViewModel(var repository: Repository) : ViewModel(){
 
@@ -28,7 +27,7 @@ class BetViewModel(var repository: Repository) : ViewModel(){
         return repository.getIssueInfo(token, gameId).asLiveData()
     }
 
-    fun getLastIssueResult(token:String, gameId: Int): LiveData<ViewState<LastIssueResultResponse>>{
+    fun getLastIssueResult(token:String, gameId: ArrayList<Int>): LiveData<ViewState<LastIssueResultResponse>>{
         return repository.getLastIssueResult(token, gameId).asLiveData()
     }
 
