@@ -42,7 +42,6 @@ class BetFragment : BaseFragment() {
     private lateinit var mViewModel: BetViewModel
     private var mPlayTypeDialog: PlayTypeDialog? = null
     private var mLotteryHistoryDialog: LotteryRecordDialog? = null
-    private var mDatePickerDialog: DatePickerDialog? = null
 
     private var mGameID: Int = -1
     private var mGameTypeID: Int = -1
@@ -67,16 +66,6 @@ class BetFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         setListener()
-        ivGameName.onClick {
-            mDatePickerDialog = context?.let { DatePickerDialog(it, object: DatePickerDialog.GetDateListener{
-                override fun getSearch(list: ArrayList<Long>) {
-                    Log.d("mori time", list[0].toString())
-                    Log.d("mori time", list[1].toString())
-                }
-            })
-            }
-            mDatePickerDialog?.show()
-        }
     }
 
     private fun init() {
