@@ -60,4 +60,8 @@ class BetViewModel(var repository: Repository) : ViewModel(){
         return repository.getLotteryHistoricalRecord(token, gameId).asLiveData()
     }
 
+    fun getBetList(token: String, param: BetEntityParam): LiveData<ViewState<BetListResponse>>{
+        return repository.getBetList(token,param).asLiveData()
+    }
+
 }

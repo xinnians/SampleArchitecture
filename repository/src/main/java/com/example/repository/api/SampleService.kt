@@ -59,5 +59,13 @@ interface SampleService {
                    @Path("gameId") gameId: Int,
                    @Query("pageSize") page: Int): HistoricalResponse
 
+    /**
+     * 下注-獎金盤
+     * @param token String
+     * */
+    @POST("api/BetOrder/BetList")
+    suspend fun betList(@Header("Authorization") token: String,
+                @Body param: BetEntityParam): BetListResponse
+
 
 }

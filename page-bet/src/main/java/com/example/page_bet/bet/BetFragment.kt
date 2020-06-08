@@ -47,6 +47,8 @@ class BetFragment : BaseFragment() {
     private var mGameTypeID: Int = -1
     private var mCurrentPlayTypeID: String = ""
     private var mCurrentBetItemType: BetItemType = BetItemType.NONE
+    private var mCurrentSelectNumber: String = ""
+    private var mCurrentIssueId: Int = -1
 
     private var mBetPositionAdapter: BetPositionAdapter? = null
     private var mBetRegionAdapter: BetRegionAdapter? = null
@@ -117,12 +119,38 @@ class BetFragment : BaseFragment() {
                 //TODO 投注按鈕被點擊，應該將目前的投注選擇過正則，判斷是否該顯示注數及允許投注與否
                 var selectNumber = BetCountUtil.getBetSelectNumber(mCurrentPlayTypeID.toInt(),
                     mBetPositionAdapter!!.data)
+                mCurrentSelectNumber = selectNumber.betNumber
                 var count = BetCountUtil.getBetCount(selectNumber)
                 Log.e("Ian","selectNumber:$selectNumber")
                 Log.e("Ian","count:$count")
             }
         })
         rvBetRegion.adapter = mBetRegionAdapter
+
+        btnBet.onClick {
+
+            //TODO 先判斷當前選擇是否符合可以下注的選擇，可以的話再進行下注的動作。
+            var para: BetEntityParam = BetEntityParam(mCurrentIssueId, arrayListOf(BonusOrderEntity(
+                betCurrency = 1,
+                betUnit = 1.0,
+                multiple = 1,
+                rebate = 0.0,
+                uuid = "uuid",
+                amount = 1,
+                playTypeCode = mCurrentPlayTypeID.toInt(),
+                betNumber = mCurrentSelectNumber
+            )))
+            Log.e("Ian","[getBetList] param: $para")
+            mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty",para).observeNotNull(this){state ->
+                when(state){
+                    is ViewState.Success -> {
+                        Log.e("Ian", "[getBetList] ViewState.success: data:${state.data}")
+                    }
+                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+                }
+            }
+        }
 
     }
 
@@ -136,6 +164,7 @@ class BetFragment : BaseFragment() {
                         tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum ->
                             if (issueNum.length!! > 7) issueNum.substring(issueNum.length - 7) else issueNum
                         }}期"
+                        mCurrentIssueId = it.issueId
                         var leftTime =
                             ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
                         launch {

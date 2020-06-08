@@ -160,4 +160,14 @@ class Repository(private val sampleService: SampleService) {
             emit(ViewState.error(it.message.orEmpty()))
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getBetList(token: String,parameter: BetEntityParam): Flow<ViewState<BetListResponse>>{
+        return flow {
+            emit(ViewState.loading())
+            val result = sampleService.betList(token,parameter)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 }
