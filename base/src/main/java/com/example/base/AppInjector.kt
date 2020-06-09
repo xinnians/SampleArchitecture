@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.example.repository.Repository
 import com.example.repository.api.BaseAPI
 import com.example.repository.api.SampleAPI
+import com.example.repository.room.LocalDatabase
 
 object AppInjector {
 
@@ -18,17 +19,18 @@ object AppInjector {
     private lateinit var repository: Repository
     private lateinit var preferences: SharedPreferencesProvider
     private lateinit var resource: ResourceProvider
+    private lateinit var localDb: LocalDatabase
 
     fun init(application: Application, factory: BaseViewModelFactory) {
         AppInjector.application = application
-
+        localDb = LocalDatabase.getInstance(application)
         AppInjector.application.let {
             preferences =
                 SharedPreferencesProvider(it)
             resource =
                 ResourceProvider(it)
             BaseAPI.init(application)
-            repository = Repository(SampleAPI.getInstance()?.getService()!!)
+            repository = Repository(SampleAPI.getInstance()?.getService()!!, localDb)
             factory.init(application, repository, preferences, resource)
             viewModelFactory = factory
         }

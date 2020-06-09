@@ -6,8 +6,14 @@ import androidx.room.PrimaryKey
 @Entity
 data class Cart (
     @PrimaryKey(autoGenerate = true)
-    var cartId: Int,
-    var betNumber: String,
-    var gameTypeId: Int,
-    var playTypeId: String
+    var cartId: Int, //db id
+    var issueId: Int,//期號
+    var playTypeCode: Int,//玩法
+    var betNumber: String,//投注號碼
+    var betCurrency: Int,//元角分厘
+    var betUnit: Double,//單位
+    var multiple: Int,//倍數
+    var rebate: Double,//返點
+    var uuid: String,
+    var amount: Int//金額
 )

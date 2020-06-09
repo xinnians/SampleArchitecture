@@ -5,13 +5,15 @@ import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
+import com.example.repository.room.Cart
+import com.example.repository.room.LocalDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class Repository(private val sampleService: SampleService) {
+class Repository(private val sampleService: SampleService, private val localDb: LocalDatabase) {
 
     companion object {
         const val test = "tttttt"
@@ -170,4 +172,9 @@ class Repository(private val sampleService: SampleService) {
             emit(ViewState.error(it.message.orEmpty()))
         }.flowOn(Dispatchers.IO)
     }
+
+    //Local Database
+    fun addCart(cart: Cart) = localDb.cartDao().insertCart(cart)
+
+    fun getCartList() = localDb.cartDao().getCartList()
 }

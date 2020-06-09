@@ -7,6 +7,7 @@ import com.example.repository.Repository
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.base.ViewState.Success
 import com.example.repository.model.bet.*
+import com.example.repository.room.Cart
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 
@@ -63,5 +64,10 @@ class BetViewModel(var repository: Repository) : ViewModel(){
     fun getBetList(token: String, param: BetEntityParam): LiveData<ViewState<BetListResponse>>{
         return repository.getBetList(token,param).asLiveData()
     }
+
+    //Local Database
+    fun addCart(cart: Cart) = repository.addCart(cart)
+
+    fun getCartList() = repository.getCartList()
 
 }

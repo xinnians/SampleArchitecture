@@ -3,7 +3,6 @@ package com.example.base
 import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.repository.room.CartRepository
 import com.example.repository.room.LocalDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +12,6 @@ import kotlin.coroutines.CoroutineContext
 open class BaseFragment : Fragment(), CoroutineScope {
 
     private lateinit var mSharedViewModel: SharedViewModel
-    var db: LocalDatabase? = null
-    lateinit var cartRepository: CartRepository
     lateinit var job: Job
 
     override val coroutineContext: CoroutineContext

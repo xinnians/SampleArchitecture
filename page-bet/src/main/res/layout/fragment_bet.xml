@@ -502,7 +502,8 @@
                     android:layout_marginStart="@dimen/dp_32"
                     app:layout_constraintStart_toEndOf="@id/ivBetHistory"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_shopping_cart_solid"/>
+                    android:src="@drawable/ic_shopping_cart_solid"
+                    />
 
                 <ImageView
                     android:id="@+id/ivAddToShoppingCart"

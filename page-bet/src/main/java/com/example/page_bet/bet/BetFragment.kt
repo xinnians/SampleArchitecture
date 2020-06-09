@@ -24,11 +24,9 @@ import com.example.page_bet.bet.play_type_select.PlayTypeDialog
 import com.example.repository.constant.BetItemType
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
-import com.example.repository.room.CartDao
-import com.example.repository.room.CartRepository
-import com.example.repository.room.LocalDatabase
-import kotlinx.android.synthetic.*
+import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
@@ -70,9 +68,6 @@ class BetFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = LocalDatabase.getInstance(requireContext())
-        cartRepository = CartRepository(db!!.cartDao())
-        cartRepository.getCartList()
         init()
         setListener()
     }
@@ -458,6 +453,33 @@ class BetFragment : BaseFragment() {
 
         ivMoreIssueHistory.setOnClickListener {
             initHistoryRecord(getSharedViewModel().lotteryToken.value?:"empty",mGameID)
+        }
+
+        ivAddToShoppingCart.onClick {
+            var cart = Cart(0,
+                mCurrentIssueId,
+                playTypeCode = mCurrentPlayTypeID.toInt(),
+                betNumber = mCurrentSelectNumber,
+                betCurrency = 1,
+                betUnit = 1.0,
+                multiple = 1,
+                rebate = 0.0,
+                uuid = "uuid",
+                amount = 1
+            )
+
+            GlobalScope.launch {
+                if (-1L != mViewModel.addCart(cart)) {
+                    requireActivity().runOnUiThread{
+                        toast("加入購物車成功")
+                    }
+                }
+            }
+
+        }
+
+        ivShoppingCart.onClick {
+
         }
     }
 
