@@ -12,21 +12,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="筛选条件"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dp_12"
         />
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_20"
         android:src="@drawable/close"
         />
 
@@ -37,8 +37,8 @@
         android:text="Start"
         app:layout_constraintTop_toBottomOf="@+id/tvPickerTitle"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="35dp"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_35"
         />
 
     <TextView
@@ -49,8 +49,8 @@
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/tvPickerTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="35dp"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_35"
         />
 
     <TextView
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:textSize="28sp"
+        android:textSize="@dimen/sp_28"
         app:layout_constraintTop_toBottomOf="@+id/tvLabelStart"
         app:layout_constraintStart_toStartOf="@+id/tvLabelStart"
         />
@@ -68,11 +68,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="month"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintBottom_toBottomOf="@+id/tvStartDay"
         app:layout_constraintStart_toEndOf="@+id/tvStartDay"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_3"
         />
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="-"
-        android:textSize="28sp"
+        android:textSize="@dimen/sp_28"
         app:layout_constraintTop_toBottomOf="@+id/tvLabelStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,10 +91,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End"
-        android:textSize="28sp"
+        android:textSize="@dimen/sp_28"
         app:layout_constraintBottom_toBottomOf="@+id/tvStartDay"
         app:layout_constraintEnd_toStartOf="@+id/tvEndMonth"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/dp_10"
         />
 
     <TextView
@@ -102,11 +102,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="month"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintBottom_toBottomOf="@+id/tvStartDay"
         app:layout_constraintEnd_toEndOf="@+id/tvLabelEnd"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_3"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,7 +116,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="@dimen/dp_70"
         android:background="@drawable/bg_radius_white_board"
         >
 
@@ -125,11 +125,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择区间不得超过45天"
-            android:textSize="12sp"
+            android:textSize="@dimen/sp_12"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="@dimen/dp_19"
             />
 
         <com.savvi.rangedatepicker.CalendarPickerView
@@ -137,14 +137,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingBottom="@dimen/dp_16"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
             android:scrollbarStyle="outsideOverlay"
             app:tsquare_orientation_horizontal="false"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelNote"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_20"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -156,9 +156,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         android:text="查询"
         android:textColor="#fff"
         android:background="@drawable/bg_button"

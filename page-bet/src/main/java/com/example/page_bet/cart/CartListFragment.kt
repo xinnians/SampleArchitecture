@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import com.example.base.BaseFragment
 import com.example.base.inflate
 import com.example.page_bet.R
-import kotlinx.android.synthetic.main.fragment_cart.*
 
-class CartFragment : BaseFragment() {
-    private lateinit var cartPagerAdapter: CartPagerAdapter
+class CartListFragment : BaseFragment() {
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,9 +18,7 @@ class CartFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cartPagerAdapter = CartPagerAdapter(childFragmentManager)
-        vpCartType.adapter = cartPagerAdapter
-        tlCartType.setupWithViewPager(vpCartType)
+
     }
 
 

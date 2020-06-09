@@ -13,22 +13,22 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="14sp"
+        android:textSize="@dimen/sp_14"
         />
 
 
     <EditText
         android:id="@+id/etInput"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/dp_40"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="start|center"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:textSize="14sp"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingEnd="@dimen/dp_12"
+        android:textSize="@dimen/sp_14"
         android:background="@drawable/radius_board"
         />
 
@@ -39,8 +39,8 @@
         app:layout_constraintEnd_toEndOf="@id/etInput"
         app:layout_constraintTop_toTopOf="@+id/etInput"
         app:layout_constraintBottom_toBottomOf="@+id/etInput"
-        android:layout_marginEnd="16dp"
-        android:textSize="12sp"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:textSize="@dimen/sp_12"
         android:text="show"
         />
 
@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etInput"
-        android:layout_marginTop="5dp"
-        android:textSize="12sp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="@dimen/sp_12"
         android:textColor="#FF0000"
         android:visibility="gone"
         />

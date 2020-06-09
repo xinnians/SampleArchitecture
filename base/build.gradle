@@ -36,6 +36,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation project(':repository')
+    implementation project(':resource')
     // Android Architecture
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 

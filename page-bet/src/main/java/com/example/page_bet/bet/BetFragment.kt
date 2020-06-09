@@ -24,6 +24,9 @@ import com.example.page_bet.bet.play_type_select.PlayTypeDialog
 import com.example.repository.constant.BetItemType
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
+import com.example.repository.room.CartDao
+import com.example.repository.room.CartRepository
+import com.example.repository.room.LocalDatabase
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.coroutines.launch
@@ -67,6 +70,9 @@ class BetFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        db = LocalDatabase.getInstance(requireContext())
+        cartRepository = CartRepository(db!!.cartDao())
+        cartRepository.getCartList()
         init()
         setListener()
     }
