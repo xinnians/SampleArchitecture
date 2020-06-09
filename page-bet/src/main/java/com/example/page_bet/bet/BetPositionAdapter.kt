@@ -26,15 +26,17 @@ class BetPositionAdapter(data: List<MultiplePlayTypePositionItem>) : BaseMultiIt
             it.setText(R.id.tvPosition, item?.getData()?.displayTitle)
             it.addOnClickListener(R.id.tvPosition)
 
-            if(item?.getData()?.isSelect == true){
-                it.setTextColor(R.id.tvPosition,mContext.getColor(R.color.colorBlack))
-                it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_white_25_corner_dark_stroke)
-            }else{
-                it.setTextColor(R.id.tvPosition,mContext.getColor(R.color.colorLittleGray))
-                if(item?.getData()?.isDataSet == true){
-                    it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_darkgray_25_corner)
+            if(it.itemViewType != 0){
+                if(item?.getData()?.isSelect == true){
+                    it.setTextColor(R.id.tvPosition,mContext.getColor(R.color.colorBlack))
+                    it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_white_25_corner_dark_stroke)
                 }else{
-                    it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_gray_25_corner)
+                    it.setTextColor(R.id.tvPosition,mContext.getColor(R.color.colorLittleGray))
+                    if(item?.getData()?.isDataSet == true){
+                        it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_darkgray_25_corner)
+                    }else{
+                        it.setBackgroundRes(R.id.tvPosition,R.drawable.bg_gray_25_corner)
+                    }
                 }
             }
         }

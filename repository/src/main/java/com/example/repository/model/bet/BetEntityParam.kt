@@ -7,9 +7,7 @@ data class BetEntityParam(
     @SerializedName("issueId")
     val issueId: Int,
     @SerializedName("bonusOrder")
-    val bonusOrder: ArrayList<BonusOrderEntity>,
-    @SerializedName("inputHash")
-    val inputHash: String = "inputHash"
+    val bonusOrder: ArrayList<BonusOrderEntity>
 )
 
 data class BonusOrderEntity(

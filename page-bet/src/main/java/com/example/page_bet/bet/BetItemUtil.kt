@@ -34,29 +34,29 @@ object BetItemUtil {
         "1" to false, "2" to false, "3" to false)
 
     private var templateThreeChar: ArrayList<BetUnit> = arrayListOf(
-        BetUnit("小小小",1,displayMode = BetUnitDisplayMode.THREE_CHAR),
-        BetUnit("小小大",2,displayMode = BetUnitDisplayMode.THREE_CHAR),
-        BetUnit("小大小",3,displayMode = BetUnitDisplayMode.THREE_CHAR),
-        BetUnit("小大大",4,displayMode = BetUnitDisplayMode.THREE_CHAR)
+        BetUnit("小小小","1",displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小小大","2",displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小大小","3",displayMode = BetUnitDisplayMode.THREE_CHAR),
+        BetUnit("小大大","4",displayMode = BetUnitDisplayMode.THREE_CHAR)
     )
 
     private var templateTwoChar: ArrayList<BetUnit> = arrayListOf(
-        BetUnit("十個",1,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("百個",2,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("百十",3,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千個",4,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千十",5,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千百",6,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬個",7,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬十",8,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬百",9,displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬千",10,displayMode = BetUnitDisplayMode.TWO_CHAR)
+        BetUnit("十個","1",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百個","2",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百十","3",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千個","4",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千十","5",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千百","6",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬個","7",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬十","8",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬百","9",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬千","10",displayMode = BetUnitDisplayMode.TWO_CHAR)
     )
 
     private var templateOneChar: ArrayList<BetUnit> = arrayListOf(
-        BetUnit("龍",1,displayMode = BetUnitDisplayMode.ONE_CHAR),
-        BetUnit("虎",2,displayMode = BetUnitDisplayMode.ONE_CHAR),
-        BetUnit("和",3,displayMode = BetUnitDisplayMode.ONE_CHAR)
+        BetUnit("龍","1",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("虎","2",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("和","3",displayMode = BetUnitDisplayMode.ONE_CHAR)
     )
 
     private var hashMapForZeroToEighteen = hashMapOf(
@@ -110,6 +110,8 @@ object BetItemUtil {
             }
             //五星-直選單式
             playTypeID_205001 -> {
+                itemType = BetItemType.SINGLE_BET_TYPE
+                stringArray = context.resources.getStringArray(R.array.single).toList()
 
             }
             //五星-組選120
@@ -536,6 +538,11 @@ object BetItemUtil {
                     betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,17)))
                 }
             }
+            BetItemType.SINGLE_BET_TYPE -> {
+                for (text in stringArray){
+                    betArray.add(BetData(displayTitle = text,unitList = arrayListOf(BetUnit(unitName = "", unitValue = "",displayMode = BetUnitDisplayMode.EDIT_AREA))))
+                }
+            }
 //            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {
 //                for (text in stringArray){
 //                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToFour.clone() as HashMap<String, Boolean>))
@@ -559,7 +566,7 @@ object BetItemUtil {
         when (type){
             BetUnitDisplayMode.ONLY_NUMBER -> {
                 for (index in start..end){
-                    list.add(BetUnit(index.toString(),index,false,BetUnitDisplayMode.ONLY_NUMBER))
+                    list.add(BetUnit(index.toString(),index.toString(),false,BetUnitDisplayMode.ONLY_NUMBER))
                 }
             }
             BetUnitDisplayMode.ONE_CHAR -> {

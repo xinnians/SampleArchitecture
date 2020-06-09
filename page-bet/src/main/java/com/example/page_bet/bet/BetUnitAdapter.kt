@@ -6,7 +6,7 @@ import com.example.page_bet.R
 import com.example.repository.constant.BetUnitDisplayMode
 import com.example.repository.model.bet.MultipleBetUnit
 
-class BetUnitAdapter(data: List<MultipleBetUnit>,var parentPostion: Int) :
+class BetUnitAdapter(data: List<MultipleBetUnit>, var parentPostion: Int) :
     BaseMultiItemQuickAdapter<MultipleBetUnit, BaseViewHolder>(data) {
 
     init {
@@ -14,27 +14,26 @@ class BetUnitAdapter(data: List<MultipleBetUnit>,var parentPostion: Int) :
         addItemType(BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_unit_one_char)
         addItemType(BetUnitDisplayMode.TWO_CHAR.typeNumber, R.layout.item_bet_unit_two_char)
         addItemType(BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_unit_three_char)
+        addItemType(BetUnitDisplayMode.EDIT_AREA.typeNumber, R.layout.item_bet_unit_edit_area)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleBetUnit?) {
         helper?.let {
-            if(item?.data?.isSelect == true){
-                it.setBackgroundRes(R.id.tvUnitTitle,R.drawable.bg_darkgray_circle)
+            if (item?.data?.isSelect == true) {
+                it.setBackgroundRes(R.id.tvUnitTitle, R.drawable.bg_darkgray_circle)
                 mContext?.getColor(R.color.colorWhite)?.let { it1 ->
-                    it.setTextColor(R.id.tvUnitTitle,
-                        it1
+                    it.setTextColor(
+                        R.id.tvUnitTitle, it1
                     )
                 }
-            }else{
-                it.setBackgroundRes(R.id.tvUnitTitle,R.drawable.bg_white_circle_gray_stroke)
+            } else {
+                it.setBackgroundRes(R.id.tvUnitTitle, R.drawable.bg_white_circle_gray_stroke)
                 mContext?.getColor(R.color.colorLittleBlack)?.let { it1 ->
-                    it.setTextColor(R.id.tvUnitTitle,
-                        it1
+                    it.setTextColor(
+                        R.id.tvUnitTitle, it1
                     )
                 }
             }
-
-
             it.setText(R.id.tvUnitTitle, item?.data?.unitName)
             it.addOnClickListener(R.id.tvUnitTitle)
         }

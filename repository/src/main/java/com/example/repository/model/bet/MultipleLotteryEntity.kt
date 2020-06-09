@@ -6,6 +6,10 @@ import com.example.repository.constant.BetUnitDisplayMode
 
 class MultipleLotteryEntity(var itemType: BetUnitDisplayMode = BetUnitDisplayMode.ONLY_NUMBER,var data: BetData,var isFull: Boolean = false): MultiItemEntity {
 
-    override fun getItemType(): Int = if(isFull)10+itemType.typeNumber else itemType.typeNumber
+    companion object{
+        const val FULL_SCREEN = 10
+    }
+
+    override fun getItemType(): Int = if(isFull)FULL_SCREEN+itemType.typeNumber else itemType.typeNumber
 
 }

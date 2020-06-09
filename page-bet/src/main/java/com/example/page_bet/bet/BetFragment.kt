@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
@@ -70,6 +71,8 @@ class BetFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         setListener()
+
+//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     private fun init() {
@@ -121,15 +124,31 @@ class BetFragment : BaseFragment() {
                 var selectNumber = BetCountUtil.getBetSelectNumber(mCurrentPlayTypeID.toInt(),
                     mBetPositionAdapter!!.data)
                 mCurrentSelectNumber = selectNumber.betNumber
-                var count = BetCountUtil.getBetCount(selectNumber)
+
+                //取得當前玩法的正則
+                mPlayTypeDialog?.data?.let {betTypeList ->
+                    for(betType in betTypeList){
+                        for (betGroup in betType.mobileBetGroupEntityList){
+                            for(playType in betGroup.playTypeInfoEntityList){
+                                if(playType.playTypeCode.toString() == mCurrentPlayTypeID){
+                                    Log.e("Ian","${playType.regex}")
+                                    var count = BetCountUtil.getBetCount(selectNumber,playType.regex)
+                                    Log.e("Ian","count:$count")
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 Log.e("Ian","selectNumber:$selectNumber")
-                Log.e("Ian","count:$count")
             }
         })
         rvBetRegion.adapter = mBetRegionAdapter
 
         btnBet.onClick {
 
+            //TODO 根據獎金盤/信用盤的不同 call的api跟參數皆有差異
             //TODO 先判斷當前選擇是否符合可以下注的選擇，可以的話再進行下注的動作。
             var para: BetEntityParam = BetEntityParam(mCurrentIssueId, arrayListOf(BonusOrderEntity(
                 betCurrency = 1,
@@ -294,8 +313,9 @@ class BetFragment : BaseFragment() {
 
                     //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
                     if (oriList.isNotEmpty()) {
+                        var type = if(mCurrentBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size
                         for (item in oriList) {
-                            modifyList.add(MultiplePlayTypePositionItem(oriList.size, item))
+                            modifyList.add(MultiplePlayTypePositionItem(type, item))
                         }
                     } else {
                         modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
@@ -557,10 +577,10 @@ class BetFragment : BaseFragment() {
             //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
             if (oriList.isNotEmpty()) {
                 for (item in oriList) {
-                    modifyList.add(MultiplePlayTypePositionItem(oriList.size, item))
+                    modifyList.add(MultiplePlayTypePositionItem(if(mCurrentBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size, item))
                 }
             } else {
-                modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
+                modifyList.add(MultiplePlayTypePositionItem(0, BetData("沒有管理到", arrayListOf())))
             }
 //                    Log.e("Ian","itemType:${modifyList?.get(0)?.itemType}, Data:${modifyList?.get(0)?.getData()}")
 

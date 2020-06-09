@@ -412,14 +412,17 @@ enum class BetItemType(val typeNumber: Int,val unitDisplayMode: BetUnitDisplayMo
     //任三組選 0-9
     ANY_THREE_SET(14,BetUnitDisplayMode.ONLY_NUMBER),
     //任四組選 0-9
-    ANY_FOUR_SET(15,BetUnitDisplayMode.ONLY_NUMBER)
+    ANY_FOUR_SET(15,BetUnitDisplayMode.ONLY_NUMBER),
+    //單式
+    SINGLE_BET_TYPE(16,BetUnitDisplayMode.EDIT_AREA)
 }
 
 enum class BetUnitDisplayMode(val typeNumber: Int){
     ONLY_NUMBER(1),
     ONE_CHAR(2),
     TWO_CHAR(3),
-    THREE_CHAR(4)}
+    THREE_CHAR(4),
+    EDIT_AREA(5)}
 
 enum class GameTypeId(val typeId: Int,var chineseName: String){
     RACING(1,"北京賽車"),

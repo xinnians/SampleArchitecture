@@ -206,4 +206,9 @@
         <item>號碼</item>
     </string-array>
 
+    <!--  單式  -->
+    <string-array name="single">
+        <item>请在下方输入框内输入或黏贴投注内容,每注之间请用空格、逗号或者分号隔开</item>
+    </string-array>
+
 </resources>

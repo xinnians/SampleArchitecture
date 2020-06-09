@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetSelectNumber
 import com.example.repository.model.bet.MultiplePlayTypePositionItem
+import java.net.URLDecoder
+import java.util.regex.Pattern
 
 object BetCountUtil {
 
@@ -160,7 +162,26 @@ object BetCountUtil {
         return BetSelectNumber(playtypeCode.toString(),result.toString())
     }
 
-    fun getBetCount(betSelectNumber: BetSelectNumber): Int {
+    /**
+     * 會先以傳入的正則表示式檢查該betSelectNumber有無符合正則規則，不符合則回傳0，符合則進行注數運算。
+     */
+    fun getBetCount(betSelectNumber: BetSelectNumber, regex: String): Int {
+
+        var currentRegex = URLDecoder.decode(regex,"UTF-8")
+        var pattern: Pattern? = null
+
+        if(currentRegex.isNotEmpty()){
+            pattern = Pattern.compile(currentRegex)
+            pattern?.let {
+                if(it.matcher(betSelectNumber.betNumber).matches()){
+
+                }else{
+                    return 0
+                }
+            }
+        }else{
+            return 0
+        }
 
         val gameID = betSelectNumber.playTypeCode.substring(0, 1)
         val playTypeID = betSelectNumber.playTypeCode.substring(2, 3)
