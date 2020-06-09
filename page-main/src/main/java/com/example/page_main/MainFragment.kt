@@ -54,7 +54,6 @@ class MainFragment : BaseFragment() {
         (activity as BaseActivity?)?.showBottomNav()
         mMainViewModel = AppInjector.obtainViewModel(this)
         Log.e("[MainFragment]", "lotteryToken: ${getSharedViewModel().lotteryToken.value}")
-
         mMainViewModel.getGameMenuResult(getSharedViewModel().lotteryToken.value.orEmpty())
             .observeNotNull(this) { state ->
                 when (state) {
@@ -73,7 +72,6 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setListener() {
-
         // 領紅包按鈕
         btnRedBag.setOnClickListener {
             //TODO
@@ -122,7 +120,6 @@ class MainFragment : BaseFragment() {
                 if(CarouselLayoutManager.INVALID_POSITION != adapterPosition) {
                     Log.d("msg", "invalid item: ${adapter.getItem(adapterPosition)}")
                 }
-                Log.d("msg", "item name: ${adapter.getItem(adapterPosition)}")
             }
         })
     }

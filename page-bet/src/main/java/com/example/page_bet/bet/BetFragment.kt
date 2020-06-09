@@ -212,6 +212,7 @@ class BetFragment : BaseFragment() {
                     state.data.data.forEach {
                         list.add(MultipleHistoryRecord(mGameTypeID,it))
                     }
+
                     initHistoryDialog(list)
                 }
                 is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")

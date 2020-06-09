@@ -11,6 +11,7 @@ import com.example.base.BaseFragment
 import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
+import com.example.page_bet.bet.BetFragment
 import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.MultipleIssueResultItem
@@ -73,8 +74,10 @@ class LotteryCenterFragment : BaseFragment() {
 
         mAdapter= ViewPagerAdapter()
         mAdapter!!.setResultAction {
-            Log.d("msg", "reult win: ${it.data?.winNum}")
-            navigation.toLotteryResultPage()
+            Log.d("msg", "reult win: ${it.data?.winNum} + gameId: ${it.data?.gameId}")
+            var bundle = Bundle()
+            it.data?.gameId?.let { it1 -> bundle.putInt(BetFragment.TAG_GAME_ID, it1) }
+            navigation.toLotteryResultPage(bundle)
         }
 //        var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 //        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
