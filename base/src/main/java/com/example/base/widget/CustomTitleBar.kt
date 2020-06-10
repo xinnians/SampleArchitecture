@@ -29,16 +29,16 @@ class CustomTitleBar  @JvmOverloads constructor(
             if (isHide) {
                 isHide = false
                 ivShowMoney.setImageDrawable(context.drawable(R.drawable.open_eye))
-                tvMoney.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 Handler().postDelayed({
                     ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
-                    tvMoney.transformationMethod = PasswordTransformationMethod.getInstance()
+                    amount.transformationMethod = PasswordTransformationMethod.getInstance()
                     isHide = true
                 }, showTime)
             } else {
                 isHide = true
                 ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
-                tvMoney.let {
+                amount.let {
                     it.transformationMethod = PasswordTransformationMethod.getInstance()
                 }
                 Handler().removeCallbacksAndMessages(null)
@@ -50,11 +50,11 @@ class CustomTitleBar  @JvmOverloads constructor(
         get() = this.toString()
         set(money){
             if (money.isNotBlank() || money.isNotEmpty()) {
-                tvMoney.text = money
+                amount.text = money
             } else {
-                tvMoney.text = "0"
+                amount.text = "0"
             }
-            tvMoney.transformationMethod = PasswordTransformationMethod.getInstance()
+            amount.transformationMethod = PasswordTransformationMethod.getInstance()
         }
 
     var showTime: Long = 1000

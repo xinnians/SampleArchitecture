@@ -74,7 +74,7 @@
         />
 
     <TextView
-        android:id="@+id/tvMoney"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_16"
         app:layout_constraintStart_toEndOf="@+id/tvDollar"
@@ -88,7 +88,7 @@
         android:id="@+id/ivShowMoney"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
-        app:layout_constraintStart_toEndOf="@+id/tvMoney"
+        app:layout_constraintStart_toEndOf="@+id/amount"
         app:layout_constraintBottom_toBottomOf="@+id/ivTitleIcon"
         android:layout_marginStart="@dimen/dp_4"
         android:src="@drawable/close_eye"

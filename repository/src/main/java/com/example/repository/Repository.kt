@@ -1,6 +1,6 @@
 package com.example.repository
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
@@ -22,17 +22,18 @@ class Repository(private val sampleService: SampleService, private val localDb: 
 
     private var fakeGameMenuResponse: GameMenuResponse = GameMenuResponse(
         listOf(
+//            GameMenuResponse.Data(
+//                listOf(
+//                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
+//                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
+//                ), "Hot", 134
+//            ), GameMenuResponse.Data(
+//                listOf(
+//                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
+//                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
+//                ), "Favorite", 7
+//            ),
             GameMenuResponse.Data(
-                listOf(
-                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
-                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
-                ), "Hot", 134
-            ), GameMenuResponse.Data(
-                listOf(
-                    GameMenuResponse.Data.GameInfoEntity(220003, "新西兰45秒彩", 1, 2, -5),
-                    GameMenuResponse.Data.GameInfoEntity(220002, "腾讯分分彩", 1, 2, -10)
-                ), "Favorite", 7
-            ), GameMenuResponse.Data(
                 listOf(
                     GameMenuResponse.Data.GameInfoEntity(110001, "北京PK10", 1, 1, -60),
                     GameMenuResponse.Data.GameInfoEntity(110002, "幸运飞艇", 1, 1, -30)
@@ -174,7 +175,27 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     }
 
     //Local Database
-    fun addCart(cart: Cart) = localDb.cartDao().insertCart(cart)
+    fun addCart(cart: Cart) = localDb.cartDao().addCart(cart)
 
-    fun getCartList() = localDb.cartDao().getCartList()
+    fun getCartList(gameId: Int): Flow<ViewState<MutableList<Cart>>>{
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().getCartList(gameId)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+
+    fun getAllGameId(): Flow<ViewState<MutableList<Int>>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().getAllGameId()
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
 }

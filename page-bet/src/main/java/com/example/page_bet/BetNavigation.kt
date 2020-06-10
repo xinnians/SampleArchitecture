@@ -9,4 +9,5 @@ interface BetNavigation {
     fun goBackToBetMenuPage()
     fun toLotteryCenterPage()
     fun toLotteryResultPage()
+    fun toShoppingCartPage()
 }

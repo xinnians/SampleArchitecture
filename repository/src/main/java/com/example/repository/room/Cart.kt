@@ -8,6 +8,7 @@ data class Cart (
     @PrimaryKey(autoGenerate = true)
     var cartId: Int, //db id
     var issueId: Int,//期號
+    var gameId: Int,
     var playTypeCode: Int,//玩法
     var betNumber: String,//投注號碼
     var betCurrency: Int,//元角分厘
@@ -15,5 +16,6 @@ data class Cart (
     var multiple: Int,//倍數
     var rebate: Double,//返點
     var uuid: String,
+    var betCount: Int,//注數
     var amount: Int//金額
 )

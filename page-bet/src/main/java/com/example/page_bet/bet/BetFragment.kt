@@ -158,7 +158,8 @@ class BetFragment : BaseFragment() {
                 uuid = "uuid",
                 amount = 1,
                 playTypeCode = mCurrentPlayTypeID.toInt(),
-                betNumber = mCurrentSelectNumber
+                betNumber = mCurrentSelectNumber,
+                betCount = 10000
             )))
             Log.e("Ian","[getBetList] param: $para")
             mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty",para).observeNotNull(this){state ->
@@ -478,6 +479,7 @@ class BetFragment : BaseFragment() {
         ivAddToShoppingCart.onClick {
             var cart = Cart(0,
                 mCurrentIssueId,
+                gameId = mGameID,
                 playTypeCode = mCurrentPlayTypeID.toInt(),
                 betNumber = mCurrentSelectNumber,
                 betCurrency = 1,
@@ -485,6 +487,7 @@ class BetFragment : BaseFragment() {
                 multiple = 1,
                 rebate = 0.0,
                 uuid = "uuid",
+                betCount = 10000,
                 amount = 1
             )
 
@@ -499,7 +502,7 @@ class BetFragment : BaseFragment() {
         }
 
         ivShoppingCart.onClick {
-
+            navigation.toShoppingCartPage()
         }
     }
 

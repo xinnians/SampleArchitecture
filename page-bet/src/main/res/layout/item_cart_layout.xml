@@ -4,6 +4,7 @@
     android:layout_height="@dimen/dp_62"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
+    android:layout_marginBottom="@dimen/dp_5"
     >
 
     <com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
@@ -60,7 +61,7 @@
                 />
 
             <TextView
-                android:id="@+id/tvBetMoney"
+                android:id="@+id/tvAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1,000,000.000 元"
@@ -83,40 +84,70 @@
             app:layout_constraintBottom_toBottomOf="parent"
             >
 
-            <ImageView
-                android:id="@+id/ivDel"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDel"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#8d8d8d"
-                android:src="@drawable/ic_icon_delete"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/clEdit"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                >
 
-            <ImageView
-                android:id="@+id/ivEdit"
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:background="#8d8d8d"
+                    android:src="@drawable/ic_icon_delete"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clEdit"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#b1b1b1"
-                android:src="@drawable/ic_icon_edit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ivDel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                >
 
-            <ImageView
-                android:id="@+id/ivAppend"
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/ic_icon_edit"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAppend"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#cecece"
-                android:src="@drawable/ic_files_and_folders"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ivEdit"
+                app:layout_constraintEnd_toStartOf="@+id/clEdit"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                >
 
-
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/ic_files_and_folders"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

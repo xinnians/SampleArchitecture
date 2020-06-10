@@ -44,7 +44,11 @@
     <fragment
         android:id="@+id/betFragment"
         android:name="com.example.page_bet.bet.BetFragment"
-        android:label="BetFragment" />
+        android:label="BetFragment" >
+        <action
+            android:id="@+id/action_betFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
     <fragment
         android:id="@+id/betMenuFragment"
         android:name="com.example.page_bet.bet_menu.BetMenuFragment"
@@ -111,4 +115,8 @@
         android:id="@+id/lotteryResultFragment"
         android:name="com.example.page_bet.lottery_result.LotteryResultFragment"
         android:label="LotteryResultFragment"/>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.page_bet.cart.CartFragment"
+        android:label="CartFragment"/>
 </navigation>

@@ -11,6 +11,10 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
         navController?.navigate(R.id.action_betMenuFragment_to_betFragment, gameInfo)
     }
 
+    override fun toShoppingCartPage() {
+        navController?.navigate(R.id.action_betFragment_to_cartFragment)
+    }
+
     override fun toGameFavoritePage() {
         navController?.navigate(R.id.action_betMenuFragment_to_gameFavoriteFragment)
     }

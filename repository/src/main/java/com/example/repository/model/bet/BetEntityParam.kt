@@ -26,5 +26,7 @@ data class BonusOrderEntity(
     @SerializedName("playTypeCode")
     val playTypeCode: Int,
     @SerializedName("betNumber")
-    val betNumber: String
+    val betNumber: String,
+    @SerializedName("betCount")
+    val betCount: Int
 )
