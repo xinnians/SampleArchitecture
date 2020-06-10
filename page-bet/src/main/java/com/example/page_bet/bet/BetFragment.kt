@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
@@ -27,8 +26,10 @@ import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class BetFragment : BaseFragment() {
@@ -44,13 +45,6 @@ class BetFragment : BaseFragment() {
     private lateinit var mViewModel: BetViewModel
     private var mPlayTypeDialog: PlayTypeDialog? = null
     private var mLotteryHistoryDialog: LotteryRecordDialog? = null
-
-    private var mGameID: Int = -1
-    private var mGameTypeID: Int = -1
-    private var mCurrentPlayTypeID: String = ""
-    private var mCurrentBetItemType: BetItemType = BetItemType.NONE
-    private var mCurrentSelectNumber: String = ""
-    private var mCurrentIssueId: Int = -1
 
     private var mBetPositionAdapter: BetPositionAdapter? = null
     private var mBetRegionAdapter: BetRegionAdapter? = null
@@ -71,8 +65,6 @@ class BetFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         setListener()
-
-//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     private fun init() {
@@ -80,14 +72,14 @@ class BetFragment : BaseFragment() {
         mViewModel = AppInjector.obtainViewModel(this)
         arguments?.let {
             ivGameName.text = it.getString(TAG_GAME_NAME, "empty")
-            mGameID = it.getInt(TAG_GAME_ID, -1)
-            mGameTypeID = it.getInt(TAG_GAME_TYPE, -1)
+            mViewModel.gameId = it.getInt(TAG_GAME_ID, -1)
+            mViewModel.gameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
-        refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
-        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mGameID, mGameTypeID)
+        refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value ?: "empty", mViewModel.gameId)
+        refreshLastIssueResult(getSharedViewModel().lotteryToken.value ?: "empty", mViewModel.gameId, mViewModel.gameTypeId)
 
         //TODO 要先判斷該遊戲有沒有官方跟信用的玩法支援再依此更新官方/信用的顯示資訊，目前該處只有直接去撈官方玩法，所以遇到只有支援信用的遊戲時會顯示空畫面
-        initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mGameID)
+        initPlayTypeInfo(getSharedViewModel().lotteryToken.value ?: "empty", mViewModel.gameId)
         ivPlayTypeSelect.onClick { mPlayTypeDialog?.show() }
 
         var layoutManager = LinearLayoutManager(context)
@@ -107,7 +99,7 @@ class BetFragment : BaseFragment() {
 
             //在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
             mBetPositionAdapter?.data?.get(position)?.let {
-                var data = listOf(MultipleLotteryEntity(mCurrentBetItemType.unitDisplayMode,it.getData()!!))
+                var data = listOf(MultipleLotteryEntity(mViewModel.betItemType.unitDisplayMode,it.getData()!!))
                 setBetRegionDisplay(data)
             }
         }
@@ -120,18 +112,19 @@ class BetFragment : BaseFragment() {
         mBetRegionAdapter = BetRegionAdapter(listOf())
         mBetRegionAdapter?.setOnUnitClickListener(object: BetRegionAdapter.OnUnitClickListener{
             override fun onUnitClick() {
-                //TODO 投注按鈕被點擊，應該將目前的投注選擇過正則，判斷是否該顯示注數及允許投注與否
-                var selectNumber = BetCountUtil.getBetSelectNumber(mCurrentPlayTypeID.toInt(),
+
+                var selectNumber = BetCountUtil.getBetSelectNumber(mViewModel.playTypeId,
                     mBetPositionAdapter!!.data)
-                mCurrentSelectNumber = selectNumber.betNumber
+                mViewModel.selectNumber = selectNumber.betNumber
 
                 //取得當前玩法的正則
                 mPlayTypeDialog?.data?.let {betTypeList ->
                     for(betType in betTypeList){
                         for (betGroup in betType.mobileBetGroupEntityList){
                             for(playType in betGroup.playTypeInfoEntityList){
-                                if(playType.playTypeCode.toString() == mCurrentPlayTypeID){
-                                    Log.e("Ian","${playType.regex}")
+                                if(playType.playTypeCode == mViewModel.playTypeId){
+                                    Log.e("Ian","playType.regex: ${playType.regex}")
+                                    //計算注數時，將該玩法的正則丟入判斷該投注號碼是否符合規則。
                                     var count = BetCountUtil.getBetCount(selectNumber,playType.regex)
                                     Log.e("Ian","count:$count")
                                 }
@@ -139,8 +132,6 @@ class BetFragment : BaseFragment() {
                         }
                     }
                 }
-
-
                 Log.e("Ian","selectNumber:$selectNumber")
             }
         })
@@ -150,15 +141,15 @@ class BetFragment : BaseFragment() {
 
             //TODO 根據獎金盤/信用盤的不同 call的api跟參數皆有差異
             //TODO 先判斷當前選擇是否符合可以下注的選擇，可以的話再進行下注的動作。
-            var para: BetEntityParam = BetEntityParam(mCurrentIssueId, arrayListOf(BonusOrderEntity(
+            var para: BetEntityParam = BetEntityParam(mViewModel.issueId, arrayListOf(BonusOrderEntity(
                 betCurrency = 1,
                 betUnit = 1.0,
                 multiple = 1,
                 rebate = 0.0,
                 uuid = "uuid",
                 amount = 1,
-                playTypeCode = mCurrentPlayTypeID.toInt(),
-                betNumber = mCurrentSelectNumber,
+                playTypeCode = mViewModel.playTypeId,
+                betNumber = mViewModel.selectNumber,
                 betCount = 10000
             )))
             Log.e("Ian","[getBetList] param: $para")
@@ -185,7 +176,7 @@ class BetFragment : BaseFragment() {
                         tvCurrentIssueNumber.text = "${it.issueNum.let { issueNum ->
                             if (issueNum.length!! > 7) issueNum.substring(issueNum.length - 7) else issueNum
                         }}期"
-                        mCurrentIssueId = it.issueId
+                        mViewModel.issueId = it.issueId
                         var leftTime =
                             ((it.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
                         launch {
@@ -195,9 +186,9 @@ class BetFragment : BaseFragment() {
                                 if (time <= 0) {
                                     this.cancel()
                                     refreshCurrentIssueInfo(getSharedViewModel().lotteryToken.value
-                                        ?: "empty", mGameID)
+                                        ?: "empty", mViewModel.gameId)
                                     refreshLastIssueResult(getSharedViewModel().lotteryToken.value
-                                        ?: "empty", mGameID, mGameTypeID)
+                                        ?: "empty", mViewModel.gameId, mViewModel.gameTypeId)
                                 }
                             }
                         }
@@ -255,7 +246,7 @@ class BetFragment : BaseFragment() {
                     Log.e("Ian","[getLotteryHistoricalRecord] success: ${state.data}")
                     var list: MutableList<MultipleHistoryRecord> = mutableListOf()
                     state.data.data.forEach {
-                        list.add(MultipleHistoryRecord(mGameTypeID,it))
+                        list.add(MultipleHistoryRecord(mViewModel.gameTypeId,it))
                     }
                     initHistoryDialog(list)
                 }
@@ -302,19 +293,19 @@ class BetFragment : BaseFragment() {
                     Log.e("Ian", "[onPlayTypeSelectListener] playTypeCode:$playTypeCode, playTypeName:$playTypeName, betGroupName:$betGroupName, betTypeName:$betTypeName")
                     tvGamePlayType.text = "$betTypeName $betGroupName $playTypeName"
                     //儲存目前的playTypeCode，以便計算注數等判斷
-                    mCurrentPlayTypeID = playTypeCode.toString()
+                    mViewModel.playTypeId = playTypeCode
                     //TODO change投注欄位的ui
 
                     var result = getTypeData(context!!, playTypeCode.toString())
                     Log.e("Ian", "getTypeData: $result")
                     //根據typeData顯示投注單位選擇，可以根據list的長度來判斷該顯示什麼樣式的投注單位選擇
-                    mCurrentBetItemType = result.first
+                    mViewModel.betItemType = result.first
                     var oriList = result.second
                     var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
 
                     //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
                     if (oriList.isNotEmpty()) {
-                        var type = if(mCurrentBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size
+                        var type = if(mViewModel.betItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size
                         for (item in oriList) {
                             modifyList.add(MultiplePlayTypePositionItem(type, item))
                         }
@@ -402,7 +393,7 @@ class BetFragment : BaseFragment() {
 
                         var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
                         mBetPositionAdapter?.data?.forEach {
-                            list.add(MultipleLotteryEntity(mCurrentBetItemType.unitDisplayMode,it.getData()!!,true))
+                            list.add(MultipleLotteryEntity(mViewModel.betItemType.unitDisplayMode,it.getData()!!,true))
                         }
                         setBetRegionDisplay(list)
 
@@ -473,15 +464,15 @@ class BetFragment : BaseFragment() {
         })
 
         ivMoreIssueHistory.setOnClickListener {
-            initHistoryRecord(getSharedViewModel().lotteryToken.value?:"empty",mGameID)
+            initHistoryRecord(getSharedViewModel().lotteryToken.value?:"empty",mViewModel.gameId)
         }
 
         ivAddToShoppingCart.onClick {
             var cart = Cart(0,
-                mCurrentIssueId,
-                gameId = mGameID,
-                playTypeCode = mCurrentPlayTypeID.toInt(),
-                betNumber = mCurrentSelectNumber,
+                mViewModel.issueId,
+                gameId = mViewModel.gameId,
+                playTypeCode = mViewModel.playTypeId,
+                betNumber = mViewModel.selectNumber,
                 betCurrency = 1,
                 betUnit = 1.0,
                 multiple = 1,
@@ -491,14 +482,13 @@ class BetFragment : BaseFragment() {
                 amount = 1
             )
 
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 if (-1L != mViewModel.addCart(cart)) {
-                    requireActivity().runOnUiThread{
+                    launch(Dispatchers.Main){
                         toast("加入購物車成功")
                     }
                 }
             }
-
         }
 
         ivShoppingCart.onClick {
@@ -571,16 +561,16 @@ class BetFragment : BaseFragment() {
         }
 
         context?.let {
-            mCurrentPlayTypeID = defaultPlayTypeCode.toString()
+            mViewModel.playTypeId = defaultPlayTypeCode
             var result = getTypeData(it, defaultPlayTypeCode.toString())
-            mCurrentBetItemType = result.first
+            mViewModel.betItemType = result.first
             var oriList = result.second
             var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
 
             //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
             if (oriList.isNotEmpty()) {
                 for (item in oriList) {
-                    modifyList.add(MultiplePlayTypePositionItem(if(mCurrentBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size, item))
+                    modifyList.add(MultiplePlayTypePositionItem(if(mViewModel.betItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size, item))
                 }
             } else {
                 modifyList.add(MultiplePlayTypePositionItem(0, BetData("沒有管理到", arrayListOf())))
