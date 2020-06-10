@@ -36,26 +36,28 @@
         android:gravity="center"
         android:text="03/26 19:29:24"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutIssueResult"
+    <LinearLayout
+        android:id="@+id/llIssueResult"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/tvResultIssueNum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginBottom="@dimen/dp_12">
 
-        <TextView
-            android:id="@+id/tvResultWinNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="23423423"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tvResultWinNum"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="23423423"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

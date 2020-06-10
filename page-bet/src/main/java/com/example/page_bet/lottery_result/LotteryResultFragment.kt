@@ -1,10 +1,13 @@
 package com.example.page_bet.lottery_result
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
@@ -12,9 +15,8 @@ import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetFragment
+import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
-import com.example.repository.model.bet.BetData
-import com.example.repository.model.bet.BetSelectNumber
 import com.example.repository.model.bet.MultipleHistoryRecord
 import kotlinx.android.synthetic.main.fragment_lottery_result.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -24,6 +26,7 @@ class LotteryResultFragment: BaseFragment() {
     private lateinit var mLotteryResultViewModel: LotteryResultViewModel
     private var gameId:Int = -1
     private var resultAdapter: LotteryResultAdapter ?= null
+    private var list: MutableList<MultipleHistoryRecord> = mutableListOf()
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -39,13 +42,13 @@ class LotteryResultFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         gameId = arguments?.getInt(BetFragment.TAG_GAME_ID)!!
-        Log.d("msg", "gameId: ${gameId}")
         initView()
+        setListener()
         initData()
     }
 
     fun initView() {
-        var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
+        var layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         resultRecycleLayout.layoutManager = layoutManager
     }
@@ -57,17 +60,32 @@ class LotteryResultFragment: BaseFragment() {
             when (state) {
                 is ViewState.Success -> {
                     Log.d("msg","[getLotteryHistoricalRecord] success: ")
-                    var list: MutableList<MultipleHistoryRecord> = mutableListOf()
                     state.data.data.forEach {
-                        list.add(MultipleHistoryRecord(gameId,it))
+                        list.add(MultipleHistoryRecord(gameId.toString().substring(0,1).toInt(),it))
                     }
-                    resultAdapter = LotteryResultAdapter(list)
+                    resultAdapter = context?.let { LotteryResultAdapter(list, it) }
                     resultRecycleLayout.adapter = resultAdapter
                 }
                 is ViewState.Loading -> Log.d("msg", "ViewState.Loading")
                 is ViewState.Error -> Log.d("msg", "ViewState.Error : ${state.message}")
             }
         }
+    }
 
+    fun setListener() {
+        etNumSearch.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var newList: MutableList<MultipleHistoryRecord> = mutableListOf()
+                for(item in list) {
+                    if(s?.let { item.data.issueNum.contains(it) }!!) {
+                        newList.add(item)
+                    }
+                }
+                resultAdapter?.setNewData(newList)
+                resultAdapter?.notifyDataSetChanged()
+            }
+        })
     }
 }
