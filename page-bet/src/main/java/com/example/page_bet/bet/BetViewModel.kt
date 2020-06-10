@@ -66,10 +66,15 @@ class BetViewModel(var repository: Repository) : ViewModel(){
     }
 
     //Local Database
-    fun addCart(cart: Cart) = repository.addCart(cart)
+    fun addCart(cart: Cart) = repository.addCart(cart).asLiveData()
 
     fun getCartList(gameId: Int) = repository.getCartList(gameId).asLiveData()
 
     fun getAllGameId() =  repository.getAllGameId().asLiveData()
+
+    fun delCart(cart: Cart) = repository.delCart(cart).asLiveData()
+
+    fun getCartArray(gameIdArray: ArrayList<Int>) = repository.getCartListArray(gameIdArray).asLiveData()
+
 
 }

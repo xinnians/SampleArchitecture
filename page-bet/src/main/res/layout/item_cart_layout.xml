@@ -8,6 +8,7 @@
     >
 
     <com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
+        android:id="@+id/esLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:contentView="@+id/clContentView"
@@ -21,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clContentView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp_62"
             >
 
             <TextView

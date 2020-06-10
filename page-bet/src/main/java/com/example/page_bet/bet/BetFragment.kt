@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
@@ -27,7 +26,6 @@ import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
@@ -491,14 +489,18 @@ class BetFragment : BaseFragment() {
                 amount = 1
             )
 
-            GlobalScope.launch {
-                if (-1L != mViewModel.addCart(cart)) {
-                    requireActivity().runOnUiThread{
-                        toast("加入購物車成功")
+            mViewModel.addCart(cart).observeNotNull(this){ state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        if (-1L != state.data) {
+                            toast("加入購物車成功")
+                        }
                     }
+                    is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
+                    is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
                 }
             }
-
         }
 
         ivShoppingCart.onClick {
@@ -590,6 +592,6 @@ class BetFragment : BaseFragment() {
             mBetPositionAdapter?.setNewData(modifyList)
             Log.e("Ian","[initDefaultSelect] end.")}
 
-            mBetPositionAdapter?.setFirstItemSelect()
+        mBetPositionAdapter?.setFirstItemSelect()
     }
 }

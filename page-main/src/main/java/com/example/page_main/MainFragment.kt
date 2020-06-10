@@ -14,7 +14,6 @@ import com.example.base.carousel_layout_tool.CarouselLayoutManager
 import com.example.base.carousel_layout_tool.CarouselZoomPostLayoutListener
 import com.example.base.carousel_layout_tool.CenterScrollListener
 import com.example.base.carousel_layout_tool.DefaultChildSelectionListener
-import com.example.base.navbar_tool.MeowBottomNavigation
 import com.example.base.observeNotNull
 import com.example.repository.model.base.ViewState
 import com.example.page_main.adapter.CarouselAdapter

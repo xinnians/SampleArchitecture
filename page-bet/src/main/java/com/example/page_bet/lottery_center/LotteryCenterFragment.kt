@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
@@ -13,7 +12,6 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
-import com.example.repository.model.bet.MultipleIssueResultItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_lottery_center.*

@@ -1,6 +1,5 @@
 package com.example.page_login
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
