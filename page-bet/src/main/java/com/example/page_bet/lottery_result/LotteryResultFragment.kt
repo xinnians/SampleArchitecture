@@ -19,6 +19,7 @@ import com.example.page_bet.bet.BetFragment
 import com.example.repository.constant.GameTypeId
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.MultipleHistoryRecord
+import kotlinx.android.synthetic.main.fragment_bet.*
 import kotlinx.android.synthetic.main.fragment_lottery_result.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 import java.util.ArrayList
@@ -27,6 +28,7 @@ class LotteryResultFragment: BaseFragment() {
 
     private lateinit var mLotteryResultViewModel: LotteryResultViewModel
     private var gameId:Int = -1
+    private var gameName:String = ""
     private var resultAdapter: LotteryResultAdapter ?= null
     private var list: MutableList<MultipleHistoryRecord> = mutableListOf()
 
@@ -54,12 +56,30 @@ class LotteryResultFragment: BaseFragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         resultRecycleLayout.layoutManager = layoutManager
         when(gameId.toString().substring(0,1).toInt()) {
-            GameTypeId.RACING.typeId -> { tvResultTitle.text = GameTypeId.RACING.chineseName }
-            GameTypeId.TIME_LOTTERY.typeId -> { tvResultTitle.text = GameTypeId.TIME_LOTTERY.chineseName }
-            GameTypeId.CHOOSE.typeId -> { tvResultTitle.text = GameTypeId.CHOOSE.chineseName }
-            GameTypeId.HURRY_THREE.typeId -> { tvResultTitle.text = GameTypeId.HURRY_THREE.chineseName }
-            GameTypeId.LUCKY.typeId -> { tvResultTitle.text = GameTypeId.LUCKY.chineseName }
-            GameTypeId.MARX_SIX.typeId -> { tvResultTitle.text = GameTypeId.MARX_SIX.chineseName }
+            GameTypeId.RACING.typeId -> {
+                gameName = GameTypeId.RACING.chineseName
+                tvResultTitle.text = GameTypeId.RACING.chineseName
+            }
+            GameTypeId.TIME_LOTTERY.typeId -> {
+                tvResultTitle.text = GameTypeId.TIME_LOTTERY.chineseName
+                gameName = GameTypeId.TIME_LOTTERY.chineseName
+            }
+            GameTypeId.CHOOSE.typeId -> {
+                tvResultTitle.text = GameTypeId.CHOOSE.chineseName
+                gameName = GameTypeId.CHOOSE.chineseName
+            }
+            GameTypeId.HURRY_THREE.typeId -> {
+                tvResultTitle.text = GameTypeId.HURRY_THREE.chineseName
+                gameName = GameTypeId.HURRY_THREE.chineseName
+            }
+            GameTypeId.LUCKY.typeId -> {
+                tvResultTitle.text = GameTypeId.LUCKY.chineseName
+                gameName = GameTypeId.LUCKY.chineseName
+            }
+            GameTypeId.MARX_SIX.typeId -> {
+                tvResultTitle.text = GameTypeId.MARX_SIX.chineseName
+                gameName = GameTypeId.MARX_SIX.chineseName
+            }
         }
     }
 
@@ -110,6 +130,14 @@ class LotteryResultFragment: BaseFragment() {
                 })
             }
             datePick?.show()
+        }
+        btnBetting.setOnClickListener {
+            //TODO to BetFragment
+            var bundle = Bundle()
+            bundle.putInt(BetFragment.TAG_GAME_ID, gameId)
+            bundle.putString(BetFragment.TAG_GAME_NAME, gameName)
+            bundle.putInt(BetFragment.TAG_GAME_TYPE, gameId.toString().substring(0,1).toInt())
+            navigation.fromResultToBetPage(bundle)
         }
     }
 }

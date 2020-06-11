@@ -118,9 +118,18 @@
     <fragment
         android:id="@+id/lotteryResultFragment"
         android:name="com.example.page_bet.lottery_result.LotteryResultFragment"
-        android:label="LotteryResultFragment"/>
+        android:label="LotteryResultFragment">
+        <action
+            android:id="@+id/action_lotteryResultFragment_to_betFragment"
+            app:destination="@id/betFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.page_bet.cart.CartFragment"
-        android:label="CartFragment"/>
+        android:label="CartFragment">
+    </fragment>
 </navigation>

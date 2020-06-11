@@ -117,7 +117,7 @@ class MainFragment : BaseFragment() {
             override fun onCenterItemChanged(adapterPosition: Int) {
                 //TODO 滑動到中間的項目
                 if(CarouselLayoutManager.INVALID_POSITION != adapterPosition) {
-                    Log.d("msg", "invalid item: ${adapter.getItem(adapterPosition)}")
+//                    Log.d("msg", "invalid item: ${adapter.getItem(adapterPosition)}")
                 }
             }
         })

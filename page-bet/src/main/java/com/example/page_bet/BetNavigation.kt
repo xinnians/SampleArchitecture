@@ -10,4 +10,5 @@ interface BetNavigation {
     fun toLotteryCenterPage()
     fun toShoppingCartPage()
     fun toLotteryResultPage(gameId: Bundle)
+    fun fromResultToBetPage(gameInfo: Bundle)
 }

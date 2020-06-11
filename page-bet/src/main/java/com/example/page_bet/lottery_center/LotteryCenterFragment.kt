@@ -72,14 +72,13 @@ class LotteryCenterFragment : BaseFragment() {
 
         mAdapter= ViewPagerAdapter()
         mAdapter!!.setResultAction {
-            Log.d("msg", "reult win: ${it.data?.winNum} + gameId: ${it.data?.gameId}")
+//            Log.d("msg", "reult win: ${it.data?.winNum} + gameId: ${it.data?.gameId}")
             var bundle = Bundle()
             it.data?.gameId?.let { it1 -> bundle.putInt(BetFragment.TAG_GAME_ID, it1) }
             navigation.toLotteryResultPage(bundle)
         }
 //        var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 //        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-//
 //        rvGameIssueInfo.layoutManager = layoutManager
         vpGameIssueInfo.adapter = mAdapter
         TabLayoutMediator(tlLotteryType,vpGameIssueInfo) { tab: TabLayout.Tab, i: Int ->
