@@ -17,5 +17,8 @@ data class Cart (
     var rebate: Double,//返點
     var uuid: String,
     var betCount: Int,//注數
-    var amount: Int//金額
+    var amount: Int,//金額
+    var isAppend: Boolean = false, //追單
+    var isWinStop: Boolean = false, //追中即停
+    var appendCount: Int = 0 //追單期數
 )

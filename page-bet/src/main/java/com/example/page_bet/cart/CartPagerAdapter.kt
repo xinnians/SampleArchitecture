@@ -1,23 +1,59 @@
 package com.example.page_bet.cart
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.page_bet.R
+import com.example.repository.model.bet.MultipleIssueResultItem
+import com.example.repository.room.Cart
+import kotlinx.android.synthetic.main.fragment_cart_list.view.rvCartList
 
-class CartPagerAdapter(private val fragmentManager: FragmentManager, private val gameId: List<Int>, private val gameName: List<String>):
-    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    override fun getItem(position: Int): Fragment {
-        return CartListFragment().apply {
-            arguments = Bundle().apply {
-                putInt("gameId", gameId[position])
-            }
-        }
+class CartPagerAdapter(var data: MutableList<MutableList<Cart>>, private val callback: CartPageDialog.SetCallback)
+    : RecyclerView.Adapter<CartPagerAdapter.BaseViewHolder>() {
+
+//    private var goAppendListAction: ((cart: Cart)->Unit) ? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
+        BaseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_cart_list, parent, false), callback)
+
+    override fun getItemCount(): Int = data.size
+
+    fun addData(newData: MutableList<MutableList<Cart>>) {
+        data = newData
+    }
+//
+//    fun goAppendListPage(action: (cart: Cart) -> Unit) {
+//        this.goAppendListAction = action
+//    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(data[position])
+//        holder.listAdapter.setOnItemChildClickListener { adapter, _, position ->
+//            val item: Cart = adapter.data[position] as Cart
+//            if (item.isAppend) {
+//                goAppendListAction?.invoke(item)
+//            } else {
+//                return@setOnItemChildClickListener
+//            }
+//        }
     }
 
-    override fun getCount() = gameId.size
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return gameName[position]
+    class BaseViewHolder(val view: View, callback: CartPageDialog.SetCallback) : RecyclerView.ViewHolder(view){
+
+        var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
+
+        init {
+            itemView.rvCartList.let {
+                it.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
+                it.adapter = listAdapter
+            }
+        }
+
+        fun bind(data: MutableList<Cart>){
+            listAdapter.setNewData(data)
+        }
     }
 }

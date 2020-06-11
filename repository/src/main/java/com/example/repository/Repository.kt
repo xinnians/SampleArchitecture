@@ -175,7 +175,15 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     }
 
     //Local Database
-    fun addCart(cart: Cart) = localDb.cartDao().addCart(cart)
+    fun addCart(cart: Cart): Flow<ViewState<Long>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().addCart(cart)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 
     fun getCartList(gameId: Int): Flow<ViewState<MutableList<Cart>>>{
         return flow {
@@ -187,11 +195,44 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getCartListArray(gameId: ArrayList<Int>): Flow<ViewState<MutableList<MutableList<Cart>>>>{
+        return flow {
+            emit(ViewState.loading())
+            val result : MutableList<MutableList<Cart>> = mutableListOf()
+            for (id in gameId){
+                result.add(localDb.cartDao().getCartList(id))
+            }
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
 
     fun getAllGameId(): Flow<ViewState<MutableList<Int>>> {
         return flow {
             emit(ViewState.loading())
             val result = localDb.cartDao().getAllGameId()
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun delCart(cart: Cart): Flow<ViewState<Int>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().delCart(cart)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun updateCart(cart: Cart): Flow<ViewState<Int>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().updateCart(cart)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))

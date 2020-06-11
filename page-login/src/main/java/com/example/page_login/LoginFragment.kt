@@ -1,6 +1,5 @@
 package com.example.page_login
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -87,6 +86,7 @@ class LoginFragment : BaseFragment() {
             it.title = "用戶名"
             it.hint = "請輸入用戶名"
             it.textVisible = false
+            it.text = "test123"
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {
                     if (editable.toString().length < 6) {
@@ -110,6 +110,7 @@ class LoginFragment : BaseFragment() {
         cetPws.let {
             it.title = "密碼"
             it.hint = "請輸入密碼"
+            it.text = "test123"
             it.inputType = CustomEditTextView.InType.PASSWORD
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {

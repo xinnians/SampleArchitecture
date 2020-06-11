@@ -14,7 +14,6 @@ import com.example.base.carousel_layout_tool.CarouselLayoutManager
 import com.example.base.carousel_layout_tool.CarouselZoomPostLayoutListener
 import com.example.base.carousel_layout_tool.CenterScrollListener
 import com.example.base.carousel_layout_tool.DefaultChildSelectionListener
-import com.example.base.navbar_tool.MeowBottomNavigation
 import com.example.base.observeNotNull
 import com.example.repository.model.base.ViewState
 import com.example.page_main.adapter.CarouselAdapter
@@ -54,7 +53,6 @@ class MainFragment : BaseFragment() {
         (activity as BaseActivity?)?.showBottomNav()
         mMainViewModel = AppInjector.obtainViewModel(this)
         Log.e("[MainFragment]", "lotteryToken: ${getSharedViewModel().lotteryToken.value}")
-
         mMainViewModel.getGameMenuResult(getSharedViewModel().lotteryToken.value.orEmpty())
             .observeNotNull(this) { state ->
                 when (state) {
@@ -73,7 +71,6 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setListener() {
-
         // 領紅包按鈕
         btnRedBag.setOnClickListener {
             //TODO
@@ -122,7 +119,6 @@ class MainFragment : BaseFragment() {
                 if(CarouselLayoutManager.INVALID_POSITION != adapterPosition) {
                     Log.d("msg", "invalid item: ${adapter.getItem(adapterPosition)}")
                 }
-                Log.d("msg", "item name: ${adapter.getItem(adapterPosition)}")
             }
         })
     }

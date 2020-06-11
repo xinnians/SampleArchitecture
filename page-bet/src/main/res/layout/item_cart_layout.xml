@@ -8,6 +8,7 @@
     >
 
     <com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
+        android:id="@+id/esLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:contentView="@+id/clContentView"
@@ -21,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clContentView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp_62"
             >
 
             <TextView
@@ -47,6 +48,33 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_10"
                 />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAppendLogo"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/bg_darkgray_25_corner"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="追"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/sp_14"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tvBetCount"

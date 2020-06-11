@@ -29,7 +29,7 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.BaseViewHolder>()
             clickResultAction?.invoke(item)
         }
     }
-
+    // 遊戲項目 callback
     fun setResultAction(action: (result: MultipleIssueResultItem) -> Unit) {
         this.clickResultAction = action
     }
