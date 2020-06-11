@@ -2,6 +2,7 @@ package com.example.base
 
 import android.app.Activity
 import android.app.Application
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,7 @@ object AppInjector {
     private lateinit var viewModelFactory: BaseViewModelFactory
     private lateinit var repository: Repository
     private lateinit var preferences: SharedPreferencesProvider
-    private lateinit var resource: ResourceProvider
+    private lateinit var resource: Resources
     private lateinit var localDb: LocalDatabase
 
     fun init(application: Application, factory: BaseViewModelFactory) {
@@ -28,7 +29,7 @@ object AppInjector {
             preferences =
                 SharedPreferencesProvider(it)
             resource =
-                ResourceProvider(it)
+                application.resources
             BaseAPI.init(application)
             repository = Repository(SampleAPI.getInstance()?.getService()!!, localDb)
             factory.init(application, repository, preferences, resource)

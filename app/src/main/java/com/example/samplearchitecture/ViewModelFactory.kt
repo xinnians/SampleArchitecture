@@ -1,6 +1,7 @@
 package com.example.samplearchitecture
 
 import android.app.Application
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.base.BaseViewModelFactory
@@ -20,13 +21,13 @@ class ViewModelFactory(
     override var mApplication: Application? = null,
     override var mRepository: Repository? = null,
     override var mPreferences: SharedPreferencesProvider? = null,
-    override var mResource: ResourceProvider? = null
+    override var mResource: Resources? = null
 ) : BaseViewModelFactory() {
     override fun init(
         application: Application,
         repository: Repository,
         preferences: SharedPreferencesProvider,
-        resource: ResourceProvider
+        resource: Resources
     ) {
         mApplication = application
         mRepository = repository
@@ -38,7 +39,7 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return with(modelClass) {
             when {
-                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = mRepository!!)
+                isAssignableFrom(BetViewModel::class.java) -> BetViewModel(repository = mRepository!!,resources = mResource!!)
                 isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(repository = mRepository!!)
                 isAssignableFrom(MainViewModel::class.java) -> MainViewModel(mRepository!!)
                 isAssignableFrom(SharedViewModel::class.java) -> SharedViewModel(repository = mRepository!!)

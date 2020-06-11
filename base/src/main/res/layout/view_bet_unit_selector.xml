@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutBetUnitSelector"
+    android:layout_width="@dimen/dp_210"
+    android:layout_height="@dimen/dp_30"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvDollar"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="1元"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/bg_gray_15_corner_dark_gray_stroke"
+        />
+
+    <TextView
+        android:id="@+id/tvDime"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvDollar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/dp_7"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="1角"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/bg_gray_15_corner"
+        />
+
+    <TextView
+        android:id="@+id/tvPenny"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvDime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/dp_7"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="1分"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/bg_gray_15_corner"
+        />
+
+    <TextView
+        android:id="@+id/tvCent"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPenny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/dp_7"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="1厘"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/bg_gray_15_corner"
+        />
+
+    <ImageView
+        android:id="@+id/ivSwitch"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvCent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/dp_13"
+        android:src="@drawable/ic_icon_change"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
