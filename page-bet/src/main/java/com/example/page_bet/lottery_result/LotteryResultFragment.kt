@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
+import com.example.base.DatePickerDialog
 import com.example.base.observeNotNull
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
@@ -20,6 +21,7 @@ import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.MultipleHistoryRecord
 import kotlinx.android.synthetic.main.fragment_lottery_result.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
+import java.util.ArrayList
 
 class LotteryResultFragment: BaseFragment() {
 
@@ -43,14 +45,22 @@ class LotteryResultFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         gameId = arguments?.getInt(BetFragment.TAG_GAME_ID)!!
         initView()
-        setListener()
         initData()
+        setListener()
     }
 
     fun initView() {
         var layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         resultRecycleLayout.layoutManager = layoutManager
+        when(gameId.toString().substring(0,1).toInt()) {
+            GameTypeId.RACING.typeId -> { tvResultTitle.text = GameTypeId.RACING.chineseName }
+            GameTypeId.TIME_LOTTERY.typeId -> { tvResultTitle.text = GameTypeId.TIME_LOTTERY.chineseName }
+            GameTypeId.CHOOSE.typeId -> { tvResultTitle.text = GameTypeId.CHOOSE.chineseName }
+            GameTypeId.HURRY_THREE.typeId -> { tvResultTitle.text = GameTypeId.HURRY_THREE.chineseName }
+            GameTypeId.LUCKY.typeId -> { tvResultTitle.text = GameTypeId.LUCKY.chineseName }
+            GameTypeId.MARX_SIX.typeId -> { tvResultTitle.text = GameTypeId.MARX_SIX.chineseName }
+        }
     }
 
     fun initData() {
@@ -87,5 +97,19 @@ class LotteryResultFragment: BaseFragment() {
                 resultAdapter?.notifyDataSetChanged()
             }
         })
+        btnDateSearch.setOnClickListener {
+            //TODO 點選日期搜尋
+            var datePick = context?.let { it1 ->
+                DatePickerDialog(it1, object:DatePickerDialog.GetDateListener{
+                    override fun getSearch(list: ArrayList<Long>) {
+                        //TODO 搜尋
+                        list.forEach{
+                            Log.d("msg", "it: ${it}")
+                        }
+                    }
+                })
+            }
+            datePick?.show()
+        }
     }
 }
