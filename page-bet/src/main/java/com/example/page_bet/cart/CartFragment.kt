@@ -21,6 +21,7 @@ class CartFragment : BaseFragment() {
     private lateinit var cartPagerAdapter: CartPagerAdapter
     private lateinit var mViewModel: BetViewModel
     private var allGameId = listOf<Int>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,11 +65,17 @@ class CartFragment : BaseFragment() {
 
     private fun setAdapter(gameId: MutableList<Int>, tabName: MutableList<String>) {
         val dialogCallback = object : CartDeleteDialog.SetCallback{
-            override fun del(cart: Cart) {
+            override fun del(cart: Cart, position: Int) {
                 mViewModel.delCart(cart).observeNotNull(this@CartFragment) { state ->
                     when (state) {
                         is ViewState.Success -> {
                             if(-1 != state.data) {
+                                cartPagerAdapter.data?.forEach {cartList ->
+                                    if(cartList.contains(cart)){
+                                        cartList.remove(cart)
+                                    }
+                                }
+
                                 cartPagerAdapter.notifyDataSetChanged()
                             }
                         }
@@ -83,8 +90,9 @@ class CartFragment : BaseFragment() {
         mViewModel.getCartArray(gameId as ArrayList<Int>).observeNotNull(this){ state ->
             when (state) {
                 is ViewState.Success -> {
-                    cartPagerAdapter.addData(state.data)
-                    cartPagerAdapter.notifyDataSetChanged()
+                        cartPagerAdapter.addData(state.data)
+                        cartPagerAdapter.notifyDataSetChanged()
+
                 }
                 is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
                 is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")

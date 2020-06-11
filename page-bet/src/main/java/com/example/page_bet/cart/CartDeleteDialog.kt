@@ -19,7 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
 import kotlinx.android.synthetic.main.dialog_cart_delete.*
 
-class CartDeleteDialog(context: Context, private val cart: Cart, private val esLayout: EasySwipeMenuLayout): BottomSheetDialog(context) {
+class CartDeleteDialog(context: Context, private val cart: Cart, private val position: Int,
+                       private val esLayout: EasySwipeMenuLayout): BottomSheetDialog(context) {
     private var listener: SetCallback? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +38,14 @@ class CartDeleteDialog(context: Context, private val cart: Cart, private val esL
         }
 
         btnDelConfirm.onClick {
-            listener?.del(cart)
+            listener?.del(cart, position)
             esLayout.resetStatus()
             dismiss()
         }
     }
 
     interface SetCallback{
-        fun del(cart: Cart)
+        fun del(cart: Cart, position: Int)
     }
 
     fun setCallback(callback: SetCallback){

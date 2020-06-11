@@ -19,7 +19,7 @@ class CartListAdapter(data: MutableList<Cart>, private val callback: CartDeleteD
         val esLayout = helper.getView<EasySwipeMenuLayout>(R.id.esLayout)
         val del = helper.getView<ConstraintLayout>(R.id.clDel)
         del.onClick {
-            val deleteDialog = CartDeleteDialog(mContext, item, esLayout)
+            val deleteDialog = CartDeleteDialog(mContext, item, helper.layoutPosition, esLayout)
             deleteDialog.setCallback(callback)
             deleteDialog.show()
         }

@@ -9,8 +9,10 @@ import com.example.page_bet.R
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_cart_list.view.rvCartList
 
-class CartPagerAdapter(private var data: MutableList<MutableList<Cart>>, private val callback: CartDeleteDialog.SetCallback)
+class CartPagerAdapter(var data: MutableList<MutableList<Cart>>, private val callback: CartDeleteDialog.SetCallback)
     : RecyclerView.Adapter<CartPagerAdapter.BaseViewHolder>() {
+
+    private lateinit var viewHolder: BaseViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
         BaseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_cart_list, parent, false), callback)
@@ -23,12 +25,15 @@ class CartPagerAdapter(private var data: MutableList<MutableList<Cart>>, private
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(data[position])
-//        val clDel = holder.listAdapter.getViewByPosition(position, R.id.clDel)
-//        clDel!!.onClick {
-//            val deleteDialog = CartDeleteDialog(holder.view.context, data[position], callback)
-//            deleteDialog.show()
-//        }
+        holder.listAdapter
+        innerHolder = holder
     }
+
+    var innerHolder: BaseViewHolder
+        get() = viewHolder
+        set(innerHolder) {
+            viewHolder = innerHolder
+        }
 
     class BaseViewHolder(val view: View, callback: CartDeleteDialog.SetCallback) : RecyclerView.ViewHolder(view){
 
