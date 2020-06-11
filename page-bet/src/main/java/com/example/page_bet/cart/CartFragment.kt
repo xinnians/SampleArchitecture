@@ -54,7 +54,6 @@ class CartFragment : BaseFragment() {
                         }
                     }
                     setAdapter(allGameId as MutableList<Int>, tabName)
-
                 }
 
                 is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
@@ -64,25 +63,48 @@ class CartFragment : BaseFragment() {
     }
 
     private fun setAdapter(gameId: MutableList<Int>, tabName: MutableList<String>) {
-        val dialogCallback = object : CartDeleteDialog.SetCallback{
-            override fun del(cart: Cart, position: Int) {
-                mViewModel.delCart(cart).observeNotNull(this@CartFragment) { state ->
-                    when (state) {
-                        is ViewState.Success -> {
-                            if(-1 != state.data) {
-                                cartPagerAdapter.data?.forEach {cartList ->
-                                    if(cartList.contains(cart)){
-                                        cartList.remove(cart)
+        val dialogCallback = object : CartPageDialog.SetCallback{
+            override fun onCall(view: View, cart: Cart, position: Int) {
+                when (view.id) {
+                    R.id.clDel -> {
+                        mViewModel.delCart(cart).observeNotNull(this@CartFragment) { state ->
+                            when (state) {
+                                is ViewState.Success -> {
+                                    if(-1 != state.data) {
+                                        cartPagerAdapter.data?.forEach {cartList ->
+                                            if(cartList.contains(cart)){
+                                                cartList.remove(cart)
+                                            }
+                                        }
+                                        cartPagerAdapter.notifyDataSetChanged()
                                     }
                                 }
-
-                                cartPagerAdapter.notifyDataSetChanged()
+                                is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
+                                is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
                             }
                         }
-                        is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
-                        is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
                     }
+
+                    R.id.clEdit -> {
+                        mViewModel.updateCart(cart).observeNotNull(this@CartFragment) { state ->
+                            when (state) {
+                                is ViewState.Success -> {
+                                    if(-1 != state.data) {
+                                        cartPagerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                                is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
+                                is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
+                            }
+                        }
+                    }
+
+                    R.id.clAppend -> {
+
+                    }
+
                 }
+
             }
         }
 

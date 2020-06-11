@@ -229,6 +229,14 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         }.flowOn(Dispatchers.IO)
     }
 
-
+    fun updateCart(cart: Cart): Flow<ViewState<Int>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().updateCart(cart)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 
 }

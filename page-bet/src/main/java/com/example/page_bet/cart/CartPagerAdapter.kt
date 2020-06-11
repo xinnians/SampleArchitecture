@@ -9,7 +9,7 @@ import com.example.page_bet.R
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_cart_list.view.rvCartList
 
-class CartPagerAdapter(var data: MutableList<MutableList<Cart>>, private val callback: CartDeleteDialog.SetCallback)
+class CartPagerAdapter(var data: MutableList<MutableList<Cart>>, private val callback: CartPageDialog.SetCallback)
     : RecyclerView.Adapter<CartPagerAdapter.BaseViewHolder>() {
 
     private lateinit var viewHolder: BaseViewHolder
@@ -35,7 +35,7 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>, private val cal
             viewHolder = innerHolder
         }
 
-    class BaseViewHolder(val view: View, callback: CartDeleteDialog.SetCallback) : RecyclerView.ViewHolder(view){
+    class BaseViewHolder(val view: View, callback: CartPageDialog.SetCallback) : RecyclerView.ViewHolder(view){
 
         var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
 

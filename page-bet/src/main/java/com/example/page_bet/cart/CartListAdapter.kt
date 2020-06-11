@@ -9,7 +9,7 @@ import com.example.repository.room.Cart
 import com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
 
 
-class CartListAdapter(data: MutableList<Cart>, private val callback: CartDeleteDialog.SetCallback) :
+class CartListAdapter(data: MutableList<Cart>, private val callback: CartPageDialog.SetCallback) :
     BaseQuickAdapter<Cart, BaseViewHolder>(R.layout.item_cart_layout, data) {
 
     override fun convert(helper: BaseViewHolder, item: Cart) {
@@ -19,9 +19,23 @@ class CartListAdapter(data: MutableList<Cart>, private val callback: CartDeleteD
         val esLayout = helper.getView<EasySwipeMenuLayout>(R.id.esLayout)
         val del = helper.getView<ConstraintLayout>(R.id.clDel)
         del.onClick {
-            val deleteDialog = CartDeleteDialog(mContext, item, helper.layoutPosition, esLayout)
+            val deleteDialog = CartPageDialog(mContext, CartPageDialog.DEL, del, item, helper.layoutPosition, esLayout)
             deleteDialog.setCallback(callback)
             deleteDialog.show()
+        }
+
+        val edit = helper.getView<ConstraintLayout>(R.id.clEdit)
+        edit.onClick {
+            val editDialog = CartPageDialog(mContext, CartPageDialog.EDIT, edit, item, helper.layoutPosition, esLayout)
+            editDialog.setCallback(callback)
+            editDialog.show()
+        }
+
+        val append = helper.getView<ConstraintLayout>(R.id.clAppend)
+        append.onClick {
+            val appendDialog = CartPageDialog(mContext, CartPageDialog.EDIT, append, item, helper.layoutPosition, esLayout)
+            appendDialog.setCallback(callback)
+            appendDialog.show()
         }
     }
 }

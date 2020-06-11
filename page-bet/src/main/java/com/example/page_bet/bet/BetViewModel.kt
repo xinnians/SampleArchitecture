@@ -74,6 +74,8 @@ class BetViewModel(var repository: Repository) : ViewModel(){
 
     fun delCart(cart: Cart) = repository.delCart(cart).asLiveData()
 
+    fun updateCart(cart: Cart) = repository.updateCart(cart).asLiveData()
+
     fun getCartArray(gameIdArray: ArrayList<Int>) = repository.getCartListArray(gameIdArray).asLiveData()
 
 
