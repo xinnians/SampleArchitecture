@@ -100,11 +100,19 @@ class CartFragment : BaseFragment() {
                     }
 
                     R.id.clAppend -> {
-
+                        mViewModel.updateCart(cart).observeNotNull(this@CartFragment) { state ->
+                            when (state) {
+                                is ViewState.Success -> {
+                                    if(-1 != state.data) {
+                                        cartPagerAdapter.notifyDataSetChanged()
+                                    }
+                                }
+                                is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
+                                is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
+                            }
+                        }
                     }
-
                 }
-
             }
         }
 

@@ -57,6 +57,18 @@ class CartPageDialog(context: Context,private val type:Int, private val view: Vi
             APPEND -> {
                 tvCartDialogTitle.text = "追号"
                 clAppendLayout.visible()
+                btnAppend.onClick {
+                    if (etAppendCount.text.isNotBlank() && etAppendCount.text.isNotEmpty()) {
+                        cart.appendCount = etAppendCount.text.toString().toInt()
+                        cart.isAppend = true
+                        cart.isWinStop = rbWinStop.isChecked
+                        listener?.onCall(view, cart, position)
+                        esLayout.resetStatus()
+                        dismiss()
+                    } else {
+                        return@onClick
+                    }
+                }
             }
 
             MORE -> {

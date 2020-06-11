@@ -255,7 +255,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/etAppendIssueNo"
+                    android:id="@+id/etAppendCount"
                     android:layout_width="@dimen/dp_107"
                     android:layout_height="@dimen/dp_33"
                     app:layout_constraintTop_toTopOf="parent"
@@ -263,26 +263,29 @@
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_17"
                     android:background="@drawable/bg_white_25_corner"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:inputType="number"
                     />
 
                 <TextView
                     android:id="@+id/tvLabelIssueNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@+id/etAppendIssueNo"
-                    app:layout_constraintTop_toTopOf="@+id/etAppendIssueNo"
-                    app:layout_constraintBottom_toBottomOf="@+id/etAppendIssueNo"
+                    app:layout_constraintStart_toEndOf="@+id/etAppendCount"
+                    app:layout_constraintTop_toTopOf="@+id/etAppendCount"
+                    app:layout_constraintBottom_toBottomOf="@+id/etAppendCount"
                     android:layout_marginStart="@dimen/dp_6"
                     android:text="期"
                     android:textSize="@dimen/sp_14"
                     />
 
                 <RadioButton
-                    android:id="@+id/rbAppendStop"
+                    android:id="@+id/rbWinStop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/etAppendIssueNo"
-                    app:layout_constraintBottom_toBottomOf="@+id/etAppendIssueNo"
+                    app:layout_constraintTop_toTopOf="@+id/etAppendCount"
+                    app:layout_constraintBottom_toBottomOf="@+id/etAppendCount"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="@dimen/sp_14"
                     android:text="追中即停"
@@ -294,9 +297,9 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp_0_5"
                     android:background="#c9c9c9"
-                    app:layout_constraintStart_toStartOf="@id/etAppendIssueNo"
-                    app:layout_constraintEnd_toEndOf="@id/rbAppendStop"
-                    app:layout_constraintTop_toBottomOf="@+id/etAppendIssueNo"
+                    app:layout_constraintStart_toStartOf="@id/etAppendCount"
+                    app:layout_constraintEnd_toEndOf="@id/rbWinStop"
+                    app:layout_constraintTop_toBottomOf="@+id/etAppendCount"
                     android:layout_marginTop="@dimen/dp_18"
                     />
 
@@ -304,7 +307,7 @@
                     android:id="@+id/tvLabelIssueAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/etAppendIssueNo"
+                    app:layout_constraintStart_toStartOf="@id/etAppendCount"
                     app:layout_constraintTop_toBottomOf="@+id/view1"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="每期投注额"
@@ -315,7 +318,7 @@
                     android:id="@+id/tvIssueAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/rbAppendStop"
+                    app:layout_constraintEnd_toEndOf="@+id/rbWinStop"
                     app:layout_constraintTop_toBottomOf="@+id/view1"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="2000 元"
