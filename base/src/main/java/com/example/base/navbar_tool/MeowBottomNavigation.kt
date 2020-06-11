@@ -93,7 +93,7 @@ class MeowBottomNavigation : FrameLayout {
         /**
          * bottomNavBar 的高度
          */
-        heightCell = dip(context, 74)
+        heightCell = dip(context, 76)
     }
 
     constructor(context: Context) : super(context) {

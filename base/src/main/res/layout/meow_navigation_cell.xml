@@ -6,8 +6,8 @@
 
     <View
         android:id="@+id/v_circle"
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_48"
+        android:layout_width="@dimen/dp_46"
+        android:layout_height="@dimen/dp_46"
         android:tag="v_circle"/>
 
     <FrameLayout
@@ -22,8 +22,8 @@
 
         <View
             android:id="@+id/view_selected"
-            android:layout_width="@dimen/dp_48"
-            android:layout_height="@dimen/dp_48"
+            android:layout_width="@dimen/dp_46"
+            android:layout_height="@dimen/dp_46"
             android:padding="@dimen/dp_10"
             android:layout_gravity="center"
             android:background="@drawable/meow_cell_circle">

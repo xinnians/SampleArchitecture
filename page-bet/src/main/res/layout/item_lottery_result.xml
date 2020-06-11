@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_74"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/dp_7_5"
+    android:layout_marginBottom="@dimen/dp_7_5"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:background="@color/colorWhite"
+    android:id="@+id/constrainViewChoose">
+
+    <TextView
+        android:id="@+id/tvResultIssueNum"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_15"
+        android:textSize="@dimen/sp_14"
+        android:gravity="center|start"
+        android:text="歡樂生肖"
+        android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:id="@+id/tvResultIssueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#7b7b7b"
+        android:gravity="center"
+        android:text="03/26 19:29:24"/>
+
+    <LinearLayout
+        android:id="@+id/llIssueResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/tvResultIssueNum"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_12">
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvResultWinNum"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="23423423"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
-    android:layout_width="@dimen/dp_48"
-    android:layout_height="@dimen/dp_48"
+    android:layout_width="@dimen/dp_46"
+    android:layout_height="@dimen/dp_46"
     android:background="@drawable/meow_cell_circle"
     android:clickable="true"
     android:focusable="true">

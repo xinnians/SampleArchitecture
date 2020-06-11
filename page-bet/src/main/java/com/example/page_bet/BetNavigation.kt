@@ -8,6 +8,6 @@ interface BetNavigation {
     fun toGameFavoritePage()
     fun goBackToBetMenuPage()
     fun toLotteryCenterPage()
-    fun toLotteryResultPage()
     fun toShoppingCartPage()
+    fun toLotteryResultPage(gameId: Bundle)
 }
