@@ -45,10 +45,20 @@ class LotteryResultFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        gameId = arguments?.getInt(BetFragment.TAG_GAME_ID)!!
-        initView()
         initData()
+        initView()
+        initBinding()
         setListener()
+    }
+
+    private fun initBinding() {
+        mLotteryResultViewModel.lotteryHistoryRecordData.observeNotNull(this){
+            it.data.forEach{
+                list.add(MultipleHistoryRecord(gameId.toString().substring(0,1).toInt(),it))
+            }
+            resultAdapter?.setNewData(list)
+            resultRecycleLayout.adapter = resultAdapter
+        }
     }
 
     fun initView() {
@@ -81,25 +91,14 @@ class LotteryResultFragment: BaseFragment() {
                 gameName = GameTypeId.MARX_SIX.chineseName
             }
         }
+        resultAdapter = context?.let { LotteryResultAdapter(mutableListOf(), it) }
     }
 
     fun initData() {
         mLotteryResultViewModel = AppInjector.obtainViewModel(this)
         var token = getSharedViewModel().lotteryToken.value!!
-        mLotteryResultViewModel.getLotteryHistoricalRecord(token, gameId).observeNotNull(this){ state ->
-            when (state) {
-                is ViewState.Success -> {
-                    Log.d("msg","[getLotteryHistoricalRecord] success: ")
-                    state.data.data.forEach {
-                        list.add(MultipleHistoryRecord(gameId.toString().substring(0,1).toInt(),it))
-                    }
-                    resultAdapter = context?.let { LotteryResultAdapter(list, it) }
-                    resultRecycleLayout.adapter = resultAdapter
-                }
-                is ViewState.Loading -> Log.d("msg", "ViewState.Loading")
-                is ViewState.Error -> Log.d("msg", "ViewState.Error : ${state.message}")
-            }
-        }
+        gameId = arguments?.getInt(BetFragment.TAG_GAME_ID)!!
+        mLotteryResultViewModel.getHistoricalRecord(token, gameId)
     }
 
     fun setListener() {
