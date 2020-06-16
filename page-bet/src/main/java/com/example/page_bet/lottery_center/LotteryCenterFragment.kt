@@ -49,6 +49,7 @@ class LotteryCenterFragment : BaseFragment() {
     }
 
     private fun initView() {
+
         tlLotteryType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 Log.e("Ian", "[onTabReselected] tab:${tab?.position}")
@@ -72,7 +73,6 @@ class LotteryCenterFragment : BaseFragment() {
 
         mAdapter= ViewPagerAdapter()
         mAdapter!!.setResultAction {
-//            Log.d("msg", "reult win: ${it.data?.winNum} + gameId: ${it.data?.gameId}")
             var bundle = Bundle()
             it.data?.gameId?.let { it1 -> bundle.putInt(BetFragment.TAG_GAME_ID, it1) }
             navigation.toLotteryResultPage(bundle)

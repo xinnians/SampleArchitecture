@@ -23,7 +23,6 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class MainFragment : BaseFragment() {
 
-    private var isHide = true
     private lateinit var mMainViewModel: MainViewModel
 
     private val navigation: MainNavigation by lazy {

@@ -5,13 +5,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:id="@+id/tvTransTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center_vertical"
         android:text="transation"
         android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabTransationType"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_68"
+        android:layout_marginTop="@dimen/dp_8"
+        app:tabBackground="@color/transparent"
+        app:tabRippleColor="@color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/tvTransTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tabIndicatorFullWidth="true"
+        app:tabGravity="center"
+        app:tabMode="scrollable"
+        app:layout_scrollFlags="scroll">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabAll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="all"
+            android:text="全部"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabCash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="cash"
+            android:text="資金"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabBalance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="balance"
+            android:text="盈虧"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="transfer"
+            android:text="轉帳"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabProxy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="proxy"
+            android:text="代理"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabBouns"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="bouns"
+            android:text="彩金"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabAdjustment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="adjustment"
+            android:text="調整"/>
+
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pagerTransation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabTransationType"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
