@@ -28,6 +28,10 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var mIssueId: Int = -1
     var mToken: String = ""
 
+    var mUnitValue: Double = 1.0
+    var mCurrencyUnit: Int = 1
+    var mMultiple: Int = 1
+
     /** --------------------------------------- LiveData --------------------------------------- **/
 
     var liveCurrentIssueInfo: MutableLiveData<ViewState<IssueInfoResponse>> = MutableLiveData()
@@ -335,11 +339,24 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                             var count = selectNumber?.let { BetCountUtil.getBetCount(it, playType.regex) }
                             Log.e("Ian", "count:$count")
                             liveBetCount.value = count
-                            liveBetCurrency.value = count?.times(Math.random()*1000)?.toInt()
+                            liveBetCurrency.value = getTotalCurrency().toInt()
                         }
                     }
                 }
             }
         }
     }
+
+    var selectBetUnit = { unit: Double, currency: Int ->
+        mCurrencyUnit = currency
+        mUnitValue = unit
+        liveBetCurrency.value = getTotalCurrency().toInt()
+    }
+
+    fun getTotalCurrency(): Double{
+        var result = liveBetCount.value?.times(mCurrencyUnit * mUnitValue * mMultiple) ?: 0.0
+        Log.e("Ian","[getTotalCurrency] result:$result")
+        return result
+    }
+
 }

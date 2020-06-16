@@ -14,6 +14,7 @@ import com.example.base.*
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
+import com.example.base.widget.BetUnitSelector
 import com.example.base.widget.CustomSwitch
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
@@ -99,6 +100,12 @@ class BetFragment : BaseFragment() {
     }
 
     private fun initListener() {
+        viewBetUnitSelector.addOnUnitSelectListener(object : BetUnitSelector.OnUnitSelectListener {
+            override fun onSelect(unitValue: Double, currency: Int) {
+                mViewModel.selectBetUnit(unitValue, currency)
+            }
+        })
+
         ivPlayTypeSelect.onClick { mPlayTypeDialog?.show() }
 
         mBetPositionAdapter?.setOnItemChildClickListener { _, _, position ->
@@ -329,10 +336,10 @@ class BetFragment : BaseFragment() {
         mViewModel.liveBetRegionList.observeNotNull(this) {
             mBetRegionAdapter?.setNewData(it)
         }
-        mViewModel.liveBetCount.observeNotNull(this){
+        mViewModel.liveBetCount.observeNotNull(this) {
             tvCount.text = it.toString()
         }
-        mViewModel.liveBetCurrency.observeNotNull(this){
+        mViewModel.liveBetCurrency.observeNotNull(this) {
             tvCurrency.text = it.toString()
         }
     }
