@@ -11,6 +11,7 @@ import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class BetViewModel(var repository: Repository, var resources: Resources) : ViewModel() {
 
@@ -60,6 +61,12 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
 
     //投注欄位列表
     var liveBetRegionList: MutableLiveData<MutableList<MultipleLotteryEntity>> = MutableLiveData()
+
+    //當前選擇總注數
+    var liveBetCount: MutableLiveData<Int> = MutableLiveData()
+
+    //當前選擇總金額
+    var liveBetCurrency: MutableLiveData<Int> = MutableLiveData()
 
     var liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var liveError: MutableLiveData<String> = MutableLiveData()
@@ -276,6 +283,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
 
     /** --------------------------------------- action --------------------------------------- **/
 
+    //選擇玩法
     var selectPlayType = { playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String ->
         liveGamePlayTypeDisPlayName.value = "$betTypeName $betGroupName $playTypeName"
         //儲存目前的playTypeCode，以便計算注數等判斷
@@ -298,6 +306,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         liveDefaultUiDisplay.value = Unit
     }
 
+    //選擇投注欄位
     var selectBetPosition = { position: Int, data: MutableList<MultiplePlayTypePositionItem> ->
         data.apply {
             map { it.getData()?.isSelect = false }
@@ -311,6 +320,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         }
     }
 
+    //選擇該欄位投注數值
     var selectBetRegion = {
         var selectNumber = liveBetPositionList.value?.toList()?.let { BetCountUtil.getBetSelectNumber(mPlayTypeId, it) }
         mSelectNumber = selectNumber?.betNumber.toString()
@@ -324,6 +334,8 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                             //計算注數時，將該玩法的正則丟入判斷該投注號碼是否符合規則。
                             var count = selectNumber?.let { BetCountUtil.getBetCount(it, playType.regex) }
                             Log.e("Ian", "count:$count")
+                            liveBetCount.value = count
+                            liveBetCurrency.value = count?.times(Math.random()*1000)?.toInt()
                         }
                     }
                 }

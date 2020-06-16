@@ -329,6 +329,12 @@ class BetFragment : BaseFragment() {
         mViewModel.liveBetRegionList.observeNotNull(this) {
             mBetRegionAdapter?.setNewData(it)
         }
+        mViewModel.liveBetCount.observeNotNull(this){
+            tvCount.text = it.toString()
+        }
+        mViewModel.liveBetCurrency.observeNotNull(this){
+            tvCurrency.text = it.toString()
+        }
     }
 
     private fun initUI() {

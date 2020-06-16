@@ -317,7 +317,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/tvCount"
+                    android:id="@+id/tvMultiple"
                     android:layout_width="@dimen/dp_42"
                     android:layout_height="@dimen/dp_30"
                     app:layout_constraintTop_toTopOf="parent"
@@ -334,7 +334,7 @@
                     android:layout_width="@dimen/dp_29"
                     android:layout_height="@dimen/dp_30"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tvCount"
+                    app:layout_constraintStart_toEndOf="@+id/tvMultiple"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:gravity="center"
                     android:textSize="@dimen/sp_14"
@@ -372,29 +372,93 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/colorWhite">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBottomRow1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_210"
                 android:layout_height="@dimen/dp_32"
                 android:layout_marginBottom="@dimen/dp_7"
+                android:layout_marginStart="@dimen/dp_20"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/clBottomRow2"
-                android:background="@color/colorWhite">
-
+                app:layout_constraintBottom_toTopOf="@id/clBottomRow2">
+                
                 <TextView
+                    android:id="@+id/tvAlreadyChoose"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_17"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:text="已選中 20 注 共 999,999,999.999 元"
+                    android:text="已選中"
+                    android:gravity="center"
                     android:textSize="@dimen/sp_12"
+                    android:textColor="#525252"/>
+
+                <TextView
+                    android:id="@+id/tvCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_17"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvAlreadyChoose"
+                    android:text="0"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/tvCountUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_17"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvCount"
+                    android:text="注"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginStart="@dimen/dp_5"
                     android:gravity="center"
                     android:textColor="#525252"/>
+
+                <TextView
+                    android:id="@+id/tvAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_17"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvCurrency"
+                    android:text="共"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="#525252"/>
+
+                <TextView
+                    android:id="@+id/tvCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_17"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvCurrencyUnit"
+                    android:text="0"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:gravity="center"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/tvCurrencyUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_17"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="元"
+                    android:textSize="@dimen/sp_12"
+                    android:gravity="center"
+                    android:textColor="#000000"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
