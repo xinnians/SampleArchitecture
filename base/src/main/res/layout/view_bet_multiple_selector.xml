@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_106"
+    android:layout_height="@dimen/dp_30"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvDecrease"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="-"
+        android:background="@drawable/bg_multiple_selector_decrease"
+        />
+
+    <TextView
+        android:id="@+id/tvMultiple"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvDecrease"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/sp_12"
+        android:text="10000"
+        />
+
+    <TextView
+        android:id="@+id/tvIncrease"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvMultiple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:text="+"
+        android:background="@drawable/bg_multiple_selector_increase"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
