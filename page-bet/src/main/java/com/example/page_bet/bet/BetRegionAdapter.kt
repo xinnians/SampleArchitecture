@@ -1,7 +1,9 @@
 package com.example.page_bet.bet
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.TextView
+import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -34,7 +36,32 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
     override fun convert(helper: BaseViewHolder?, item: MultipleLotteryEntity?) {
         helper?.let {
             Log.e("Ian", "[BetRegionAdapter] convert item:${item?.data}")
-            if(it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber || it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber+ FULL_SCREEN){
+            if(it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber ||
+                it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber+ FULL_SCREEN){
+
+
+                item?.data?.unitList?.get(0)?.unitValue?.let {values ->
+                    it.getView<EditText>(R.id.etBetNumber).apply {
+                        setText(values)
+                        setSelection(values.length)
+                        requestFocus()
+                    }
+
+                }
+
+                it.getView<EditText>(R.id.etBetNumber).addTextChangedListener(object: TextWatcher{
+                    override fun afterTextChanged(s: Editable?) {
+                        item?.data?.unitList?.get(0)?.unitValue = s.toString()
+                        onUnitClickListener?.onUnitClick()
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    }
+
+                })
 
             }else{
                 it.setText(R.id.tvTitle, item?.data?.displayTitle ?: "empty")

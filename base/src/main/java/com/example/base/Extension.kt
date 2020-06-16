@@ -168,3 +168,12 @@ var extensionProgress: AlertDialog? = null
 //        }
 //    }
 //}
+
+fun String.isNumeric(): Boolean{
+    this.forEach {
+        if(!Character.isDigit(it)){
+            return false
+        }
+    }
+    return true
+}

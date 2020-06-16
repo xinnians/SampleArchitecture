@@ -1,6 +1,7 @@
 package com.example.page_bet.bet
 
 import android.util.Log
+import com.example.base.isNumeric
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetSelectNumber
 import com.example.repository.model.bet.MultiplePlayTypePositionItem
@@ -156,7 +157,22 @@ object BetCountUtil {
                     }
                 }
             }
-
+            playTypeID_205001-> {
+                for (index in betEntityList.indices) {
+                    for (entity in betEntityList[index].getData()?.unitList!!) {
+                        result.append(entity.unitValue)
+                    }
+                    var spiltList = result.split(Pattern.compile("[,. ;]"))
+                    spiltList = spiltList.filter { it.isNumeric() && it.length == 5}
+                    result.clear()
+                    for(index in spiltList.indices){
+                        result.append(spiltList[index])
+                        if(index != spiltList.size-1){
+                            result.append(",")
+                        }
+                    }
+                }
+            }
         }
         Log.e("Ian","[getBetSelectNumber] result: $result")
         return BetSelectNumber(playtypeCode.toString(),result.toString())
@@ -168,6 +184,7 @@ object BetCountUtil {
     fun getBetCount(betSelectNumber: BetSelectNumber, regex: String): Int {
 
         var currentRegex = URLDecoder.decode(regex,"UTF-8")
+        Log.e("Ian","[getBetCount] currentRegex:$currentRegex")
         var pattern: Pattern? = null
 
         if(currentRegex.isNotEmpty()){
