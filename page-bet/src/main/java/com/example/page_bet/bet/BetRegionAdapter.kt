@@ -4,10 +4,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.example.base.isOdd
+import com.example.base.onClick
 import com.example.page_bet.R
 import com.example.repository.constant.BetUnitDisplayMode
 import com.example.repository.model.bet.MultipleBetUnit
@@ -72,6 +75,72 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) :
                     FULL_SCREEN+BetUnitDisplayMode.ONLY_NUMBER.typeNumber -> {
                         spanCount = 5
                         displayMode = BetUnitDisplayMode.ONLY_NUMBER
+
+                        it.getView<TextView>(R.id.tvFunctionAll).onClick {
+                            item?.data?.let { betData ->
+                                betData.unitList.forEach { unitList -> unitList.isSelect = true }
+                                betData.isDataSet = true
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+                        it.getView<TextView>(R.id.tvFunctionBig).onClick {
+                            item?.data?.let { betData ->
+                                val halfSize = betData.unitList.size/2
+                                betData.unitList.forEach { unit ->
+                                    unit.isSelect = false
+                                    if(unit.unitValue.toInt() >= halfSize) unit.isSelect = true }
+                                betData.isDataSet = true
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+                        it.getView<TextView>(R.id.tvFunctionSmall).onClick {
+                            item?.data?.let { betData ->
+                                val halfSize = betData.unitList.size/2
+                                betData.unitList.forEach { unit ->
+                                    unit.isSelect = false
+                                    if(unit.unitValue.toInt() < halfSize) unit.isSelect = true }
+                                betData.isDataSet = true
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+                        it.getView<TextView>(R.id.tvFunctionOdd).onClick {
+                            item?.data?.let { betData ->
+                                betData.unitList.forEach { unit ->
+                                    unit.isSelect = false
+                                    if(unit.unitValue.toInt().isOdd()) unit.isSelect = true }
+                                betData.isDataSet = true
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+                        it.getView<TextView>(R.id.tvFunctionEven).onClick {
+                            item?.data?.let { betData ->
+                                betData.unitList.forEach { unit ->
+                                    unit.isSelect = false
+                                    if(!unit.unitValue.toInt().isOdd()) unit.isSelect = true }
+                                betData.isDataSet = true
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+                        it.getView<TextView>(R.id.tvFunctionClear).onClick {
+                            item?.data?.let { betData ->
+                                betData.unitList.forEach { unit -> unit.isSelect = false }
+                                betData.isDataSet = false
+                                onUnitClickListener?.onUnitClick()
+                                it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                            }
+                        }
+
+
                     }
                     BetUnitDisplayMode.ONE_CHAR.typeNumber -> {
                         spanCount = 2
