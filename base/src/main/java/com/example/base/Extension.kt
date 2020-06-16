@@ -9,7 +9,6 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
@@ -150,24 +149,6 @@ fun closeSoftKeyboard(mEditText: EditText, mContext: Context) {
     val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
 }
-
-
-
-var extensionProgress: AlertDialog? = null
-
-//fun runProgress(myContext: Context, loading: Boolean) {
-//    if (extensionProgress == null) {
-//        extensionProgress = AlertDialog.Builder(myContext, R.style.DialogBackgroundNull).setCancelable(true)
-//            .setView(R.layout.loading_progress).create()
-//    }
-//    when (loading) {
-//        true -> extensionProgress!!.show()
-//        false -> {
-//            extensionProgress!!.dismiss()
-//            extensionProgress = null
-//        }
-//    }
-//}
 
 fun String.isNumeric(): Boolean{
     this.forEach {
