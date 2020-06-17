@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_44"
         android:gravity="center_vertical"
         android:text="transation"
-        android:textSize="26sp"
+        android:textSize="@dimen/sp_18"
         android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,46 +35,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="all"
-            android:text="全部"/>
+            android:text="全部交易"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabCash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="cash"
-            android:text="資金"/>
+            android:text="資金紀錄"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabBalance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="balance"
-            android:text="盈虧"/>
+            android:text="盈虧紀錄"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabTransfer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="transfer"
-            android:text="轉帳"/>
+            android:text="轉帳紀錄"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabProxy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="proxy"
-            android:text="代理"/>
+            android:text="代理交易"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabBouns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="bouns"
-            android:text="彩金"/>
+            android:text="彩金紀錄"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabAdjustment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="adjustment"
-            android:text="調整"/>
+            android:text="調整紀錄"/>
 
     </com.google.android.material.tabs.TabLayout>
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pagerTransation"
         android:layout_width="0dp"
         android:layout_height="0dp"

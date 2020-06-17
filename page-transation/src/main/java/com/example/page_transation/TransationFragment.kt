@@ -19,16 +19,17 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 class TransationFragment : BaseFragment() {
 
     companion object {
-        private val ALL = 0
-        private val CASH = 1
-        private val BALANCE = 2
-        private val TRANSFER = 3
-        private val PROXY = 4
-        private val BOUNS = 5
-        private val ADJUSTMENT = 6
+        private const val ALL = 0
+        private const val CASH = 1
+        private const val BALANCE = 2
+        private const val TRANSFER = 3
+        private const val PROXY = 4
+        private const val BOUNS = 5
+        private const val ADJUSTMENT = 6
     }
 
     private var isHide = true
+    private var mAdapter: ViewPagerAdapter? = null
     private lateinit var mTransationViewModel: TransationViewModel
 
     private val navigation: TransationNavigation by lazy {
@@ -47,6 +48,7 @@ class TransationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        setLinstener()
     }
 
     @SuppressLint("ResourceType")
@@ -65,6 +67,7 @@ class TransationFragment : BaseFragment() {
                     holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                     holder.tvTabItem?.setTextColor(Color.BLACK)
                     holder.tvTabItem?.text = "全部"
+                    tvTransTitle.text = "全部交易"
                 }
                 CASH -> { holder.tvTabItem?.text = "資金" }
                 BALANCE -> { holder.tvTabItem?.text = "盈虧" }
@@ -74,7 +77,13 @@ class TransationFragment : BaseFragment() {
                 ADJUSTMENT -> { holder.tvTabItem?.text = "調整" }
             }
         }
+        mAdapter = ViewPagerAdapter()
+        pagerTransation.adapter = this.mAdapter
+        pagerTransation.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabTransationType))
+        tabTransationType.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pagerTransation))
+    }
 
+    fun setLinstener() {
         tabTransationType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 // TODO
@@ -92,8 +101,8 @@ class TransationFragment : BaseFragment() {
                 var holder = ViewHolder(tab?.customView!!)
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                 holder.tvTabItem?.setTextColor(Color.BLACK)
+                tvTransTitle.text = tab.text
             }
-
         })
     }
 
@@ -105,6 +114,4 @@ class TransationFragment : BaseFragment() {
             tvTabItem = view.findViewById<TextView>(R.id.tvTabItem)
         }
     }
-
-
 }
