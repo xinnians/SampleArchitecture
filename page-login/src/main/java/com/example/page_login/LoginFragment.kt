@@ -61,13 +61,21 @@ class LoginFragment : BaseFragment() {
 
     private fun init(){
         mViewModel = AppInjector.obtainViewModel(this)
+        getToken()
+    }
+
+    private fun getToken(){
         mViewModel.getLoginResult().observeNotNull(this){ state ->
             when(state) {
                 is ViewState.Success -> {
                     Log.e("Ian","ViewState.Success : ${state.data.token}")
+                    showDefaultLoading(false)
                     getSharedViewModel().lotteryToken.postValue("Bearer ${state.data.token}")
                 }
-                is ViewState.Loading -> Log.e("Ian","ViewState.Loading")
+                is ViewState.Loading -> {
+                    Log.e("Ian","ViewState.Loading")
+                    showDefaultLoading(true)
+                }
                 is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
             }
         }
@@ -137,7 +145,8 @@ class LoginFragment : BaseFragment() {
         }
 
         ivTestPlay.onClick {
-            toast("試玩版開發中")
+//            toast("試玩版開發中")
+            getToken()
         }
 
         btnLogin.text = "登入"

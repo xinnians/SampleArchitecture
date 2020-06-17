@@ -8,6 +8,7 @@ import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import com.example.repository.room.LocalDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -101,6 +102,7 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     fun getLoginResult(): Flow<ViewState<LoginResponse.Data>> {
         return flow {
             emit(ViewState.loading())
+            delay(3000)
             val result = sampleService.getLoginResult(LoginRequest("test123", "test123"))
             emit(ViewState.success(result.data))
         }.catch {

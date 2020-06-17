@@ -7,9 +7,9 @@ import com.example.repository.Repository
 import com.example.repository.model.LoginResponse
 import com.example.repository.model.base.ViewState
 
-class LoginViewModel(repository: Repository) : ViewModel() {
+class LoginViewModel(var repository: Repository) : ViewModel() {
     private val loginResult: LiveData<ViewState<LoginResponse.Data>> =
         repository.getLoginResult().asLiveData()
 
-    fun getLoginResult(): LiveData<ViewState<LoginResponse.Data>> = loginResult
+    fun getLoginResult(): LiveData<ViewState<LoginResponse.Data>> = repository.getLoginResult().asLiveData()
 }
