@@ -74,6 +74,12 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var liveError: MutableLiveData<String> = MutableLiveData()
 
+    var addCartResult: MutableLiveData<Long> = MutableLiveData()
+    var allGameIdResult: MutableLiveData<MutableList<Int>> = MutableLiveData()
+    var delCartResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
+    var updateCartResult: MutableLiveData<Int> = MutableLiveData()
+    var getCartListResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
+
     /** --------------------------------------- Remote --------------------------------------- **/
 
     //取得當期期號資訊
@@ -245,17 +251,114 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
 
     /** --------------------------------------- Local Database --------------------------------------- **/
     //Local Database
-    fun addCart(cart: Cart) = repository.addCart(cart).asLiveData()
+    fun addCart(cart: Cart) {
+        viewModelScope.launch {
+            repository.addCart(cart).collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        addCartResult.postValue(state.data)
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
 
-    fun getCartList(gameId: Int) = repository.getCartList(gameId).asLiveData()
+    fun getAllGameId() {
+        viewModelScope.launch {
+            repository.getAllGameId().collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        allGameIdResult.value = state.data
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
 
-    fun getAllGameId() = repository.getAllGameId().asLiveData()
+    fun delCart(cart: Cart) {
+        viewModelScope.launch {
+            repository.delCart(cart).collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        val result: MutableList<MutableList<Cart>>? = getCartListResult.value
+                        result?.apply {
+                            map { if (it.contains(cart)) it.remove(cart) }
+                        }
+                        delCartResult.postValue(result)
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
 
-    fun delCart(cart: Cart) = repository.delCart(cart).asLiveData()
+    fun updateCart(cart: Cart){
+        viewModelScope.launch {
+            repository.updateCart(cart).collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        updateCartResult.postValue(state.data)
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
 
-    fun updateCart(cart: Cart) = repository.updateCart(cart).asLiveData()
-
-    fun getCartArray(gameIdArray: ArrayList<Int>) = repository.getCartListArray(gameIdArray).asLiveData()
+    fun getCartArray(gameIdArray: ArrayList<Int>) {
+        viewModelScope.launch {
+            repository.getCartListArray(gameIdArray).collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        getCartListResult.value = state.data
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
 
     /** --------------------------------------- Utils --------------------------------------- **/
     private fun getDisplayTime(second: Int): String {

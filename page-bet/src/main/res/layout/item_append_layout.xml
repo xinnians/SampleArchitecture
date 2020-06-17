@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_62"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/dp_5"
+    >
+
+    <CheckBox
+        android:id="@+id/cbAppend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/esLayout"
+        android:visibility="gone"
+        />
+
+    <com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
+        android:id="@+id/esLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:contentView="@+id/clAppendContentView"
+        app:rightMenuView="@+id/clRightMenu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cbAppend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAppendContentView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_62"
+            android:background="#f8f8f8"
+            >
+
+            <TextView
+                android:id="@+id/tvMoreIssueNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0200729期"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/dp_15"
+                />
+
+            <EditText
+                android:id="@+id/etAppendMultiple"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_33"
+                android:text="20"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvMoreIssueNo"
+                android:layout_marginStart="@dimen/dp_15"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:inputType="number"
+                android:background="@drawable/bg_white_25_corner"
+                />
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="倍"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/etAppendMultiple"
+                android:layout_marginStart="@dimen/dp_8"
+                />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,000,000.000 元"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dp_15"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRightMenu"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDelAppend"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_62"
+                android:background="#8d8d8d"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:background="#8d8d8d"
+                    android:src="@drawable/ic_icon_delete"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

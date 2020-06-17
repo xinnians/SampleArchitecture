@@ -107,7 +107,7 @@ class BetFragment : BaseFragment() {
             }
         })
 
-        viewBetMultipleSelector.setOnMultipleValueChangeListener(object : BetMultipleSelector.OnMultipleValueChangeListener{
+        viewBetMultipleSelector.setOnMultipleValueChangeListener(object : BetMultipleSelector.OnMultipleValueChangeListener {
             override fun onChange(value: Int) {
                 mViewModel.selectBetMultiple(value)
             }
@@ -292,19 +292,8 @@ class BetFragment : BaseFragment() {
                             uuid = "uuid",
                             betCount = 10000,
                             amount = 1)
-
-            mViewModel.addCart(cart).observeNotNull(this) { state ->
-                when (state) {
-                    is ViewState.Success -> {
-                        Log.e("Mori", "ViewState.Success")
-                        if (-1L != state.data) {
-                            toast("加入購物車成功")
-                        }
-                    }
-                    is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
-                    is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
-                }
-            }
+            mViewModel.addCart(cart)
+            mViewModel.addCartResult
         }
 
         ivShoppingCart.onClick {
@@ -343,11 +332,16 @@ class BetFragment : BaseFragment() {
         mViewModel.liveBetRegionList.observeNotNull(this) {
             mBetRegionAdapter?.setNewData(it)
         }
+
         mViewModel.liveBetCount.observeNotNull(this) {
             tvCount.text = it.toString()
         }
         mViewModel.liveBetCurrency.observeNotNull(this) {
             tvCurrency.text = it.toString()
+
+            mViewModel.addCartResult.observeNotNull(this) {
+                if (-1L != it) toast("加入購物車完成")
+            }
         }
     }
 
