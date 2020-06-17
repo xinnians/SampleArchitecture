@@ -113,12 +113,12 @@
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clDel"
+                android:id="@+id/clDelCart"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#8d8d8d"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/clEdit"
+                app:layout_constraintStart_toEndOf="@+id/clEditCart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 >
 
@@ -135,7 +135,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clEdit"
+                android:id="@+id/clEditCart"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#b1b1b1"
@@ -157,12 +157,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clAppend"
+                android:id="@+id/clAppendCart"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_62"
                 android:background="#cecece"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/clEdit"
+                app:layout_constraintEnd_toStartOf="@+id/clEditCart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 >
 

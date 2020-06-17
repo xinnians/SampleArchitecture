@@ -1,10 +1,12 @@
 package com.example.samplearchitecture.activity
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.navigation.Navigation.findNavController
 import com.example.base.BaseActivity
+import com.example.base.BaseFragment
 import com.example.base.navbar_tool.MeowBottomNavigation
 import com.example.samplearchitecture.Navigator
 import com.example.samplearchitecture.R
@@ -24,13 +26,14 @@ class MainActivity : BaseActivity() {
         private const val ID_TRANSATION = 4
         private const val ID_USER = 5
         private const val ID_HOME = 6
+
         /**
          * subCells ID
          */
         private const val ID_SUB_MESSAGE = 7
         private const val ID_SUB_ANNOUNCEMENT = 8
         private const val ID_SUB_CS = 9
-        var isBottomNavHide:Boolean = true
+        var isBottomNavHide: Boolean = true
     }
 
     private val navigator: Navigator by lazy {
@@ -44,7 +47,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun hideBottomNav() {
-        if(isBottomNavHide) {
+        if (isBottomNavHide) {
             meowNavBar.visibility = View.INVISIBLE
         } else {
             val animation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -55,11 +58,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun showBottomNav() {
-        if(isBottomNavHide) {
-            val animation = AnimationUtils.loadAnimation(
-                this,
-                R.anim.fade_in
-            )
+        if (isBottomNavHide) {
+            val animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
             meowNavBar.startAnimation(animation)
             meowNavBar.visibility = View.VISIBLE
         } else {
@@ -70,21 +70,19 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        navigator.bind(findNavController(this,R.id.layout_fragment))
+        navigator.bind(findNavController(this, R.id.layout_fragment))
     }
 
-    override fun onSupportNavigateUp(): Boolean = findNavController(this,R.id.layout_fragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean = findNavController(this, R.id.layout_fragment).navigateUp()
 
     private fun initBottomNavBar() {
 //        meowNavBar.visibility = View.GONE
         meowNavBar.let {
-            it.add(
-                MeowBottomNavigation.Model(ID_NOTICE, R.drawable.ic_notice,
-                    arrayListOf(
-                        MeowBottomNavigation.Model(ID_SUB_MESSAGE, R.drawable.ic_message),
-                        MeowBottomNavigation.Model(ID_SUB_ANNOUNCEMENT, R.drawable.ic_announcement),
-                        MeowBottomNavigation.Model(ID_SUB_CS, R.drawable.ic_cs)
-                    )))
+            it.add(MeowBottomNavigation.Model(ID_NOTICE,
+                                              R.drawable.ic_notice,
+                                              arrayListOf(MeowBottomNavigation.Model(ID_SUB_MESSAGE, R.drawable.ic_message),
+                                                          MeowBottomNavigation.Model(ID_SUB_ANNOUNCEMENT, R.drawable.ic_announcement),
+                                                          MeowBottomNavigation.Model(ID_SUB_CS, R.drawable.ic_cs))))
             it.add(MeowBottomNavigation.Model(ID_GIFT, R.drawable.ic_gift))
             it.add(MeowBottomNavigation.Model(ID_DEPOSIT, R.drawable.ic_deposit))
             it.add(MeowBottomNavigation.Model(ID_TRANSATION, R.drawable.ic_transaction))
@@ -103,24 +101,39 @@ class MainActivity : BaseActivity() {
             }
             it.setOnClickMenuListener {
                 // BottomNav 項目
-                when(it.id) {
-                    ID_GIFT -> {navigator.giftPage()}
-                    ID_DEPOSIT -> {navigator.depositPage()}
-                    ID_TRANSATION -> {navigator.transationPage()}
-                    ID_USER -> {navigator.userPage()}
-                    ID_HOME -> {navigator.homePage()}
-                    else -> {}
+                when (it.id) {
+                    ID_GIFT -> {
+                        navigator.giftPage()
+                    }
+                    ID_DEPOSIT -> {
+                        navigator.depositPage()
+                    }
+                    ID_TRANSATION -> {
+                        navigator.transationPage()
+                    }
+                    ID_USER -> {
+                        navigator.userPage()
+                    }
+                    ID_HOME -> {
+                        navigator.homePage()
+                    }
+                    else -> {
+                    }
                 }
             }
-            it.setOnReselectListener {  }
+            it.setOnReselectListener { }
             it.setCellOnClickListener(object : MeowBottomNavigation.CellOnClickListener {
                 override fun cellOnClickListener(id: Int) {
                     // BottomNav 子項目
-                    when(id) {
-                        ID_SUB_MESSAGE -> {}
-                        ID_SUB_ANNOUNCEMENT -> {}
-                        ID_SUB_CS -> {}
-                        else -> {}
+                    when (id) {
+                        ID_SUB_MESSAGE -> {
+                        }
+                        ID_SUB_ANNOUNCEMENT -> {
+                        }
+                        ID_SUB_CS -> {
+                        }
+                        else -> {
+                        }
                     }
                 }
             })

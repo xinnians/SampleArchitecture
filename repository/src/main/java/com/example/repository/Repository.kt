@@ -1,6 +1,8 @@
 package com.example.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
@@ -185,15 +187,15 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getCartList(gameId: Int): Flow<ViewState<MutableList<Cart>>>{
-        return flow {
-            emit(ViewState.loading())
-            val result = localDb.cartDao().getCartList(gameId)
-            emit(ViewState.success(result))
-        }.catch {
-            emit(ViewState.error(it.message.orEmpty()))
-        }.flowOn(Dispatchers.IO)
-    }
+//    fun getCartList(gameId: Int): Flow<ViewState<MutableList<MutableList<Cart>>>> {
+//        return flow {
+//            emit(ViewState.loading())
+//            val result = localDb.cartDao().getCartList(gameId)
+//            emit(ViewState.success(result))
+//        }.catch {
+//            emit(ViewState.error(it.message.orEmpty()))
+//        }.flowOn(Dispatchers.IO)
+//    }
 
     fun getCartListArray(gameId: ArrayList<Int>): Flow<ViewState<MutableList<MutableList<Cart>>>>{
         return flow {
@@ -201,6 +203,7 @@ class Repository(private val sampleService: SampleService, private val localDb: 
             val result : MutableList<MutableList<Cart>> = mutableListOf()
             for (id in gameId){
                 result.add(localDb.cartDao().getCartList(id))
+                Log.d("mori", "list size = ${result.size}")
             }
             emit(ViewState.success(result))
         }.catch {
@@ -212,7 +215,8 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     fun getAllGameId(): Flow<ViewState<MutableList<Int>>> {
         return flow {
             emit(ViewState.loading())
-            val result = localDb.cartDao().getAllGameId()
+            var result: MutableList<Int> = mutableListOf()
+            result = localDb.cartDao().getAllGameId()
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
