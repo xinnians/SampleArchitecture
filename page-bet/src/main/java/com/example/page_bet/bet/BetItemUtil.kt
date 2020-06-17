@@ -113,7 +113,17 @@ object BetItemUtil {
 //                }
             }
             //五星-直選單式
-            playTypeID_205001 -> {
+            //四星-前四單式,四星-後四單式
+            //前三-直選單式,前三-組三單式,前三-組六單式
+            //中三-直選單式,中三-組三單式,中三-組六單式
+            //後三-直選單式,後三-組三單式,後三-組六單式
+            //前二-直選單式,前二-組選單式,後二-直選單式,後二-組選單式
+            playTypeID_205001,
+            playTypeID_204101, playTypeID_204201,
+            playTypeID_203101, playTypeID_203121, playTypeID_203122,
+            playTypeID_203201, playTypeID_203221, playTypeID_203222,
+            playTypeID_203301, playTypeID_203321, playTypeID_203322,
+            playTypeID_202101, playTypeID_202120, playTypeID_202201, playTypeID_202220-> {
                 itemType = BetItemType.SINGLE_BET_TYPE
                 stringArray = resources.getStringArray(R.array.single).toList()
 
@@ -206,15 +216,6 @@ object BetItemUtil {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = resources.getStringArray(R.array.fourStar_last).toList()
             }
-            //四星-前四單式
-            playTypeID_204101 ->{
-
-            }
-            //四星-後四單式
-            playTypeID_204201 ->{
-
-            }
-
 
             //---------------------------------------------三星---------------------------------------------
             //前三-直選複式
@@ -222,11 +223,6 @@ object BetItemUtil {
             playTypeID_203100, playTypeID_203110 -> {
                 itemType = BetItemType.DEFAULT_BET_TYPE
                 stringArray = resources.getStringArray(R.array.frontThree).toList()
-            }
-
-            //前三-直選單式
-            playTypeID_203101 -> {
-
             }
 
             //前三-直选和值
@@ -434,6 +430,15 @@ object BetItemUtil {
 
 
             //---------------------------------------------任選2、3、4---------------------------------------------
+            //任選二-直選單式,任選二-組選單式
+            //任選三-直選單式,任選三-組三單式,任選三-組六單式
+            //任選四-直選單式
+            playTypeID_202001,playTypeID_202020,
+            playTypeID_203001,playTypeID_203021,playTypeID_203022,
+            playTypeID_204001-> {
+                itemType = BetItemType.ANY_SINGLE_BET_TYPE
+                stringArray = resources.getStringArray(R.array.single).toList()
+            }
             //任選二-直選和值
             playTypeID_202002 -> {
                 itemType = BetItemType.ANY_TWO_SUM_BET_TYPE
@@ -468,10 +473,6 @@ object BetItemUtil {
             playTypeID_203024 -> {
                 itemType = BetItemType.ANY_THREE_SET
                 stringArray = resources.getStringArray(R.array.threeSet6).toList()
-            }
-            //任選四-直選單式
-            playTypeID_204001 -> {
-
             }
             //任選四-組選24
             playTypeID_204021 -> {
@@ -542,7 +543,8 @@ object BetItemUtil {
                     betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,17)))
                 }
             }
-            BetItemType.SINGLE_BET_TYPE -> {
+            BetItemType.SINGLE_BET_TYPE,
+            BetItemType.ANY_SINGLE_BET_TYPE-> {
                 for (text in stringArray){
                     betArray.add(BetData(displayTitle = text,unitList = arrayListOf(BetUnit(unitName = "", unitValue = "",displayMode = BetUnitDisplayMode.EDIT_AREA))))
                 }
