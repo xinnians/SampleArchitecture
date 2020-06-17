@@ -11,7 +11,6 @@ import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class BetViewModel(var repository: Repository, var resources: Resources) : ViewModel() {
 
@@ -308,6 +307,10 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         }
         liveBetPositionList.value = modifyList
         liveDefaultUiDisplay.value = Unit
+
+        //選擇玩法後初始化注數和總金額UI
+        liveBetCount.value = 0
+        liveBetCurrency.value = getTotalCurrency().toInt()
     }
 
     //選擇投注欄位
@@ -358,9 +361,9 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         liveBetCurrency.value = getTotalCurrency().toInt()
     }
 
-    fun getTotalCurrency(): Double{
+    private fun getTotalCurrency(): Double {
         var result = liveBetCount.value?.times(mCurrencyUnit * mUnitValue * mMultiple) ?: 0.0
-        Log.e("Ian","[getTotalCurrency] result:$result")
+        Log.e("Ian", "[getTotalCurrency] result:$result")
         return result
     }
 
