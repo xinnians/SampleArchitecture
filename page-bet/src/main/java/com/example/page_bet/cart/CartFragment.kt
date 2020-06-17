@@ -25,10 +25,8 @@ class CartFragment : BaseFragment() {
     private lateinit var cartAppendListAdapter: CartAppendListAdapter
     private lateinit var mViewModel: BetViewModel
     private var isAppendListMode = false
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = container?.inflate(R.layout.fragment_cart)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        container?.inflate(R.layout.fragment_cart)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +35,7 @@ class CartFragment : BaseFragment() {
         mViewModel.getAllGameId()
         cartPagerAdapter = CartPagerAdapter(mutableListOf(), callBack)
         init()
-
+        setOnKeyDown()
     }
 
     private fun init() {
@@ -51,13 +49,33 @@ class CartFragment : BaseFragment() {
             }
 
             it.updateCartResult.observeNotNull(this) { result ->
-                if(-1 != result) {
+                if (-1 != result) {
                     cartPagerAdapter.notifyDataSetChanged()
                 }
             }
 
             it.getCartListResult.observeNotNull(this) { result ->
                 cartPagerAdapter.addData(result)
+            }
+        }
+    }
+
+    private fun setOnKeyDown() {
+        view?.let {
+            it.isFocusableInTouchMode = true
+            it.requestFocus()
+            it.setOnKeyListener { v, keyCode, event ->
+                Log.d("mori", "setOnKeyListener call")
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    Log.d("mori", "keyCode = $keyCode")
+                    if (isAppendListMode) {
+                        clCartListLayout.visible()
+                        clAppendLayout.gone()
+                        isAppendListMode = false
+                        return@setOnKeyListener true
+                    }
+                }
+                return@setOnKeyListener false
             }
         }
     }
@@ -69,8 +87,7 @@ class CartFragment : BaseFragment() {
                     mViewModel.delCart(cart)
                 }
 
-                clAppendCart.id,
-                clEditCart.id -> {
+                clAppendCart.id, clEditCart.id -> {
                     mViewModel.updateCart(cart)
                 }
             }
@@ -113,7 +130,7 @@ class CartFragment : BaseFragment() {
 
             val appendList = mutableListOf<Append>()
             for (i in 0 until appendCount) {
-                appendList.add(Append(i+1, setting.get("multiple").asInt, cart.amount))
+                appendList.add(Append(i + 1, setting.get("multiple").asInt, cart.amount))
             }
 
             cartAppendListAdapter = CartAppendListAdapter(appendList, object : CartAppendDialog.SetCallback {
@@ -141,7 +158,7 @@ class CartFragment : BaseFragment() {
 
             clBin.onClick {
                 var tempList = cartAppendListAdapter.data
-                cartAppendListAdapter.setNewData(tempList.filter { item ->!item.isCheck })
+                cartAppendListAdapter.setNewData(tempList.filter { item -> !item.isCheck })
             }
 
             clBack.onClick {

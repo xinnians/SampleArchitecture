@@ -6,7 +6,7 @@ import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.repository.room.LocalDatabase
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class  BaseActivity : AppCompatActivity() {
 
     private var mKeyDownListenerList: ArrayList<OnKeyDownListener>? = arrayListOf()
 
