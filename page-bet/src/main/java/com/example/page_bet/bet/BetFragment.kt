@@ -47,6 +47,7 @@ class BetFragment : BaseFragment() {
 
     private var isBetUnitShow = true
     private var isZoomIn = false
+    private var cartCount = -1
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -74,6 +75,7 @@ class BetFragment : BaseFragment() {
             mViewModel.mGameId = it.getInt(TAG_GAME_ID, -1)
             mViewModel.mGameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
+        mViewModel.getAllCartList()
     }
 
     private fun initView() {
@@ -297,7 +299,9 @@ class BetFragment : BaseFragment() {
         }
 
         ivShoppingCart.onClick {
-            navigation.toShoppingCartPage()
+            if (cartCount > 0) {
+                navigation.toShoppingCartPage()
+            }
         }
     }
 
@@ -339,9 +343,17 @@ class BetFragment : BaseFragment() {
         mViewModel.liveBetCurrency.observeNotNull(this) {
             tvCurrency.text = it.toString()
 
-            mViewModel.addCartResult.observeNotNull(this) {
-                if (-1L != it) toast("加入購物車完成")
+        }
+
+        mViewModel.addCartResult.observeNotNull(this) {
+            if (-1L != it) {
+                mViewModel.getAllCartList()
+                toast("加入購物車完成")
             }
+        }
+
+        mViewModel.getAllCartListResult.observeNotNull(this) {
+            cartCount = it.size
         }
     }
 

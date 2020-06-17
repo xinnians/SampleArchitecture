@@ -79,6 +79,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var delCartResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
     var updateCartResult: MutableLiveData<Int> = MutableLiveData()
     var getCartListResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
+    var getAllCartListResult: MutableLiveData<MutableList<Cart>> = MutableLiveData()
 
     /** --------------------------------------- Remote --------------------------------------- **/
 
@@ -258,6 +259,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                     is ViewState.Success -> {
                         Log.e("Mori", "ViewState.Success")
                         liveLoading.value = false
+                        val temple = getAllCartListResult
                         addCartResult.postValue(state.data)
                     }
                     is ViewState.Loading -> {
@@ -347,6 +349,27 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                         Log.e("Mori", "ViewState.Success")
                         liveLoading.value = false
                         getCartListResult.value = state.data
+                    }
+                    is ViewState.Loading -> {
+                        liveLoading.value = true
+                    }
+                    is ViewState.Error -> {
+                        liveLoading.value = false
+                        liveError.value = state.message
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAllCartList() {
+        viewModelScope.launch {
+            repository.getAllCartList().collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        Log.e("Mori", "ViewState.Success")
+                        liveLoading.value = false
+                        getAllCartListResult.value = state.data
                     }
                     is ViewState.Loading -> {
                         liveLoading.value = true
