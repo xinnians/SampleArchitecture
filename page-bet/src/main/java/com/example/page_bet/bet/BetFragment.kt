@@ -14,6 +14,7 @@ import com.example.base.*
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
+import com.example.base.widget.BetMultipleSelector
 import com.example.base.widget.BetUnitSelector
 import com.example.base.widget.CustomSwitch
 import com.example.page_bet.BetNavigation
@@ -103,6 +104,12 @@ class BetFragment : BaseFragment() {
         viewBetUnitSelector.addOnUnitSelectListener(object : BetUnitSelector.OnUnitSelectListener {
             override fun onSelect(unitValue: Double, currency: Int) {
                 mViewModel.selectBetUnit(unitValue, currency)
+            }
+        })
+
+        viewBetMultipleSelector.setOnMultipleValueChangeListener(object : BetMultipleSelector.OnMultipleValueChangeListener{
+            override fun onChange(value: Int) {
+                mViewModel.selectBetMultiple(value)
             }
         })
 

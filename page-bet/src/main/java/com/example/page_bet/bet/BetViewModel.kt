@@ -353,6 +353,11 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         liveBetCurrency.value = getTotalCurrency().toInt()
     }
 
+    var selectBetMultiple = { value: Int ->
+        mMultiple = value
+        liveBetCurrency.value = getTotalCurrency().toInt()
+    }
+
     fun getTotalCurrency(): Double{
         var result = liveBetCount.value?.times(mCurrencyUnit * mUnitValue * mMultiple) ?: 0.0
         Log.e("Ian","[getTotalCurrency] result:$result")

@@ -2,44 +2,81 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_106"
     android:layout_height="@dimen/dp_30"
+    android:id="@+id/clBetMultipleSelector"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tvDecrease"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDecrease"
         android:layout_width="@dimen/dp_32"
         android:layout_height="@dimen/dp_30"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:textSize="@dimen/sp_14"
-        android:text="-"
-        android:background="@drawable/bg_multiple_selector_decrease"
-        />
+        android:background="@drawable/bg_multiple_selector_decrease">
 
-    <TextView
-        android:id="@+id/tvMultiple"
+        <ImageView
+            android:id="@+id/ivDecrease"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:src="@drawable/ic_icon_minus"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMultiple"
         android:layout_width="@dimen/dp_42"
         android:layout_height="@dimen/dp_30"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvDecrease"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:textSize="@dimen/sp_12"
-        android:text="10000"
-        />
+        app:layout_constraintStart_toEndOf="@+id/clDecrease"
+        android:background="#ededed">
 
-    <TextView
-        android:id="@+id/tvIncrease"
+        <TextView
+            android:id="@+id/tvMultiple"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#000000"
+            android:text="10000"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="@dimen/dp_1"
+            android:layout_marginBottom="@dimen/dp_1"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clIncrease"
         android:layout_width="@dimen/dp_32"
         android:layout_height="@dimen/dp_30"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvMultiple"
+        app:layout_constraintStart_toEndOf="@+id/clMultiple"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:textSize="@dimen/sp_14"
-        android:text="+"
-        android:background="@drawable/bg_multiple_selector_increase"
-        />
+        android:background="@drawable/bg_multiple_selector_increase">
+
+        <ImageView
+            android:id="@+id/ivIncrease"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:src="@drawable/ic_icon_plus"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
