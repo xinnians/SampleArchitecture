@@ -135,7 +135,11 @@ class CartFragment : BaseFragment() {
 
             cartAppendListAdapter = CartAppendListAdapter(appendList, object : CartAppendDialog.SetCallback {
                 override fun onCall(append: Append, position: Int) {
-
+                    val tempList = cartAppendListAdapter.data
+                    if (tempList.contains(append)) {
+                        tempList.remove(append)
+                    }
+                    cartAppendListAdapter.notifyDataSetChanged()
                 }
             })
 
@@ -157,7 +161,7 @@ class CartFragment : BaseFragment() {
             }
 
             clBin.onClick {
-                var tempList = cartAppendListAdapter.data
+                val tempList = cartAppendListAdapter.data
                 cartAppendListAdapter.setNewData(tempList.filter { item -> !item.isCheck })
             }
 

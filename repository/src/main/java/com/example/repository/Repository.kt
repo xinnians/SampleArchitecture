@@ -211,6 +211,15 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getAllCartList(): Flow<ViewState<MutableList<Cart>>>{
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().getAllCartList()
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 
     fun getAllGameId(): Flow<ViewState<MutableList<Int>>> {
         return flow {

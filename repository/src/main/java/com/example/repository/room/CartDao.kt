@@ -10,6 +10,9 @@ interface CartDao {
     @Insert
     fun addCart(cart: Cart): Long
 
+    @Query("SELECT * FROM Cart")
+    fun getAllCartList(): MutableList<Cart>
+
     @Query("SELECT * FROM Cart WHERE gameId LIKE :gameId")
     fun getCartList(gameId: Int): MutableList<Cart>
 
