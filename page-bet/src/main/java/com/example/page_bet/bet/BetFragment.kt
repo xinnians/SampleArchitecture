@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
 import com.example.base.AppInjector
@@ -21,10 +23,12 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.lottery_record.LotteryRecordDialog
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
+import com.example.page_bet.cart.CartViewModel
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.coroutines.isActive
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class BetFragment : BaseFragment() {
@@ -38,6 +42,7 @@ class BetFragment : BaseFragment() {
     }
 
     private lateinit var mViewModel: BetViewModel
+    private lateinit var cartViewModel: CartViewModel
     private var mPlayTypeDialog: PlayTypeDialog? = null
     private var mLotteryHistoryDialog: LotteryRecordDialog? = null
 
@@ -47,7 +52,7 @@ class BetFragment : BaseFragment() {
 
     private var isBetUnitShow = true
     private var isZoomIn = false
-    private var cartCount = -1
+    private var isGoToShoppingCart = false
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -55,6 +60,7 @@ class BetFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        Log.d(BetFragment::class.java.simpleName, "create view")
         return inflater.inflate(R.layout.fragment_bet, container, false)
     }
 
@@ -70,12 +76,13 @@ class BetFragment : BaseFragment() {
 
     private fun initData() {
         mViewModel = AppInjector.obtainViewModel(this)
+        cartViewModel = AppInjector.obtainViewModel(this)
         arguments?.let {
             mViewModel.mGameName = it.getString(TAG_GAME_NAME, "empty")
             mViewModel.mGameId = it.getInt(TAG_GAME_ID, -1)
             mViewModel.mGameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
-        mViewModel.getAllCartList()
+        cartViewModel.getAllCartList()
     }
 
     private fun initView() {
@@ -294,13 +301,15 @@ class BetFragment : BaseFragment() {
                             uuid = "uuid",
                             betCount = 10000,
                             amount = 1)
-            mViewModel.addCart(cart)
-            mViewModel.addCartResult
+            cartViewModel.addCart(cart)
+//            cartViewModel.getAllCartList()
         }
 
         ivShoppingCart.onClick {
-            if (cartCount > 0) {
+            if (isGoToShoppingCart) {
                 navigation.toShoppingCartPage()
+            } else {
+                Toast.makeText(requireContext(), "購物車沒資料喔", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -345,15 +354,14 @@ class BetFragment : BaseFragment() {
 
         }
 
-        mViewModel.addCartResult.observeNotNull(this) {
+        cartViewModel.addCartResult.observe(viewLifecycleOwner, EventObserver<Long> {
             if (-1L != it) {
-                mViewModel.getAllCartList()
-                toast("加入購物車完成")
+                Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
             }
-        }
+        })
 
-        mViewModel.getAllCartListResult.observeNotNull(this) {
-            cartCount = it.size
+        cartViewModel.getAllCartListResult.observeNotNull(viewLifecycleOwner) {
+            isGoToShoppingCart = it
         }
 
         mViewModel.liveIsNeedShowFullScreen.observeNotNull(this) {
@@ -426,4 +434,5 @@ class BetFragment : BaseFragment() {
 
         }
     }
+
 }

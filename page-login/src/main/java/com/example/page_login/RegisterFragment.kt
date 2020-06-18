@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.text.color
 import com.example.base.*
 import com.example.base.widget.CustomEditTextView
@@ -86,12 +87,12 @@ class RegisterFragment : BaseFragment() {
         btnRegister.text = "免費註冊"
         btnRegister.onClick {
             if (isAccount && isPws) {
-                toast("註冊成功")
+                Toast.makeText(requireContext(), "註冊成功", Toast.LENGTH_SHORT).show()
                 prefStore.account = cetAccount.text
                 prefStore.password = cetPws.text
                 navigation.loginPage()
             } else {
-                toast("請輸入帳號密碼喔")
+                Toast.makeText(requireContext(), "請輸入帳號密碼喔", Toast.LENGTH_SHORT).show()
             }
         }
 

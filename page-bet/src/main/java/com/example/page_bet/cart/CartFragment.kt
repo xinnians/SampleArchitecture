@@ -23,38 +23,38 @@ import kotlinx.android.synthetic.main.item_cart_layout.*
 class CartFragment : BaseFragment() {
     private lateinit var cartPagerAdapter: CartPagerAdapter
     private lateinit var cartAppendListAdapter: CartAppendListAdapter
-    private lateinit var mViewModel: BetViewModel
+    private lateinit var cartViewModel: CartViewModel
     private var isAppendListMode = false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         container?.inflate(R.layout.fragment_cart)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel = AppInjector.obtainViewModel(this)
+        cartViewModel = AppInjector.obtainViewModel(this)
         vpCartType.isUserInputEnabled = false
-        mViewModel.getAllGameId()
+        cartViewModel.getAllGameId()
         cartPagerAdapter = CartPagerAdapter(mutableListOf(), callBack)
         init()
         setOnKeyDown()
     }
 
     private fun init() {
-        mViewModel.let {
-            it.allGameIdResult.observeNotNull(this) { result ->
+        cartViewModel.let {
+            it.allGameIdResult.observeNotNull(viewLifecycleOwner) { result ->
                 getIdAndName(result)
             }
 
-            it.delCartResult.observeNotNull(this) { result ->
+            it.delCartResult.observeNotNull(viewLifecycleOwner) { result ->
                 cartPagerAdapter.addData(result)
             }
 
-            it.updateCartResult.observeNotNull(this) { result ->
+            it.updateCartResult.observeNotNull(viewLifecycleOwner) { result ->
                 if (-1 != result) {
                     cartPagerAdapter.notifyDataSetChanged()
                 }
             }
 
-            it.getCartListResult.observeNotNull(this) { result ->
+            it.getCartListResult.observeNotNull(viewLifecycleOwner) { result ->
                 cartPagerAdapter.addData(result)
             }
         }
@@ -64,10 +64,8 @@ class CartFragment : BaseFragment() {
         view?.let {
             it.isFocusableInTouchMode = true
             it.requestFocus()
-            it.setOnKeyListener { v, keyCode, event ->
-                Log.d("mori", "setOnKeyListener call")
+            it.setOnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    Log.d("mori", "keyCode = $keyCode")
                     if (isAppendListMode) {
                         clCartListLayout.visible()
                         clAppendLayout.gone()
@@ -84,11 +82,11 @@ class CartFragment : BaseFragment() {
         override fun onCall(view: View, cart: Cart, position: Int) {
             when (view.id) {
                 clDelCart.id -> {
-                    mViewModel.delCart(cart)
+                    cartViewModel.delCart(cart)
                 }
 
                 clAppendCart.id, clEditCart.id -> {
-                    mViewModel.updateCart(cart)
+                    cartViewModel.updateCart(cart)
                 }
             }
         }
@@ -196,7 +194,7 @@ class CartFragment : BaseFragment() {
     }
 
     private fun setAdapter(gameId: MutableList<Int>, tabName: MutableList<String>) {
-        mViewModel.getCartArray(gameId as ArrayList<Int>)
+        cartViewModel.getCartArray(gameId as ArrayList<Int>)
         vpCartType.adapter = cartPagerAdapter
         cartPagerAdapter.notifyDataSetChanged()
 
@@ -205,6 +203,7 @@ class CartFragment : BaseFragment() {
         }.attach()
 
     }
+
 
     data class Append(val appendIssueNo: Int, val multiple: Int, val amount: Int, var isCheck: Boolean = false)
 
