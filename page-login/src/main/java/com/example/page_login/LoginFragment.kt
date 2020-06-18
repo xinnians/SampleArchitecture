@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
@@ -137,20 +138,20 @@ class LoginFragment : BaseFragment() {
         }
 
         ivTestPlay.onClick {
-            toast("試玩版開發中")
+            Toast.makeText(requireContext(), "試玩版開發中", Toast.LENGTH_SHORT).show()
         }
 
         btnLogin.text = "登入"
         btnLogin.onClick {
             if (isAccount && isPws) {
                 if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
-                    toast("登入成功")
+                    Toast.makeText(requireContext(), "登入成功", Toast.LENGTH_SHORT).show()
                     navigation.mainPage()
                 } else {
-                    toast("帳號密碼錯誤")
+                    Toast.makeText(requireContext(), "帳號密碼錯誤", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                toast("請輸入帳號密碼喔")
+                Toast.makeText(requireContext(), "請輸入帳號密碼喔", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -170,19 +171,19 @@ class LoginFragment : BaseFragment() {
                     override fun onAuthenticationError(errorCode: Int,
                                                        errString: CharSequence) {
                         super.onAuthenticationError(errorCode, errString)
-                        toast("Authentication error: $errString")
+                        Toast.makeText(requireContext(), "Authentication error: $errString", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onAuthenticationSucceeded(
                         result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
-                        toast("登入成功")
+                        Toast.makeText(requireContext(), "登入成功", Toast.LENGTH_SHORT).show()
                         navigation.mainPage()
                     }
 
                     override fun onAuthenticationFailed() {
                         super.onAuthenticationFailed()
-                        toast("Authentication failed")
+                        Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()
                     }
                 })
 

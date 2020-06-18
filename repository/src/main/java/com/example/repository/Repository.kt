@@ -203,7 +203,6 @@ class Repository(private val sampleService: SampleService, private val localDb: 
             val result : MutableList<MutableList<Cart>> = mutableListOf()
             for (id in gameId){
                 result.add(localDb.cartDao().getCartList(id))
-                Log.d("mori", "list size = ${result.size}")
             }
             emit(ViewState.success(result))
         }.catch {

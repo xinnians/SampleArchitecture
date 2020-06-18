@@ -40,14 +40,6 @@ inline fun View.onClick(crossinline clickAction: () -> Unit) = this.setOnClickLi
     clickAction.invoke()
 }
 
-fun Fragment.toast(text: CharSequence) = requireActivity().toast(text)
-
-fun Context.toast(message: CharSequence): Toast = Toast
-    .makeText(this, message, Toast.LENGTH_SHORT)
-    .apply {
-        show()
-    }
-
 fun Fragment.drawable(resId: Int) = requireContext().drawable(resId)
 
 fun Context.drawable(resId: Int) = ContextCompat.getDrawable(this, resId)
