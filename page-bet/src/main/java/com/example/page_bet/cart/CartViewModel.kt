@@ -3,7 +3,7 @@ package com.example.page_bet.cart
 import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.base.Event
+import com.example.base.toSingleEvent
 import com.example.repository.Repository
 import com.example.repository.model.base.ViewState
 import com.example.repository.room.Cart
@@ -16,13 +16,12 @@ class CartViewModel(var repository: Repository, var resources: Resources) : View
     var liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var liveError: MutableLiveData<String> = MutableLiveData()
 
-    var addCartResult: MutableLiveData<Event<Long>> = MutableLiveData()
+    var addCartResult: MutableLiveData<Long> = MutableLiveData<Long>().toSingleEvent()
     var allGameIdResult: MutableLiveData<MutableList<Int>> = MutableLiveData()
     var delCartResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
     var updateCartResult: MutableLiveData<Int> = MutableLiveData()
     var getCartListResult: MutableLiveData<MutableList<MutableList<Cart>>> = MutableLiveData()
     var getAllCartListResult: MutableLiveData<Boolean> = MutableLiveData()
-
 
     /** --------------------------------------- Local Database --------------------------------------- **/
     //Local Database
@@ -33,7 +32,7 @@ class CartViewModel(var repository: Repository, var resources: Resources) : View
                     is ViewState.Success -> {
                         liveLoading.value = false
                         getAllCartList()
-                        addCartResult.value = Event(state.data)
+                        addCartResult.value = state.data
                     }
                     is ViewState.Loading -> {
                         liveLoading.value = true
@@ -92,7 +91,7 @@ class CartViewModel(var repository: Repository, var resources: Resources) : View
         }
     }
 
-    fun updateCart(cart: Cart){
+    fun updateCart(cart: Cart) {
         viewModelScope.launch {
             repository.updateCart(cart).collect { state ->
                 when (state) {

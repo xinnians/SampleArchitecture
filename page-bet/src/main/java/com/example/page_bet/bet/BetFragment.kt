@@ -354,11 +354,11 @@ class BetFragment : BaseFragment() {
 
         }
 
-        cartViewModel.addCartResult.observe(viewLifecycleOwner, EventObserver<Long> {
+        cartViewModel.addCartResult.observeNotNull(this){
             if (-1L != it) {
                 Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         cartViewModel.getAllCartListResult.observeNotNull(viewLifecycleOwner) {
             isGoToShoppingCart = it

@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import com.hadilq.liveevent.LiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -153,4 +155,12 @@ fun String.isNumeric(): Boolean{
 
 fun Int.isOdd(): Boolean {
     return this % 2 != 0
+}
+
+fun <T> MutableLiveData<T>.toSingleEvent(): MutableLiveData<T> {
+    val result = LiveEvent<T>()
+    result.addSource(this) {
+        result.value = it
+    }
+    return result
 }
