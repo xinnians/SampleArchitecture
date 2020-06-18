@@ -53,6 +53,7 @@ class BetFragment : BaseFragment() {
     private var isBetUnitShow = true
     private var isZoomIn = false
     private var isGoToShoppingCart = false
+    private var isBigScreen = true
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -60,7 +61,6 @@ class BetFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        Log.d(BetFragment::class.java.simpleName, "create view")
         return inflater.inflate(R.layout.fragment_bet, container, false)
     }
 
@@ -72,6 +72,7 @@ class BetFragment : BaseFragment() {
         initListener()
         initBinding()
         initUI()
+        initScreen()
     }
 
     private fun initData() {
@@ -160,12 +161,18 @@ class BetFragment : BaseFragment() {
             }
         }
 
+        //上層所有資訊欄位
         val zoomIn = ConstraintSet()
-        val zoomInTopRow = ConstraintSet()
         val zoomOut = ConstraintSet()
+        //期數欄位
+        val zoomInTopRow = ConstraintSet()
         val zoomOutTopRow = ConstraintSet()
+        //最外層
         val mainInLayout = ConstraintSet()
         val mainOutLayout = ConstraintSet()
+        //投注單位
+        val showRate = ConstraintSet()
+        showRate.clone(clUnderLayout)
         mainInLayout.clone(layoutBetMain)
         mainOutLayout.clone(layoutBetMain)
         zoomIn.clone(clTopLayout)
@@ -203,6 +210,12 @@ class BetFragment : BaseFragment() {
                 zoomOutTopRow.applyTo(layoutCurrentIssueInfo)
                 mainOutLayout.applyTo(layoutBetMain)
                 btnZoom.background = drawable(R.drawable.bg_zoom_in)
+                if (isBigScreen) {
+                    showRate.applyTo(clUnderLayout)
+                    tvLabel.gone()
+                } else {
+                    tvLabel.visible()
+                }
                 isZoomIn = false
             } else {
                 //放大投注區
@@ -244,26 +257,18 @@ class BetFragment : BaseFragment() {
                 zoomInView(zoomInTopRow, R.id.tvCurrentIssueNumber, 3).applyTo(layoutCurrentIssueInfo)
 
                 zoomInView(mainInLayout, R.id.btnZoom, 4).applyTo(layoutBetMain)
+                if (isBigScreen) {
+                    tvLabel.visible()
+                    hideRateLayout(layoutBetMain)
+                }
                 btnZoom.background = drawable(R.drawable.bg_zoom_out)
                 isZoomIn = true
             }
         }
 
-        val showRate = ConstraintSet()
-        val hideRate = ConstraintSet()
-        showRate.clone(clUnderLayout)
-        hideRate.clone(clUnderLayout)
         tvLabel.onClick {
             if (isBetUnitShow) {
-                TransitionManager.beginDelayedTransition(clUnderLayout)
-                hideRate.apply {
-                    clear(R.id.clRateLayout)
-                    connect(R.id.clRateLayout, ConstraintSet.TOP, R.id.clBottomLayout, ConstraintSet.TOP)
-                    connect(R.id.clRateLayout, ConstraintSet.START, R.id.clBottomLayout, ConstraintSet.START)
-                    connect(R.id.clRateLayout, ConstraintSet.END, R.id.clBottomLayout, ConstraintSet.END)
-                }.applyTo(clUnderLayout)
-                tvLabel.text = "Show"
-                isBetUnitShow = false
+                hideRateLayout(clUnderLayout)
             } else {
                 TransitionManager.beginDelayedTransition(clUnderLayout)
                 showRate.applyTo(clUnderLayout)
@@ -302,7 +307,6 @@ class BetFragment : BaseFragment() {
                             betCount = 10000,
                             amount = 1)
             cartViewModel.addCart(cart)
-//            cartViewModel.getAllCartList()
         }
 
         ivShoppingCart.onClick {
@@ -397,6 +401,28 @@ class BetFragment : BaseFragment() {
         mBetRegionAdapter?.setNewData(data)
     }
 
+    private fun initScreen() {
+        if (isBigScreen) {
+            tvLabel.gone()
+        } else {
+            tvLabel.visible()
+            hideRateLayout(clUnderLayout)
+        }
+    }
+
+    private fun hideRateLayout(connectLayout: ViewGroup) {
+        val rateSet = ConstraintSet()
+        TransitionManager.beginDelayedTransition(connectLayout)
+        rateSet.apply {
+            clear(R.id.clRateLayout)
+            connect(R.id.clRateLayout, ConstraintSet.TOP, R.id.clBottomLayout, ConstraintSet.TOP)
+            connect(R.id.clRateLayout, ConstraintSet.START, R.id.clBottomLayout, ConstraintSet.START)
+            connect(R.id.clRateLayout, ConstraintSet.END, R.id.clBottomLayout, ConstraintSet.END)
+        }.applyTo(clUnderLayout)
+        tvLabel.text = "Show"
+        isBetUnitShow = false
+    }
+
     private fun zoomInView(set: ConstraintSet, resId: Int, type: Int): ConstraintSet {
         return set.apply {
             clear(resId, ConstraintSet.TOP)
@@ -411,25 +437,32 @@ class BetFragment : BaseFragment() {
                 }
 
                 2 -> {
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP, R.id.layoutCurrentIssueInfo, ConstraintSet.TOP)
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.layoutCurrentIssueInfo, ConstraintSet.START)
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM, R.id.layoutCurrentIssueInfo, ConstraintSet.BOTTOM)
-                    setMargin(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.TOP, R.id.layoutCurrentIssueInfo, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.START, R.id.layoutCurrentIssueInfo, ConstraintSet.START)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.layoutCurrentIssueInfo, ConstraintSet.BOTTOM)
+                    setMargin(resId, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
                 }
 
                 3 -> {
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.TOP, R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP)
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.BOTTOM, R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM)
-                    setMargin(R.id.tvCurrentIssueNumber, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
+                    connect(resId, ConstraintSet.TOP, R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM)
+                    setMargin(resId, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
                 }
 
                 4 -> {
-                    connect(R.id.btnZoom, ConstraintSet.TOP, R.id.layoutBetMain, ConstraintSet.TOP)
-                    connect(R.id.btnZoom, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
-                    setMargin(R.id.btnZoom, ConstraintSet.END, dpToPx(26f, requireContext()).toInt())
-                    setMargin(R.id.btnZoom, ConstraintSet.TOP, dpToPx(5f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.TOP, R.id.layoutBetMain, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
+                    setMargin(resId, ConstraintSet.END, dpToPx(26f, requireContext()).toInt())
+                    setMargin(resId, ConstraintSet.TOP, dpToPx(5f, requireContext()).toInt())
                 }
+
+                5 -> {
+                    connect(resId, ConstraintSet.START, R.id.layoutBetMain, ConstraintSet.START)
+                    connect(resId, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.clBottomLayout, ConstraintSet.TOP)
+                }
+
             }
 
         }
