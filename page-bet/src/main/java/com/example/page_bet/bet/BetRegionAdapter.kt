@@ -22,6 +22,8 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
     //TODO init BetUnitAdapter for four DisplayMode
     private var onUnitClickListener: OnUnitClickListener? = null
 
+    private var mUnitSelect: String = ""
+
     init {
         addItemType(BetUnitDisplayMode.ONLY_NUMBER.typeNumber, R.layout.item_bet_region_only_number)
         addItemType(BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_region_one_char)
@@ -41,10 +43,7 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
         helper?.let {
             Log.e("Ian", "[BetRegionAdapter] convert item:${item?.data}")
             //單式處理邏輯
-            if (it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber
-                || it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber + FULL_SCREEN
-                || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber
-                || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber + FULL_SCREEN) {
+            if (it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber || it.itemViewType == BetUnitDisplayMode.EDIT_AREA.typeNumber + FULL_SCREEN || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber + FULL_SCREEN) {
 
                 item?.data?.unitList?.get(0)?.unitValue?.let { values ->
                     it.getView<EditText>(R.id.etBetNumber).apply {
@@ -54,13 +53,19 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                     }
                 }
 
+                if (it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber + FULL_SCREEN) {
+
+                }
+
                 it.getView<EditText>(R.id.etBetNumber).addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
-                        item?.data?.unitList?.get(0)?.unitValue = s.toString()
+                        item?.data?.unitList?.get(0)?.unitValue = mUnitSelect + s.toString()
                         onUnitClickListener?.onUnitClick()
                     }
+
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                     }
+
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     }
 
@@ -195,6 +200,27 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
 
     fun setOnUnitClickListener(listener: OnUnitClickListener) {
         this.onUnitClickListener = listener
+    }
+
+    data class UnitSelect(var million: Boolean = false,
+                          var thousand: Boolean = false,
+                          var hundred: Boolean = false,
+                          var ten: Boolean = false,
+                          var one: Boolean = false)
+
+    fun UnitSelect.toSelectNumber(): String {
+        var recordList: ArrayList<String> = arrayListOf()
+        if (million) recordList.add("0")
+        if (thousand) recordList.add("1")
+        if (hundred) recordList.add("2")
+        if (ten) recordList.add("3")
+        if (one) recordList.add("4")
+
+        var result: String = ""
+
+        recordList.
+
+        return result
     }
 
 }

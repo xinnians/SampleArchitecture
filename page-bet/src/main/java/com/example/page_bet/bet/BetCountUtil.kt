@@ -183,7 +183,7 @@ object BetCountUtil {
                 result.append(entity.unitValue)
             }
             Log.e("Ian","[getSingleBetTypeSelectNumber] oriString: $result")
-            var spiltList = result.split(Pattern.compile("[,. ;]"))
+            var spiltList = result.split(Pattern.compile("[,. ;\n\r]"))
             spiltList = spiltList.filter { it.isNumeric() && it.length == length}
             result.clear()
             for(index in spiltList.indices){
