@@ -158,24 +158,42 @@ object BetCountUtil {
                 }
             }
             playTypeID_205001-> {
-                for (index in betEntityList.indices) {
-                    for (entity in betEntityList[index].getData()?.unitList!!) {
-                        result.append(entity.unitValue)
-                    }
-                    var spiltList = result.split(Pattern.compile("[,. ;]"))
-                    spiltList = spiltList.filter { it.isNumeric() && it.length == 5}
-                    result.clear()
-                    for(index in spiltList.indices){
-                        result.append(spiltList[index])
-                        if(index != spiltList.size-1){
-                            result.append(",")
-                        }
-                    }
-                }
+                result = getSingleBetTypeSelectNumber(5,betEntityList)
+            }
+            playTypeID_204101,playTypeID_204201-> {
+                result = getSingleBetTypeSelectNumber(4,betEntityList)
+            }
+            playTypeID_203101, playTypeID_203121, playTypeID_203122,
+            playTypeID_203201, playTypeID_203221, playTypeID_203222,
+            playTypeID_203301, playTypeID_203321, playTypeID_203322-> {
+                result = getSingleBetTypeSelectNumber(3,betEntityList)
+            }
+            playTypeID_202101, playTypeID_202120, playTypeID_202201, playTypeID_202220-> {
+                result = getSingleBetTypeSelectNumber(2,betEntityList)
             }
         }
         Log.e("Ian","[getBetSelectNumber] result: $result")
         return BetSelectNumber(playtypeCode.toString(),result.toString())
+    }
+
+    private fun getSingleBetTypeSelectNumber(length: Int, betEntityList: List<MultiplePlayTypePositionItem>): StringBuilder{
+        var result: StringBuilder = StringBuilder()
+        for (index in betEntityList.indices) {
+            for (entity in betEntityList[index].getData()?.unitList!!) {
+                result.append(entity.unitValue)
+            }
+            Log.e("Ian","[getSingleBetTypeSelectNumber] oriString: $result")
+            var spiltList = result.split(Pattern.compile("[,. ;]"))
+            spiltList = spiltList.filter { it.isNumeric() && it.length == length}
+            result.clear()
+            for(index in spiltList.indices){
+                result.append(spiltList[index])
+                if(index != spiltList.size-1){
+                    result.append(",")
+                }
+            }
+        }
+        return result
     }
 
     /**

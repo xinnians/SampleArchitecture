@@ -71,6 +71,9 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     //當前選擇總金額
     var liveBetCurrency: MutableLiveData<Int> = MutableLiveData()
 
+    //是否需顯示全螢幕切換按鈕
+    var liveIsNeedShowFullScreen: MutableLiveData<Boolean> = MutableLiveData()
+
     var liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var liveError: MutableLiveData<String> = MutableLiveData()
 
@@ -320,7 +323,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         }
     }
 
-    fun updateCart(cart: Cart){
+    fun updateCart(cart: Cart) {
         viewModelScope.launch {
             repository.updateCart(cart).collect { state ->
                 when (state) {
@@ -424,13 +427,15 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
         //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
         if (oriList.isNotEmpty()) {
-            var type = if (mBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size
+            var type = if (mBetItemType == BetItemType.SINGLE_BET_TYPE || mBetItemType == BetItemType.ANY_SINGLE_BET_TYPE) 0 else oriList.size
             for (item in oriList) {
                 modifyList.add(MultiplePlayTypePositionItem(type, item))
             }
         } else {
             modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
         }
+        liveIsNeedShowFullScreen.value = (mBetItemType == BetItemType.ANY_SINGLE_BET_TYPE || mBetItemType == BetItemType.SINGLE_BET_TYPE)
+
         liveBetPositionList.value = modifyList
         liveDefaultUiDisplay.value = Unit
 

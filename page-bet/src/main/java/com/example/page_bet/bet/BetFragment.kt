@@ -355,6 +355,10 @@ class BetFragment : BaseFragment() {
         mViewModel.getAllCartListResult.observeNotNull(this) {
             cartCount = it.size
         }
+
+        mViewModel.liveIsNeedShowFullScreen.observeNotNull(this) {
+            btnZoom.visibility = if (it) View.INVISIBLE else View.VISIBLE
+        }
     }
 
     private fun initUI() {
