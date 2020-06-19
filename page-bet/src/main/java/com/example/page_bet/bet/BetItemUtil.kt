@@ -60,6 +60,12 @@ object BetItemUtil {
         BetUnit("和","3",displayMode = BetUnitDisplayMode.ONE_CHAR)
     )
 
+    private var templateSpecial: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("豹子","1",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("順子","2",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("對子","3",displayMode = BetUnitDisplayMode.TWO_CHAR)
+    )
+
     private var hashMapForZeroToEighteen = hashMapOf(
         "0" to false, "1" to false, "2" to false, "3" to false, "4" to false,
         "5" to false, "6" to false, "7" to false, "8" to false, "9" to false,
@@ -509,44 +515,44 @@ object BetItemUtil {
             BetItemType.ANY_THREE_SET,
             BetItemType.ANY_FOUR_SET-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,9)))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,9),betItemType = betItemType))
                 }
             }
             //0-27
             BetItemType.SUM_BET_TYPE,
             BetItemType.ANY_THREE_SUM_BET_TYPE-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,27)))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,27),betItemType = betItemType))
                 }
             }
             BetItemType.SET_SUM_BET_TYPE,
             BetItemType.ANY_THREE_SET_SUM_BET_TYPE -> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,26)))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,26),betItemType = betItemType))
                 }
 
             }
             BetItemType.SPECIAL_BET_TYPE -> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = templateOneChar.clone() as ArrayList<BetUnit>))
+                    betArray.add(BetData(displayTitle = text,unitList = templateSpecial.clone() as ArrayList<BetUnit>,betItemType = betItemType))
                 }
             }
             BetItemType.TWO_SUM_BET_TYPE,
             BetItemType.ANY_TWO_SUM_BET_TYPE-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,18)))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,0,18),betItemType = betItemType))
                 }
             }
             BetItemType.TWO_SET_SUM_BET_TYPE,
             BetItemType.ANY_TWO_SET_SUM_BET_TYPE -> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,17)))
+                    betArray.add(BetData(displayTitle = text,unitList = getBetUnitList(BetUnitDisplayMode.ONLY_NUMBER,1,17),betItemType = betItemType))
                 }
             }
             BetItemType.SINGLE_BET_TYPE,
             BetItemType.ANY_SINGLE_BET_TYPE-> {
                 for (text in stringArray){
-                    betArray.add(BetData(displayTitle = text,unitList = arrayListOf(BetUnit(unitName = "", unitValue = "",displayMode = BetUnitDisplayMode.EDIT_AREA))))
+                    betArray.add(BetData(displayTitle = text,unitList = arrayListOf(BetUnit(unitName = "", unitValue = "",displayMode = BetUnitDisplayMode.EDIT_AREA)),betItemType = betItemType))
                 }
             }
 //            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {

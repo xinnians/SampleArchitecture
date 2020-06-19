@@ -216,7 +216,9 @@ class BetFragment : BaseFragment() {
 
                         var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
                         mBetPositionAdapter?.data?.forEach {
-                            list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode, it.getData()!!, true))
+                            list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode,
+                                                           it.getData()!!,
+                                                           true))
                         }
                         setBetRegionDisplay(list)
 

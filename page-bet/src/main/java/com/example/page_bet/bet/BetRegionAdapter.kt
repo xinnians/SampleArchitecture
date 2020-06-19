@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.base.isOdd
 import com.example.base.onClick
 import com.example.page_bet.R
+import com.example.repository.constant.BetItemType
 import com.example.repository.constant.BetUnitDisplayMode
 import com.example.repository.model.bet.MultipleBetUnit
 import com.example.repository.model.bet.MultipleLotteryEntity
@@ -23,6 +24,7 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
     private var onUnitClickListener: OnUnitClickListener? = null
 
     private var mUnitSelect: String = ""
+    private var mEditText: String = ""
 
     init {
         addItemType(BetUnitDisplayMode.ONLY_NUMBER.typeNumber, R.layout.item_bet_region_only_number)
@@ -54,13 +56,62 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                 }
 
                 if (it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber || it.itemViewType == BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber + FULL_SCREEN) {
+                    //TODO init任選單式相關的作動UI
+                    item?.data?.unitList?.get(0)?.unitSelect?.million?.apply {
+                        it.getView<TextView>(R.id.tvUnitMillion).onClick {
+                            item.data.unitList[0].unitSelect.million = this == false
+                            notifyDataSetChanged()
+                            onItemSelect(item)
+                        }
+                        it.setBackgroundRes(R.id.tvUnitMillion, if (!this) R.drawable.bg_white_10_corner else R.drawable.bg_gray_10_corner)
+                        it.getView<TextView>(R.id.tvUnitMillion).elevation = if (!this) 10f else 0f
+                    }
 
+                    item?.data?.unitList?.get(0)?.unitSelect?.thousand?.apply {
+                        it.getView<TextView>(R.id.tvUnitThousand).onClick {
+                            item.data.unitList[0].unitSelect.thousand = this == false
+                            notifyDataSetChanged()
+                            onItemSelect(item)
+                        }
+                        it.setBackgroundRes(R.id.tvUnitThousand, if (!this) R.drawable.bg_white_10_corner else R.drawable.bg_gray_10_corner)
+                        it.getView<TextView>(R.id.tvUnitThousand).elevation = if (!this) 10f else 0f
+                    }
+
+                    item?.data?.unitList?.get(0)?.unitSelect?.hundred?.apply {
+                        it.getView<TextView>(R.id.tvUnitHundred).onClick {
+                            item.data.unitList[0].unitSelect.hundred = this == false
+                            notifyDataSetChanged()
+                            onItemSelect(item)
+                        }
+                        it.setBackgroundRes(R.id.tvUnitHundred, if (!this) R.drawable.bg_white_10_corner else R.drawable.bg_gray_10_corner)
+                        it.getView<TextView>(R.id.tvUnitHundred).elevation = if (!this) 10f else 0f
+                    }
+
+                    item?.data?.unitList?.get(0)?.unitSelect?.ten?.apply {
+                        it.getView<TextView>(R.id.tvUnitTen).onClick {
+                            item.data.unitList[0].unitSelect.ten = this == false
+                            notifyDataSetChanged()
+                            onItemSelect(item)
+                        }
+                        it.setBackgroundRes(R.id.tvUnitTen, if (!this) R.drawable.bg_white_10_corner else R.drawable.bg_gray_10_corner)
+                        it.getView<TextView>(R.id.tvUnitTen).elevation = if (!this) 10f else 0f
+                    }
+
+                    item?.data?.unitList?.get(0)?.unitSelect?.one?.apply {
+                        it.getView<TextView>(R.id.tvUnitOne).onClick {
+                            item.data.unitList[0].unitSelect.one = this == false
+                            notifyDataSetChanged()
+                            onItemSelect(item)
+                        }
+                        it.setBackgroundRes(R.id.tvUnitOne, if (!this) R.drawable.bg_white_10_corner else R.drawable.bg_gray_10_corner)
+                        it.getView<TextView>(R.id.tvUnitOne).elevation = if (!this) 10f else 0f
+                    }
                 }
 
                 it.getView<EditText>(R.id.etBetNumber).addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
-                        item?.data?.unitList?.get(0)?.unitValue = mUnitSelect + s.toString()
-                        onUnitClickListener?.onUnitClick()
+                        mEditText = s.toString()
+                        onItemSelect(item)
                     }
 
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -154,8 +205,12 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                         spanCount = 2
                         displayMode = BetUnitDisplayMode.ONE_CHAR
                     }
-                    BetUnitDisplayMode.TWO_CHAR.typeNumber -> {
-                        spanCount = 5
+                    BetUnitDisplayMode.TWO_CHAR.typeNumber, FULL_SCREEN + BetUnitDisplayMode.TWO_CHAR.typeNumber-> {
+                        if(item?.data?.betItemType == BetItemType.SPECIAL_BET_TYPE){
+                            spanCount = 3
+                        }else{
+                            spanCount = 5
+                        }
                         displayMode = BetUnitDisplayMode.TWO_CHAR
                     }
                     BetUnitDisplayMode.THREE_CHAR.typeNumber -> {
@@ -202,25 +257,8 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
         this.onUnitClickListener = listener
     }
 
-    data class UnitSelect(var million: Boolean = false,
-                          var thousand: Boolean = false,
-                          var hundred: Boolean = false,
-                          var ten: Boolean = false,
-                          var one: Boolean = false)
-
-    fun UnitSelect.toSelectNumber(): String {
-        var recordList: ArrayList<String> = arrayListOf()
-        if (million) recordList.add("0")
-        if (thousand) recordList.add("1")
-        if (hundred) recordList.add("2")
-        if (ten) recordList.add("3")
-        if (one) recordList.add("4")
-
-        var result: String = ""
-
-        recordList.
-
-        return result
+    private fun onItemSelect(item: MultipleLotteryEntity?) {
+        item?.data?.unitList?.get(0)?.unitValue = mUnitSelect + mEditText
+        onUnitClickListener?.onUnitClick()
     }
-
 }

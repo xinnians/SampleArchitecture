@@ -388,7 +388,7 @@ enum class BetItemType(val typeNumber: Int,val unitDisplayMode: BetUnitDisplayMo
     // 1-26
     SET_SUM_BET_TYPE(2,BetUnitDisplayMode.ONLY_NUMBER),
 
-    SPECIAL_BET_TYPE(3, BetUnitDisplayMode.ONE_CHAR),
+    SPECIAL_BET_TYPE(3, BetUnitDisplayMode.TWO_CHAR),
     // 0-18
     TWO_SUM_BET_TYPE(4,BetUnitDisplayMode.ONLY_NUMBER),
 

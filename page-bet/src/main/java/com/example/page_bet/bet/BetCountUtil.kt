@@ -5,6 +5,7 @@ import com.example.base.isNumeric
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetSelectNumber
 import com.example.repository.model.bet.MultiplePlayTypePositionItem
+import com.example.repository.model.bet.toSelectNumber
 import java.net.URLDecoder
 import java.util.regex.Pattern
 
@@ -31,7 +32,6 @@ object BetCountUtil {
             playTypeID_204224,
             playTypeID_203100,
             playTypeID_203110,
-            playTypeID_203103,
             playTypeID_203200,
             playTypeID_203210,
             playTypeID_203300,
@@ -87,7 +87,8 @@ object BetCountUtil {
             playTypeID_204241,
             playTypeID_204242,
             playTypeID_205042,
-            playTypeID_205043
+            playTypeID_205043,
+            playTypeID_203134
             -> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
@@ -97,9 +98,6 @@ object BetCountUtil {
                     }
                 }
             }
-            playTypeID_203102,
-            playTypeID_203131,
-            playTypeID_203133,
             playTypeID_203202,
             playTypeID_203231,
             playTypeID_203233,
@@ -124,6 +122,10 @@ object BetCountUtil {
                     }
                 }
             }
+            playTypeID_203131,
+            playTypeID_203133,
+            playTypeID_203103,
+            playTypeID_203102,
             playTypeID_203135,
             playTypeID_203203,
             playTypeID_203235,
@@ -133,13 +135,17 @@ object BetCountUtil {
             playTypeID_202203-> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
+                        if(result.isNotEmpty() && result.last().toString()!=","){
                             result.append(",")
                         }
                         if(entity.isSelect){
                             result.append(entity.unitValue)
                         }
                     }
+                }
+
+                if(result.last().toString() == ","){
+                    result.deleteCharAt(result.lastIndex)
                 }
             }
             playTypeID_206010-> {
@@ -171,12 +177,21 @@ object BetCountUtil {
             playTypeID_202101, playTypeID_202120, playTypeID_202201, playTypeID_202220-> {
                 result = getSingleBetTypeSelectNumber(2,betEntityList)
             }
+            playTypeID_202001,playTypeID_202020-> {
+                result = getSingleBetTypeSelectNumber(2,betEntityList,true)
+            }
+            playTypeID_203001,playTypeID_203021,playTypeID_203022->{
+                result = getSingleBetTypeSelectNumber(3,betEntityList,true)
+            }
+            playTypeID_204001-> {
+                result = getSingleBetTypeSelectNumber(4,betEntityList,true)
+            }
         }
         Log.e("Ian","[getBetSelectNumber] result: $result")
         return BetSelectNumber(playtypeCode.toString(),result.toString())
     }
 
-    private fun getSingleBetTypeSelectNumber(length: Int, betEntityList: List<MultiplePlayTypePositionItem>): StringBuilder{
+    private fun getSingleBetTypeSelectNumber(length: Int, betEntityList: List<MultiplePlayTypePositionItem>, isAnyType: Boolean = false): StringBuilder{
         var result: StringBuilder = StringBuilder()
         for (index in betEntityList.indices) {
             for (entity in betEntityList[index].getData()?.unitList!!) {
@@ -186,6 +201,11 @@ object BetCountUtil {
             var spiltList = result.split(Pattern.compile("[,. ;\n\r]"))
             spiltList = spiltList.filter { it.isNumeric() && it.length == length}
             result.clear()
+            if(isAnyType){
+                var anyText = betEntityList[0].getData()?.unitList?.get(0)?.unitSelect?.toSelectNumber()
+                result.append("$anyText@")
+            }
+
             for(index in spiltList.indices){
                 result.append(spiltList[index])
                 if(index != spiltList.size-1){
@@ -193,6 +213,7 @@ object BetCountUtil {
                 }
             }
         }
+
         return result
     }
 
