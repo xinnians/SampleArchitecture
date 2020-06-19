@@ -15,6 +15,7 @@ import com.example.base.BaseFragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_transation.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
+import kotlin.random.Random
 
 class TransationFragment : BaseFragment() {
 
@@ -29,8 +30,9 @@ class TransationFragment : BaseFragment() {
     }
 
     private var isHide = true
-    private var mAdapter: ViewPagerAdapter? = null
+    private var mViewPagerAdapter: ViewPagerAdapter? = null
     private lateinit var mTransationViewModel: TransationViewModel
+    private lateinit var mFakeUserCash: FakeUserCash
 
     private val navigation: TransationNavigation by lazy {
         XInjectionManager.findComponent<TransationNavigation>()
@@ -47,6 +49,7 @@ class TransationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setFakeData()
         initView()
         setLinstener()
     }
@@ -59,11 +62,12 @@ class TransationFragment : BaseFragment() {
             var tab = tabTransationType.getTabAt(index)
             tab?.setCustomView(R.layout.item_transation_tab)
             var holder = ViewHolder(tab?.customView!!)
-            holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_selected_circle)
+            holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_circle)
             holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_balance_account))
             holder.tvTabItem?.setTextColor(Color.parseColor("#7c7e83"))
             when(index) {
                 ALL -> {
+                    holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_selected_circle)
                     holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                     holder.tvTabItem?.setTextColor(Color.BLACK)
                     holder.tvTabItem?.text = "全部"
@@ -77,8 +81,8 @@ class TransationFragment : BaseFragment() {
                 ADJUSTMENT -> { holder.tvTabItem?.text = "調整" }
             }
         }
-        mAdapter = ViewPagerAdapter()
-        pagerTransation.adapter = this.mAdapter
+        mViewPagerAdapter = ViewPagerAdapter(mFakeUserCash)
+        pagerTransation.adapter = this.mViewPagerAdapter
         pagerTransation.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabTransationType))
         tabTransationType.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pagerTransation))
     }
@@ -92,6 +96,7 @@ class TransationFragment : BaseFragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 Log.d("msg", "onTabUnselected")
                 var holder = ViewHolder(tab?.customView!!)
+                holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_circle)
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_balance_account))
                 holder.tvTabItem?.setTextColor(Color.parseColor("#7c7e83"))
             }
@@ -99,6 +104,7 @@ class TransationFragment : BaseFragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 Log.d("msg", "onTabSelected")
                 var holder = ViewHolder(tab?.customView!!)
+                holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_selected_circle)
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                 holder.tvTabItem?.setTextColor(Color.BLACK)
                 tvTransTitle.text = tab.text
@@ -110,8 +116,30 @@ class TransationFragment : BaseFragment() {
         var imgTabItem:ImageView?=null
         var tvTabItem:TextView?=null
         init {
-            imgTabItem = view.findViewById<ImageView>(R.id.imgTabItem)
-            tvTabItem = view.findViewById<TextView>(R.id.tvTabItem)
+            imgTabItem = view.findViewById(R.id.imgTabItem)
+            tvTabItem = view.findViewById(R.id.tvTabItem)
         }
     }
+
+    fun setFakeData() {
+        var datalist = mutableListOf<FakeUserCashDetail>()
+        for(index in 0..20) {
+            var gameType = ""
+            var transDate = "2020/06/18"
+            var transAmount = Random.nextInt(0,100000)
+            var randomType = Random.nextInt(0,2)
+            when(randomType) {
+                0 -> { gameType = "盈虧-彩票-歡樂生肖" }
+                1 -> { gameType = "資金-彩票-歡樂生肖" }
+                2 -> { gameType = "轉帳-彩票-歡樂生肖" }
+            }
+            var fakeDetail = FakeUserCashDetail(gameType, transDate, transAmount)
+            datalist.add(fakeDetail)
+        }
+        mFakeUserCash = FakeUserCash(123456, 2345, 23456, datalist)
+    }
+
+    data class FakeUserCashDetail(var gameType:String, var transDate:String, var transAmount:Int)
+    data class FakeUserCash(var totalCash:Int, var withdraw:Int, var lockCash:Int, var data:MutableList<FakeUserCashDetail>)
+
 }
