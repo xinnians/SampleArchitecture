@@ -7,6 +7,7 @@ import com.example.base.timer
 import com.example.base.toSingleEvent
 import com.example.repository.Repository
 import com.example.repository.constant.BetItemType
+import com.example.repository.constant.playTypeID_206010
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
@@ -24,6 +25,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var mPlayTypeInfoList: PlayTypeInfoResponse? = null
     var mPlayTypeId: Int = -1
     var mBetItemType: BetItemType = BetItemType.NONE
+    var mSecondBetItemType: BetItemType = BetItemType.NONE
     var mSelectNumber: String = ""
     var mIssueId: Int = -1
     var mToken: String = ""
@@ -201,6 +203,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         var result = BetItemUtil.getTypeData(resources, mPlayTypeId.toString())
         mBetItemType = result.first
         var oriList = result.second
+        mSecondBetItemType = result.third
         var modifyList: MutableList<MultiplePlayTypePositionItem> = arrayListOf()
 
         //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
@@ -285,6 +288,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         //根據typeData顯示投注單位選擇，可以根據list的長度來判斷該顯示什麼樣式的投注單位選擇
         mBetItemType = result.first
         var oriList = result.second
+        mSecondBetItemType = result.third
         var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
         //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
         if (oriList.isNotEmpty()) {
@@ -311,8 +315,13 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
             map { it.getData()?.isSelect = false }
             //在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
             get(position).getData()?.apply {
+                Log.e("Ian","[selectBetPosition] BetData:$this")
                 isSelect = true
-                val data = mutableListOf(MultipleLotteryEntity(mBetItemType.unitDisplayMode, this))
+                val data = if(mPlayTypeId.toString() == playTypeID_206010 && position == 1){
+                    mutableListOf(MultipleLotteryEntity(mSecondBetItemType.unitDisplayMode, this))
+                }else
+                    mutableListOf(MultipleLotteryEntity(mBetItemType.unitDisplayMode, this))
+
                 liveBetRegionList.value = data
             }
             liveBetPositionList.value = this
@@ -321,7 +330,11 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
 
     //選擇該欄位投注數值
     var selectBetRegion = {
-        var selectNumber = liveBetPositionList.value?.toList()?.let { BetCountUtil.getBetSelectNumber(mPlayTypeId, it) }
+        var selectNumber = liveBetPositionList.value?.toList()?.let {
+            it.forEach { item ->
+                Log.e("Ian","[selectBetRegion] ${item.getData()}")
+            }
+            BetCountUtil.getBetSelectNumber(mPlayTypeId, it) }
         mSelectNumber = selectNumber?.betNumber.toString()
 
         livePlayTypeList.value?.let { betTypeList ->

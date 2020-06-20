@@ -24,6 +24,7 @@ import com.example.page_bet.R
 import com.example.page_bet.bet.lottery_record.LotteryRecordDialog
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
 import com.example.page_bet.cart.CartViewModel
+import com.example.repository.constant.playTypeID_206010
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
@@ -215,10 +216,21 @@ class BetFragment : BaseFragment() {
                         rvBetRegion.layoutManager = layout
 
                         var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
+                        mBetPositionAdapter?.data?.apply {
+                            for(index in 0 until this.size){
+                                if(mViewModel.mPlayTypeId.toString() == playTypeID_206010 && index == 1){
+                                    list.add(MultipleLotteryEntity(mViewModel.mSecondBetItemType.unitDisplayMode,
+                                                                   this[index].getData()!!,
+                                                                   true))
+                                }else{
+                                    list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode,
+                                                                   this[index].getData()!!,
+                                                                   true))
+                                }
+                            }
+                        }
                         mBetPositionAdapter?.data?.forEach {
-                            list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode,
-                                                           it.getData()!!,
-                                                           true))
+
                         }
                         setBetRegionDisplay(list)
 

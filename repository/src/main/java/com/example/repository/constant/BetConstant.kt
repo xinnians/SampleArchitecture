@@ -396,7 +396,7 @@ enum class BetItemType(val typeNumber: Int,val unitDisplayMode: BetUnitDisplayMo
     //比大小 1-4
     SIZE_SINGLE_DOUBLE_BET_TYPE(6,BetUnitDisplayMode.ONE_CHAR),
     //龍虎和 0-9
-    DRAGON_TIGER_POSITION_BET_TYPE(7,BetUnitDisplayMode.ONLY_NUMBER),
+    DRAGON_TIGER_POSITION_BET_TYPE(7,BetUnitDisplayMode.TWO_CHAR),
     //龍虎和 1-3
     DRAGON_TIGER_NUMBER_BET_TYPE(8,BetUnitDisplayMode.ONE_CHAR),
     //任三組選和值 1-26
@@ -425,7 +425,8 @@ enum class BetUnitDisplayMode(val typeNumber: Int){
     TWO_CHAR(3),
     THREE_CHAR(4),
     EDIT_AREA(5),
-    ANY_EDIT_AREA(6)}
+    ANY_EDIT_AREA(6),
+    ANY_ONLY_NUMBER(7)}
 
 enum class GameTypeId(val typeId: Int,var chineseName: String){
     RACING(1,"北京賽車"),

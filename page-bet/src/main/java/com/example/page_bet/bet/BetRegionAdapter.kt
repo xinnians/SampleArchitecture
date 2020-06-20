@@ -33,12 +33,14 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
         addItemType(BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char)
         addItemType(BetUnitDisplayMode.EDIT_AREA.typeNumber, R.layout.item_bet_region_edit_area)
         addItemType(BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber, R.layout.item_bet_region_any_edit_area)
+        addItemType(BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ONLY_NUMBER.typeNumber, R.layout.item_bet_region_only_number_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_region_one_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.TWO_CHAR.typeNumber, R.layout.item_bet_region_twp_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.EDIT_AREA.typeNumber, R.layout.item_bet_region_edit_area_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber, R.layout.item_bet_region_any_edit_area_full)
+        addItemType(FULL_SCREEN + BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number_full)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleLotteryEntity?) {
@@ -143,9 +145,8 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                         it.getView<TextView>(R.id.tvFunctionBig).onClick {
                             item?.data?.let { betData ->
                                 val halfSize = betData.unitList.size / 2
-                                betData.unitList.forEach { unit ->
-                                    unit.isSelect = false
-                                    if (unit.unitValue.toInt() >= halfSize) unit.isSelect = true
+                                for (index in 0 until betData.unitList.size) {
+                                    betData.unitList[index].isSelect = index >= halfSize
                                 }
                                 betData.isDataSet = true
                                 onUnitClickListener?.onUnitClick()
@@ -156,9 +157,8 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                         it.getView<TextView>(R.id.tvFunctionSmall).onClick {
                             item?.data?.let { betData ->
                                 val halfSize = betData.unitList.size / 2
-                                betData.unitList.forEach { unit ->
-                                    unit.isSelect = false
-                                    if (unit.unitValue.toInt() < halfSize) unit.isSelect = true
+                                for (index in 0 until betData.unitList.size) {
+                                    betData.unitList[index].isSelect = index < halfSize
                                 }
                                 betData.isDataSet = true
                                 onUnitClickListener?.onUnitClick()
@@ -201,14 +201,18 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
 
 
                     }
-                    BetUnitDisplayMode.ONE_CHAR.typeNumber -> {
-                        spanCount = 2
-                        displayMode = BetUnitDisplayMode.ONE_CHAR
-                    }
-                    BetUnitDisplayMode.TWO_CHAR.typeNumber, FULL_SCREEN + BetUnitDisplayMode.TWO_CHAR.typeNumber-> {
-                        if(item?.data?.betItemType == BetItemType.SPECIAL_BET_TYPE){
+                    BetUnitDisplayMode.ONE_CHAR.typeNumber, FULL_SCREEN + BetUnitDisplayMode.ONE_CHAR.typeNumber -> {
+                        if(item?.data?.betItemType == BetItemType.DRAGON_TIGER_POSITION_BET_TYPE){
                             spanCount = 3
                         }else{
+                            spanCount = 2
+                        }
+                        displayMode = BetUnitDisplayMode.ONE_CHAR
+                    }
+                    BetUnitDisplayMode.TWO_CHAR.typeNumber, FULL_SCREEN + BetUnitDisplayMode.TWO_CHAR.typeNumber -> {
+                        if(item?.data?.betItemType == BetItemType.SPECIAL_BET_TYPE) {
+                            spanCount = 3
+                        } else {
                             spanCount = 5
                         }
                         displayMode = BetUnitDisplayMode.TWO_CHAR
@@ -218,6 +222,18 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                         displayMode = BetUnitDisplayMode.THREE_CHAR
                     }
                 }
+                if(it.itemViewType != BetUnitDisplayMode.ONLY_NUMBER.typeNumber || it.itemViewType != FULL_SCREEN + BetUnitDisplayMode.ONLY_NUMBER.typeNumber){
+                    it.getView<TextView>(R.id.tvFunctionClear).onClick {
+                        item?.data?.let { betData ->
+                            betData.unitList.forEach { unit -> unit.isSelect = false }
+                            betData.isDataSet = false
+                            onUnitClickListener?.onUnitClick()
+                            it.getView<RecyclerView>(R.id.rvBetUnit).adapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+
+
                 it.getView<RecyclerView>(R.id.rvBetUnit).let { recyclerView ->
                     recyclerView.layoutManager = GridLayoutManager(mContext, spanCount)
                     var unitAdapter: BetUnitAdapter = BetUnitAdapter(listOf(), it.layoutPosition)
@@ -240,7 +256,8 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
                             }
                         }
                         mData[unitAdapter.parentPostion].data?.isDataSet = isDataSet
-
+                        Log.e("Ian","[mData] size:${mData.size}")
+                        mData.forEach { betData -> Log.e("Ian","[mData] ${betData.data}") }
                         onUnitClickListener?.onUnitClick()
                         unitAdapter.notifyDataSetChanged()
                     }

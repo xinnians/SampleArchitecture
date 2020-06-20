@@ -42,16 +42,16 @@ object BetItemUtil {
     )
 
     private var templateTwoChar: ArrayList<BetUnit> = arrayListOf(
-        BetUnit("十個","1",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("百個","2",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("百十","3",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千個","4",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千十","5",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("千百","6",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬個","7",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬十","8",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬百","9",displayMode = BetUnitDisplayMode.TWO_CHAR),
-        BetUnit("萬千","10",displayMode = BetUnitDisplayMode.TWO_CHAR)
+        BetUnit("十個","0",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百個","1",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("百十","2",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千個","3",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千十","4",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("千百","5",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬個","6",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬十","7",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬百","8",displayMode = BetUnitDisplayMode.TWO_CHAR),
+        BetUnit("萬千","9",displayMode = BetUnitDisplayMode.TWO_CHAR)
     )
 
     private var templateOneChar: ArrayList<BetUnit> = arrayListOf(
@@ -64,6 +64,20 @@ object BetItemUtil {
         BetUnit("豹子","1",displayMode = BetUnitDisplayMode.TWO_CHAR),
         BetUnit("順子","2",displayMode = BetUnitDisplayMode.TWO_CHAR),
         BetUnit("對子","3",displayMode = BetUnitDisplayMode.TWO_CHAR)
+    )
+
+    private var templateSize: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("大","1",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("小","2",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("單","3",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("雙","4",displayMode = BetUnitDisplayMode.ONE_CHAR)
+    )
+
+    private var templateSize1: ArrayList<BetUnit> = arrayListOf(
+        BetUnit("大","1",true,displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("小","2",displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("單","3",true,displayMode = BetUnitDisplayMode.ONE_CHAR),
+        BetUnit("雙","4",displayMode = BetUnitDisplayMode.ONE_CHAR)
     )
 
     private var hashMapForZeroToEighteen = hashMapOf(
@@ -412,7 +426,7 @@ object BetItemUtil {
             //大小單雙-前三
             playTypeID_203150 -> {
                 itemType = BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE
-                stringArray = resources.getStringArray(R.array.lastThree).toList()
+                stringArray = resources.getStringArray(R.array.frontThree).toList()
             }
             //大小單雙-中三
             playTypeID_203250 -> {
@@ -555,17 +569,18 @@ object BetItemUtil {
                     betArray.add(BetData(displayTitle = text,unitList = arrayListOf(BetUnit(unitName = "", unitValue = "",displayMode = BetUnitDisplayMode.EDIT_AREA)),betItemType = betItemType))
                 }
             }
-//            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {
-//                for (text in stringArray){
-//                    betArray.add(BetData(displayTitle = text,unitMap = hashMapForOneToFour.clone() as HashMap<String, Boolean>))
-//                }
-//            }
-//            BetItemType.DRAGON_TIGER_POSITION_BET_TYPE -> {
-//                if(stringArray.size == 2){
-//                    betArray.add(BetData(displayTitle = stringArray[0],unitMap = hashMapForZeroToNine.clone() as HashMap<String, Boolean>))
-//                    betArray.add(BetData(displayTitle = stringArray[1],unitMap = hashMapForOneTwoThree.clone() as HashMap<String, Boolean>))
-//                }
-//            }
+            BetItemType.SIZE_SINGLE_DOUBLE_BET_TYPE -> {
+                for (text in stringArray){
+                    var unitList = templateSize.map { it.copy() }
+                    betArray.add(BetData(displayTitle = text,unitList = ArrayList(unitList),betItemType = betItemType))
+                }
+            }
+            BetItemType.DRAGON_TIGER_POSITION_BET_TYPE -> {
+                if(stringArray.size == 2){
+                    betArray.add(BetData(displayTitle = stringArray[0],unitList = templateTwoChar.clone() as ArrayList<BetUnit>,betItemType = betItemType))
+                    betArray.add(BetData(displayTitle = stringArray[1],unitList = templateOneChar.clone() as ArrayList<BetUnit>,betItemType = betItemType))
+                }
+            }
             else -> {
 
             }

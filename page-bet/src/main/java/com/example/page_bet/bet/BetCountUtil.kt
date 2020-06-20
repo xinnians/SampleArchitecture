@@ -98,30 +98,30 @@ object BetCountUtil {
                     }
                 }
             }
-            playTypeID_203202,
-            playTypeID_203231,
-            playTypeID_203233,
-            playTypeID_203302,
-            playTypeID_203331,
-            playTypeID_203333,
-            playTypeID_202102,
-            playTypeID_202131,
-            playTypeID_202133,
-            playTypeID_202202,
+//            -> {
+//                for (index in betEntityList.indices){
+//                    for (entity in betEntityList[index].getData()?.unitList!!){
+//                        if(result.isNotEmpty()){
+//                            result.append("$")
+//                        }
+//                        if(entity.isSelect){
+//                            result.append(entity.unitValue)
+//                        }
+//                    }
+//                }
+//            }
+            playTypeID_202233,
             playTypeID_202231,
-            playTypeID_202233
-            -> {
-                for (index in betEntityList.indices){
-                    for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
-                            result.append("$")
-                        }
-                        if(entity.isSelect){
-                            result.append(entity.unitValue)
-                        }
-                    }
-                }
-            }
+            playTypeID_202202,
+            playTypeID_202133,
+            playTypeID_202131,
+            playTypeID_202102,
+            playTypeID_203333,
+            playTypeID_203331,
+            playTypeID_203302,
+            playTypeID_203233,
+            playTypeID_203231,
+            playTypeID_203202,
             playTypeID_203131,
             playTypeID_203133,
             playTypeID_203103,
@@ -144,19 +144,22 @@ object BetCountUtil {
                     }
                 }
 
-                if(result.last().toString() == ","){
+                if(result.isNotEmpty() && result.last().toString() == ","){
                     result.deleteCharAt(result.lastIndex)
                 }
             }
             playTypeID_206010-> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
+                        if(result.isNotEmpty() && result.last().toString()!="," && result.last().toString()!="@"){
                             result.append(",")
                         }
                         if(entity.isSelect){
                             result.append(entity.unitValue)
                         }
+                    }
+                    if(result.isNotEmpty() && result.last().toString() == ","){
+                        result.deleteCharAt(result.lastIndex)
                     }
                     if(betEntityList.lastIndex != index){
                         result.append("@")
