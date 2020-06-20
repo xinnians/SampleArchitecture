@@ -13,10 +13,10 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>,
                        private val callback: CartPageDialog.SetCallback)
     : RecyclerView.Adapter<CartPagerAdapter.BaseViewHolder>() {
 
-//    private var goAppendListAction: ((cart: Cart)->Unit) ? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
         BaseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_cart_list, parent, false), callback)
+
+    var pageData: MutableList<Cart> = mutableListOf()
 
     override fun getItemCount(): Int = data.size
 
@@ -27,12 +27,14 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>,
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(data[position])
+        pageData = data[position]
     }
+
 
 
     class BaseViewHolder(val view: View, callback: CartPageDialog.SetCallback) : RecyclerView.ViewHolder(view){
 
-        private var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
+        var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
 
         init {
             itemView.rvCartList.let {

@@ -85,11 +85,13 @@ class CartPageDialog(context: Context,private val type:Int, private val view: Vi
 
                 btnGenerate.onClick {
                     val setting = JsonObject()
+
                     setting.apply {
-                        addProperty("appendCount", etMoreCount.text.toString().toInt())
-                        Log.d("mori", "isWinStop json = ${rbMoreWinStop.isChecked}")
+//                        addProperty("appendCount", etMoreCount.text.toString().toInt())
+                        addProperty("appendCount", 20)
                         addProperty("isWinStop", rbMoreWinStop.isChecked)
-                        addProperty("multiple", etAppendMultiple.text.toString().toInt())
+//                        addProperty("multiple", etAppendMultiple.text.toString().toInt())
+                        addProperty("multiple", 20)
                     }
 
                     when (appendType) {

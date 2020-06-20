@@ -482,6 +482,16 @@
                     android:src="@drawable/ic_shopping_cart_solid"
                     />
 
+                <View
+                    android:id="@+id/viewPoint"
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@drawable/bg_red_circle_button"
+                    app:layout_constraintTop_toTopOf="@+id/ivShoppingCart"
+                    app:layout_constraintEnd_toEndOf="@id/ivShoppingCart"
+                    android:visibility="gone"
+                    />
+
                 <ImageView
                     android:id="@+id/ivAddToShoppingCart"
                     android:layout_width="@dimen/dp_23"

@@ -53,6 +53,7 @@ class BetFragment : BaseFragment() {
     private var isBetUnitShow = true
     private var isZoomIn = false
     private var isGoToShoppingCart = false
+    private var isGameInCart = false
     private var isBigScreen = true
 
     private val navigation: BetNavigation by lazy {
@@ -83,6 +84,7 @@ class BetFragment : BaseFragment() {
             mViewModel.mGameId = it.getInt(TAG_GAME_ID, -1)
             mViewModel.mGameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
+        cartViewModel.checkGameInCart(mViewModel.mGameId)
         cartViewModel.getAllCartList()
     }
 
@@ -310,8 +312,10 @@ class BetFragment : BaseFragment() {
         }
 
         ivShoppingCart.onClick {
-            if (isGoToShoppingCart) {
-                navigation.toShoppingCartPage()
+            if (isGoToShoppingCart && isGameInCart) {
+                navigation.toShoppingCartPage(Bundle().apply {
+                    putInt(TAG_GAME_ID, mViewModel.mGameId)
+                })
             } else {
                 Toast.makeText(requireContext(), "購物車沒資料喔", Toast.LENGTH_SHORT).show()
             }
@@ -370,6 +374,17 @@ class BetFragment : BaseFragment() {
 
         mViewModel.liveIsNeedShowFullScreen.observeNotNull(this) {
             btnZoom.visibility = if (it) View.INVISIBLE else View.VISIBLE
+        }
+
+        cartViewModel.checkCartListResult.observeNotNull(this) { result ->
+            isGameInCart = if (result.size > 0) {
+                viewPoint.visible()
+                true
+            } else {
+                viewPoint.gone()
+                false
+            }
+
         }
     }
 

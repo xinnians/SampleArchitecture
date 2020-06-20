@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_270"
+    android:layout_height="@dimen/dp_140"
+    >
+
+
+    <include
+        android:id="@+id/button"
+        layout="@layout/alert_content" />
+
+    <include
+        android:id="@+id/button"
+        layout="@layout/alert_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

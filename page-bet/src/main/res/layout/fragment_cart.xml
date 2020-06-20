@@ -31,7 +31,7 @@
             android:minHeight="?attr/actionBarSize"
             app:tabIndicatorColor="#525252"
             app:tabIndicatorFullWidth="false"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="#acacac"
             app:tabTextColor="#acacac"
             app:layout_constraintTop_toTopOf="parent"
