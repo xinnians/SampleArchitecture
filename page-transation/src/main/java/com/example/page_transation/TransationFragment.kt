@@ -3,15 +3,17 @@ package com.example.page_transation
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import com.example.base.BaseActivity
 import com.example.base.BaseFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_transation.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
@@ -33,6 +35,9 @@ class TransationFragment : BaseFragment() {
     private var mViewPagerAdapter: ViewPagerAdapter? = null
     private lateinit var mTransationViewModel: TransationViewModel
     private lateinit var mFakeUserCash: FakeUserCash
+//    lateinit var bottomBehavior: BottomSheetBehavior<View>
+//    lateinit var bottomSheet: View
+    private var unSelectTab: Int = 0
 
     private val navigation: TransationNavigation by lazy {
         XInjectionManager.findComponent<TransationNavigation>()
@@ -81,33 +86,55 @@ class TransationFragment : BaseFragment() {
                 ADJUSTMENT -> { holder.tvTabItem?.text = "調整" }
             }
         }
-        mViewPagerAdapter = ViewPagerAdapter(mFakeUserCash)
+        val displayMetrics = DisplayMetrics()
+        activity?.windowManager?.defaultDisplay?.getMetrics((displayMetrics))
+        val height: Int = displayMetrics.heightPixels
+//        mViewPagerAdapter = ViewPagerAdapter(height, mFakeUserCash)
+        mViewPagerAdapter = context?.let { ViewPagerAdapter(tabTransationType,it, mFakeUserCash) }
+
         pagerTransation.adapter = this.mViewPagerAdapter
         pagerTransation.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabTransationType))
         tabTransationType.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pagerTransation))
+        Log.d("msg", "windows height: ${height}")
+
     }
 
     fun setLinstener() {
+        mViewPagerAdapter?.setSlideOffset {
+            tabTransationType.alpha = 1.0f - 0.2f - it
+            if(it == 0f) {
+                pagerTransation.setSwipePagingEnabled(true)
+            } else if(it == 1f) {
+                pagerTransation.setSwipePagingEnabled(false)
+            }
+        }
         tabTransationType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 // TODO
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Log.d("msg", "onTabUnselected")
+                Log.d("msg", "onTabUnselected: ${tab?.position}")
                 var holder = ViewHolder(tab?.customView!!)
                 holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_circle)
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_balance_account))
                 holder.tvTabItem?.setTextColor(Color.parseColor("#7c7e83"))
+                unSelectTab = tab.position
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("msg", "onTabSelected")
+                Log.d("msg", "onTabSelected ${tab?.position}")
                 var holder = ViewHolder(tab?.customView!!)
                 holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_selected_circle)
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                 holder.tvTabItem?.setTextColor(Color.BLACK)
                 tvTransTitle.text = tab.text
+                // 更換頁面要重新顯示 tabBar
+                Log.d("msg", "unSelectTab: ${unSelectTab}")
+                if(tab.position != unSelectTab) {
+                    tabTransationType.alpha = 1.0f
+                    tabTransationType.visibility = View.VISIBLE
+                }
             }
         })
     }
