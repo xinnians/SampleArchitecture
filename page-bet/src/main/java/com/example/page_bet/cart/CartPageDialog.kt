@@ -10,12 +10,15 @@ import android.view.WindowManager
 import com.example.base.gone
 import com.example.base.onClick
 import com.example.base.visible
+import com.example.base.widget.CustomSwitch
 import com.example.page_bet.R
 import com.example.repository.room.Cart
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
 import kotlinx.android.synthetic.main.dialog_cart_page.*
+import kotlinx.android.synthetic.main.dialog_cart_page.csPlayRate
+import kotlinx.android.synthetic.main.fragment_bet.*
 
 class CartPageDialog(context: Context,private val type:Int, private val view: View,
                      private val cart: Cart, private val position: Int,
@@ -30,6 +33,8 @@ class CartPageDialog(context: Context,private val type:Int, private val view: Vi
         const val MORE_TYPE_3 = 3
     }
     private var appendType = -1
+    private var isWinStop = false
+    private var isMoreWinStop = false
     private var listener: SetCallback? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,21 @@ class CartPageDialog(context: Context,private val type:Int, private val view: Vi
                 WindowManager.LayoutParams.MATCH_PARENT
             )
         }
+
+        csPlayRate.switchType = CustomSwitch.GAME_RATE
+        rbWinStop.onClick {
+            if (!isWinStop) {
+                isWinStop = true
+                rbWinStop.isChecked = isWinStop
+            } else {
+                isWinStop = false
+                rbWinStop.isChecked = isWinStop
+            }
+        }
+
+
+
+
 
         when (type) {
             DEL -> {
@@ -83,10 +103,21 @@ class CartPageDialog(context: Context,private val type:Int, private val view: Vi
                     setAppendMoreListener()
                 }
 
+                rbMoreWinStop.onClick {
+                    if (!isMoreWinStop) {
+                        isMoreWinStop = true
+                        rbMoreWinStop.isChecked = isMoreWinStop
+                    } else {
+                        isMoreWinStop = false
+                        rbMoreWinStop.isChecked = isMoreWinStop
+                    }
+                }
+
                 btnGenerate.onClick {
                     val setting = JsonObject()
 
                     setting.apply {
+
 //                        addProperty("appendCount", etMoreCount.text.toString().toInt())
                         addProperty("appendCount", 20)
                         addProperty("isWinStop", rbMoreWinStop.isChecked)

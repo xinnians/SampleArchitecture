@@ -37,6 +37,7 @@ class LoginFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_login)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefStore = PreferenceStore(requireActivity())
@@ -81,12 +82,13 @@ class LoginFragment : BaseFragment() {
             cetPws.text = prefStore.password
             isAccount = true
             isPws = true
+            changeBackground(isAccount, isPws)
         }
 
         cetAccount.let {
             it.title = "用戶名"
             it.hint = "請輸入用戶名"
-            it.textVisible = false
+            it.ivEyeVisible = false
             it.text = "test123"
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {
@@ -103,6 +105,7 @@ class LoginFragment : BaseFragment() {
                         }
                         isAccount = true
                     }
+                    changeBackground(isAccount, isPws)
                 }
             })
         }
@@ -129,6 +132,7 @@ class LoginFragment : BaseFragment() {
                         }
                         isPws = true
                     }
+                    changeBackground(isAccount, isPws)
                 }
             })
         }
@@ -137,8 +141,12 @@ class LoginFragment : BaseFragment() {
             prefStore.remember = cbRemember.isChecked
         }
 
-        ivTestPlay.onClick {
+        clTestPlay.onClick {
             Toast.makeText(requireContext(), "試玩版開發中", Toast.LENGTH_SHORT).show()
+        }
+
+        tvForget.onClick {
+            Toast.makeText(requireContext(), "忘記密碼開發中", Toast.LENGTH_SHORT).show()
         }
 
         btnLogin.text = "登入"
@@ -157,14 +165,14 @@ class LoginFragment : BaseFragment() {
 
         val s = SpannableStringBuilder()
             .append("尚未註冊？")
-            .color(Color.RED) { append("免費註冊") }
+            .color(Color.parseColor("#999999")) { append("免費註冊") }
 
         tvRegisterMsg.text = s
         tvRegisterMsg.onClick {
             navigation.registerPage()
         }
 
-        ivBioLogin.onClick {
+        clBioLogin.onClick {
             executor = ContextCompat.getMainExecutor(requireActivity())
             biometricPrompt = BiometricPrompt(requireActivity(), executor,
                 object : BiometricPrompt.AuthenticationCallback() {
@@ -197,6 +205,19 @@ class LoginFragment : BaseFragment() {
         }
     }
 
+    private fun changeBackground(account: Boolean, password: Boolean) {
+        if (account && password) {
+            btnLogin.let {
+            it.setBackgroundResource(R.drawable.bg_radius_blue_board)
+             it.setTextColor(Color.parseColor("#ffffff"))
+            }
+        } else {
+            btnLogin.let {
+                it.setBackgroundResource(R.drawable.bg_radius_gary_board)
+                it.setTextColor(Color.parseColor("#898989"))
+            }
+        }
+    }
 
 
 }

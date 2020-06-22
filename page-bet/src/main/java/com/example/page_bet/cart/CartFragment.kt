@@ -2,7 +2,6 @@ package com.example.page_bet.cart
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +14,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_cart.clAppendLayout
 import kotlinx.android.synthetic.main.item_cart_layout.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
@@ -24,6 +24,7 @@ class CartFragment : BaseFragment() {
     private lateinit var cartViewModel: CartViewModel
     private var currentItemId:Int = -1
     private var isAppendListMode = false
+    private var isAppendWinStop = false
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
     }
@@ -140,8 +141,8 @@ class CartFragment : BaseFragment() {
         setting.let {
             appendCount = it.get("appendCount").asInt
             tvAppendCount.text = appendCount.toString()
+            isAppendWinStop = it.get("isWinStop").asBoolean
 
-            rbWinStop.isChecked = it.get("isWinStop").asBoolean
             when (it.get("type").asInt) {
                 CartPageDialog.MORE_TYPE_1 -> {
                     tvTypeName.text = "同倍追号"
@@ -154,6 +155,17 @@ class CartFragment : BaseFragment() {
                 CartPageDialog.MORE_TYPE_3 -> {
                     tvTypeName.text = "利润追号"
                 }
+            }
+        }
+
+        rbAppendWinStop.isChecked = isAppendWinStop
+        rbAppendWinStop.onClick {
+            if (!isAppendWinStop) {
+                isAppendWinStop = true
+                rbAppendWinStop.isChecked = isAppendWinStop
+            } else {
+                isAppendWinStop = false
+                rbAppendWinStop.isChecked = isAppendWinStop
             }
         }
 
@@ -249,6 +261,5 @@ class CartFragment : BaseFragment() {
     }
 
     data class Append(val appendIssueNo: Int, val multiple: Int, val amount: Int, var isCheck: Boolean = false)
-
 
 }

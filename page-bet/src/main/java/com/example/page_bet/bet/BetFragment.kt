@@ -184,7 +184,7 @@ class BetFragment : BaseFragment() {
         zoomInTopRow.clone(layoutCurrentIssueInfo)
         zoomOutTopRow.clone(layoutCurrentIssueInfo)
 
-        btnZoom.onClick {
+        clZoom.onClick {
             if (isZoomIn) {
                 //恢復原來大小
                 val zoomOutTransition = AutoTransition()
@@ -213,7 +213,7 @@ class BetFragment : BaseFragment() {
                 zoomOut.applyTo(clTopLayout)
                 zoomOutTopRow.applyTo(layoutCurrentIssueInfo)
                 mainOutLayout.applyTo(layoutBetMain)
-                btnZoom.background = drawable(R.drawable.bg_zoom_in)
+                ivZoom.setImageDrawable(context!!.drawable(R.drawable.ic_icon_extend))
                 if (isBigScreen) {
                     showRate.applyTo(clUnderLayout)
                     tvLabel.gone()
@@ -273,12 +273,12 @@ class BetFragment : BaseFragment() {
                 zoomInView(zoomInTopRow, R.id.tvCurrentIssueLeftTime, 2).applyTo(layoutCurrentIssueInfo)
                 zoomInView(zoomInTopRow, R.id.tvCurrentIssueNumber, 3).applyTo(layoutCurrentIssueInfo)
 
-                zoomInView(mainInLayout, R.id.btnZoom, 4).applyTo(layoutBetMain)
+                zoomInView(mainInLayout, R.id.clZoom, 4).applyTo(layoutBetMain)
                 if (isBigScreen) {
                     tvLabel.visible()
                     hideRateLayout(layoutBetMain)
                 }
-                btnZoom.background = drawable(R.drawable.bg_zoom_out)
+                ivZoom.setImageDrawable(context!!.drawable(R.drawable.ic_icon_narrow))
                 isZoomIn = true
             }
         }
@@ -388,7 +388,7 @@ class BetFragment : BaseFragment() {
         }
 
         mViewModel.liveIsNeedShowFullScreen.observeNotNull(this) {
-            btnZoom.visibility = if (it) View.INVISIBLE else View.VISIBLE
+            clZoom.visibility = if (it) View.INVISIBLE else View.VISIBLE
         }
 
         cartViewModel.checkCartListResult.observeNotNull(this) { result ->

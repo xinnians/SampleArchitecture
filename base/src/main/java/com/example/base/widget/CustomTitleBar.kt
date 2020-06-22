@@ -28,10 +28,10 @@ class CustomTitleBar  @JvmOverloads constructor(
         ivShowMoney.onClick {
             if (isHide) {
                 isHide = false
-                ivShowMoney.setImageDrawable(context.drawable(R.drawable.open_eye))
+                ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form_open))
                 amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 Handler().postDelayed({
-                    ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
+                    ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form))
                     amount.transformationMethod = PasswordTransformationMethod.getInstance()
                     isHide = true
                 }, showTime)
