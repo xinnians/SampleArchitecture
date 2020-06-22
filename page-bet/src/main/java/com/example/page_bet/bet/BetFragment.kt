@@ -1,17 +1,22 @@
 package com.example.page_bet.bet
 
+import android.app.Activity
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.binioter.guideview.GuideBuilder
 import com.example.base.*
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
@@ -29,7 +34,12 @@ import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.android.synthetic.main.item_hints.*
 import kotlinx.coroutines.isActive
+import me.toptas.fancyshowcase.FancyShowCaseView
+import me.toptas.fancyshowcase.FocusShape
+import me.toptas.fancyshowcase.listener.DismissListener
+import me.toptas.fancyshowcase.listener.OnViewInflateListener
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class BetFragment : BaseFragment() {
@@ -75,6 +85,168 @@ class BetFragment : BaseFragment() {
         initBinding()
         initUI()
         initScreen()
+        showHint0()
+    }
+
+    private fun showHint0(){
+        var mFancyShowCaseView: FancyShowCaseView? = null
+        mFancyShowCaseView = FancyShowCaseView.Builder(activity as Activity)
+//            .focusOn(tvCurrentIssueLeftTime)
+            .focusOn(arrayListOf(tvCurrentIssueLeftTime,rvBetPositionSelect,rvBetRegion,ivAddToShoppingCart,btnBet))
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(0)
+            .title("當期開獎時間倒數")
+//            .customView(R.layout.item_hints, object : OnViewInflateListener{
+//                override fun onViewInflated(view: View) {
+//                    view.findViewById<TextView>(R.id.tvHints).text = "當期開獎時間倒數"
+//                }
+//            })
+            .customView(R.layout.item_hints, object : OnViewInflateListener {
+                override fun onViewInflated(view: View,focusId: Int,focusIndex: Int) {
+                    val textView = view.findViewById<TextView>(R.id.tvHints)
+                    textView.text = when(focusId){
+                        tvCurrentIssueLeftTime.id -> "當期開獎時間倒數"
+                        rvBetPositionSelect.id -> "投注位置選擇"
+                        rvBetRegion.id -> "投注欄選擇"
+                        ivAddToShoppingCart.id -> "加入購物車"
+                        btnBet.id -> "投注按鈕"
+                        else -> "empty"
+                    }
+                    val params = textView.layoutParams as ConstraintLayout.LayoutParams
+
+                    textView.post {
+                        Log.e("Ian","focusCenterX:${mFancyShowCaseView!!.focusCenterX}, focusCenterY:${mFancyShowCaseView!!.focusCenterY}")
+                        Log.e("Ian","focusWidth:${mFancyShowCaseView!!.focusWidth}, focusHeight:${mFancyShowCaseView!!.focusHeight}")
+
+                        params.topMargin = mFancyShowCaseView?.let{
+                            if(it.focusCenterY > it.screenHeight/2){
+                                it.focusCenterY - it.focusHeight / 2 - textView.height * 2
+                            }else{
+                                it.focusCenterY + it.focusHeight / 2 + textView.height * 2
+                            }
+                        } ?: 0
+
+                        textView.layoutParams = params
+                        textView.visibility = View.VISIBLE
+                    }
+                }
+            })
+            .dismissListener(object : DismissListener {
+                override fun onDismiss(id: String?) {
+//                    showHint1()
+                }
+
+                override fun onSkipped(id: String?) {
+                }
+
+            })
+            .enableAutoTextPosition()
+            .build()
+
+        mFancyShowCaseView.show()
+    }
+
+    private fun showHint1(){
+        FancyShowCaseView.Builder(activity as Activity)
+            .focusOn(rvBetPositionSelect)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(0)
+            .title("投注位置選擇")
+            .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
+//            .customView(R.layout.item_hints, object : OnViewInflateListener{
+//                override fun onViewInflated(view: View) {
+//                    view.findViewById<TextView>(R.id.tvHints).text = "當期開獎時間倒數"
+//                }
+//            })
+            .dismissListener(object : DismissListener {
+                override fun onDismiss(id: String?) {
+                    showHint2()
+                }
+
+                override fun onSkipped(id: String?) {
+                }
+
+            })
+            .enableAutoTextPosition()
+            .build()
+            .show()
+    }
+
+    private fun showHint2(){
+        FancyShowCaseView.Builder(activity as Activity)
+            .focusOn(rvBetRegion)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(0)
+            .title("投注欄選擇")
+            .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
+//            .customView(R.layout.item_hints, object : OnViewInflateListener{
+//                override fun onViewInflated(view: View) {
+//                    view.findViewById<TextView>(R.id.tvHints).text = "當期開獎時間倒數"
+//                }
+//            })
+            .dismissListener(object : DismissListener {
+                override fun onDismiss(id: String?) {
+                    showHint3()
+                }
+
+                override fun onSkipped(id: String?) {
+                }
+
+            })
+            .enableAutoTextPosition()
+            .build()
+            .show()
+    }
+
+    private fun showHint3(){
+        FancyShowCaseView.Builder(activity as Activity)
+            .focusOn(ivAddToShoppingCart)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(0)
+            .title("加入購物車按鈕")
+            .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
+//            .customView(R.layout.item_hints, object : OnViewInflateListener{
+//                override fun onViewInflated(view: View) {
+//                    view.findViewById<TextView>(R.id.tvHints).text = "當期開獎時間倒數"
+//                }
+//            })
+            .dismissListener(object : DismissListener {
+                override fun onDismiss(id: String?) {
+                    showHint4()
+                }
+
+                override fun onSkipped(id: String?) {
+                }
+
+            })
+            .enableAutoTextPosition()
+            .build()
+            .show()
+    }
+
+    private fun showHint4(){
+        FancyShowCaseView.Builder(activity as Activity)
+            .focusOn(btnBet)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(0)
+            .title("一鍵投注按鈕")
+            .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
+//            .customView(R.layout.item_hints, object : OnViewInflateListener{
+//                override fun onViewInflated(view: View) {
+//                    view.findViewById<TextView>(R.id.tvHints).text = "當期開獎時間倒數"
+//                }
+//            })
+            .dismissListener(object : DismissListener {
+                override fun onDismiss(id: String?) {
+                }
+
+                override fun onSkipped(id: String?) {
+                }
+
+            })
+            .enableAutoTextPosition()
+            .build()
+            .show()
     }
 
     private fun initData() {
