@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:background="#ededed">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerInside"
+        app:lottie_rawRes="@raw/water"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
     <com.example.resource.ToolBar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
@@ -67,5 +79,7 @@
             android:textSize="13sp"
             android:text="每日\n簽到"/>
     </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
