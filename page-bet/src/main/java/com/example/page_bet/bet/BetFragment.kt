@@ -82,6 +82,7 @@ class BetFragment : BaseFragment() {
         cartViewModel = AppInjector.obtainViewModel(this)
         arguments?.let {
             mViewModel.mGameName = it.getString(TAG_GAME_NAME, "empty")
+            ivGameName.text = mViewModel.mGameName
             mViewModel.mGameId = it.getInt(TAG_GAME_ID, -1)
             mViewModel.mGameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
