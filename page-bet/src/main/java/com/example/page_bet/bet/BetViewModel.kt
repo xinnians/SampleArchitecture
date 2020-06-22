@@ -11,6 +11,7 @@ import com.example.repository.constant.playTypeID_206010
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,8 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var mUnitValue: Double = 1.0
     var mCurrencyUnit: Int = 1
     var mMultiple: Int = 1
+
+    var mCurrentIssueTimerJob: Job? = null
 
     /** --------------------------------------- LiveData --------------------------------------- **/
 
@@ -95,7 +98,10 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                             }}期"
                             mIssueId = data.issueId
                             var leftTime = ((data.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
-                            timer(1000, false) {
+
+                            mCurrentIssueTimerJob?.cancel()
+
+                            mCurrentIssueTimerJob = timer(1000, false) {
                                 var time = leftTime--
                                 liveCurrentIssueLeftTime.value = getDisplayTime(time)
                                 if (time <= 0) {
