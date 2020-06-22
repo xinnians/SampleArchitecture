@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -64,32 +66,23 @@ fun dpToPx(dp: Float, context: Context): Float {
 //fun AppCompatActivity.switchFragment(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
 //    this.supportFragmentManager?.inTransaction { add(idRes, fragment, tag) }
 //}
-//inline fun androidx.fragment.app.FragmentManager.inTransaction(crossinline action: androidx.fragment.app.FragmentTransaction.() -> androidx.fragment.app.FragmentTransaction) {
-//    this.beginTransaction().setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.right_in, R.anim.right_out)
-//        .action().commit()
-//}
-//
-//inline fun androidx.fragment.app.FragmentManager.inStackTransaction(crossinline action: androidx.fragment.app.FragmentTransaction.() -> androidx.fragment.app.FragmentTransaction) {
-//    this.beginTransaction().setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.right_in, R.anim.right_out)
-//        .action().addToBackStack(null).commit()
-//}
-//
-//inline fun AppCompatActivity.Dialog(@LayoutRes layout: Int, title: String,
-//                                    content: String = "",
-//                                    negativeButton: String = "取消",
-//                                    positiveButton: String = "退出",
-//                                    crossinline onNegativeButtonClicked: () -> Unit,
-//                                    crossinline onPositiveButtonClicked: () -> Unit) {
-//    android.app.Dialog(this).apply {
-//        setContentView(layout)
-//        findViewById<TextView>(R.id.alert_title).text = title
-//        with(findViewById<TextView>(R.id.alert_content)) { if (content.isBlank()) gone() else text = content }
-//        findViewById<TextView>(R.id.alert_negative).onClick { this.dismiss(); onNegativeButtonClicked.invoke() }
-//        findViewById<TextView>(R.id.alert_negative).text = negativeButton
-//        findViewById<TextView>(R.id.alert_positive).text = positiveButton
-//        findViewById<TextView>(R.id.alert_positive).onClick { this.dismiss(); onPositiveButtonClicked.invoke() }
-//    }.show()
-//}
+
+inline fun AppCompatActivity.Dialog(@LayoutRes layout: Int, title: String,
+                                    content: String = "",
+                                    negativeButton: String = "取消",
+                                    positiveButton: String = "退出",
+                                    crossinline onNegativeButtonClicked: () -> Unit,
+                                    crossinline onPositiveButtonClicked: () -> Unit) {
+    android.app.Dialog(this).apply {
+        setContentView(layout)
+        findViewById<TextView>(R.id.alert_title).text = title
+        with(findViewById<TextView>(R.id.alert_content)) { if (content.isBlank()) gone() else text = content }
+        findViewById<TextView>(R.id.alert_negative).onClick { this.dismiss(); onNegativeButtonClicked.invoke() }
+        findViewById<TextView>(R.id.alert_negative).text = negativeButton
+        findViewById<TextView>(R.id.alert_positive).text = positiveButton
+        findViewById<TextView>(R.id.alert_positive).onClick { this.dismiss(); onPositiveButtonClicked.invoke() }
+    }.show()
+}
 
 fun getDateTime(millionsecond: Long): String {
     val date = Date(millionsecond)

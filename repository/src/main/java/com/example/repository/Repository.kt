@@ -1,8 +1,5 @@
 package com.example.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.repository.api.SampleService
 import com.example.repository.model.*
 import com.example.repository.model.base.ViewState
@@ -187,15 +184,14 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         }.flowOn(Dispatchers.IO)
     }
 
-//    fun getCartList(gameId: Int): Flow<ViewState<MutableList<MutableList<Cart>>>> {
-//        return flow {
-//            emit(ViewState.loading())
-//            val result = localDb.cartDao().getCartList(gameId)
-//            emit(ViewState.success(result))
-//        }.catch {
-//            emit(ViewState.error(it.message.orEmpty()))
-//        }.flowOn(Dispatchers.IO)
-//    }
+    fun getCartList(gameId: Int): Flow<ViewState<MutableList<Cart>>> {
+        return flow {
+            emit(ViewState.loading())
+            emit(ViewState.success(localDb.cartDao().getCartList(gameId)))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
 
     fun getCartListArray(gameId: ArrayList<Int>): Flow<ViewState<MutableList<MutableList<Cart>>>>{
         return flow {
@@ -235,6 +231,16 @@ class Repository(private val sampleService: SampleService, private val localDb: 
         return flow {
             emit(ViewState.loading())
             val result = localDb.cartDao().delCart(cart)
+            emit(ViewState.success(result))
+        }.catch {
+            emit(ViewState.error(it.message.orEmpty()))
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun delCartById(gameId: Int): Flow<ViewState<Int>> {
+        return flow {
+            emit(ViewState.loading())
+            val result = localDb.cartDao().delCartById(gameId)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))

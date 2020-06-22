@@ -11,8 +11,12 @@ internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, Main
         navController?.navigate(R.id.action_betMenuFragment_to_betFragment, gameInfo)
     }
 
-    override fun toShoppingCartPage() {
-        navController?.navigate(R.id.action_betFragment_to_cartFragment)
+    override fun goBackToBetPage() {
+        navController?.popBackStack()
+    }
+
+    override fun toShoppingCartPage(gameId: Bundle) {
+        navController?.navigate(R.id.action_betFragment_to_cartFragment, gameId)
     }
 
     override fun toGameFavoritePage() {
