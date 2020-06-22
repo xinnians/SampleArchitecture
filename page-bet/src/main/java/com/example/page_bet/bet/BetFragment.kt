@@ -379,7 +379,7 @@ class BetFragment : BaseFragment() {
 
         cartViewModel.addCartResult.observeNotNull(this){
             if (-1L != it) {
-                Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
             }
         }
 

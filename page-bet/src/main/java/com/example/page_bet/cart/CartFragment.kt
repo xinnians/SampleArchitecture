@@ -2,6 +2,7 @@ package com.example.page_bet.cart
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -231,18 +232,22 @@ class CartFragment : BaseFragment() {
     }
 
     private fun getIdAndName(allId: MutableList<Int>) {
+        Log.d("mori", "all id = $allId")
         val tabName = mutableListOf<String>()
         getSharedViewModel().gameMenuList.value.let { menuItem ->
+            val filterList = menuItem?.filterNot { it.getData()?.gameTypeDisplayName == "Hot" || it.getData()?.gameTypeDisplayName == "Favorite" }
             for (id in allId) {
-                for (item in menuItem!!) {
+                for (item in filterList!!.iterator()) {
                     for (entity in item.getData()!!.gameInfoEntityList) {
                         if (id == entity.gameId) {
+                            Log.d("mori", "tab name = ${entity.gameName}")
                             tabName.add(entity.gameName)
                         }
                     }
                 }
             }
         }
+        Log.d("mori", "all tab name = $tabName")
         setAdapter(allId, tabName)
     }
 

@@ -10,7 +10,6 @@ import com.savvi.rangedatepicker.CalendarPickerView
 import kotlinx.android.synthetic.main.dialog_date_picker.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.AbstractList
 
 class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog(context) {
 
