@@ -89,7 +89,7 @@ class LoginFragment : BaseFragment() {
             it.title = "用戶名"
             it.hint = "請輸入用戶名"
             it.ivEyeVisible = false
-            it.text = "test123"
+            it.text = ""
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {
                     if (editable.toString().length < 6) {
@@ -114,7 +114,7 @@ class LoginFragment : BaseFragment() {
         cetPws.let {
             it.title = "密碼"
             it.hint = "請輸入密碼"
-            it.text = "test123"
+            it.text = ""
             it.inputType = CustomEditTextView.InType.PASSWORD
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {
@@ -214,7 +214,7 @@ class LoginFragment : BaseFragment() {
         } else {
             btnLogin.let {
                 it.setBackgroundResource(R.drawable.bg_radius_gary_board)
-                it.setTextColor(Color.parseColor("#898989"))
+                it.setTextColor(Color.parseColor("#b9b9b9"))
             }
         }
     }
