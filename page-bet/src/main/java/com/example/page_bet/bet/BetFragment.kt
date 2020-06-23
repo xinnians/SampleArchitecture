@@ -92,7 +92,7 @@ class BetFragment : BaseFragment() {
         var mFancyShowCaseView: FancyShowCaseView? = null
         mFancyShowCaseView = FancyShowCaseView.Builder(activity as Activity)
 //            .focusOn(tvCurrentIssueLeftTime)
-            .focusOn(arrayListOf(tvCurrentIssueLeftTime,rvBetPositionSelect,rvBetRegion,ivAddToShoppingCart,btnBet))
+            .focusOn(arrayListOf(ivZoom,rvBetPositionSelect,rvBetRegion,ivAddToShoppingCart,btnBet))
             .focusShape(FocusShape.ROUNDED_RECTANGLE)
             .roundRectRadius(0)
             .title("當期開獎時間倒數")
@@ -105,6 +105,7 @@ class BetFragment : BaseFragment() {
                 override fun onViewInflated(view: View,focusId: Int,focusIndex: Int) {
                     val textView = view.findViewById<TextView>(R.id.tvHints)
                     textView.text = when(focusId){
+                        ivZoom.id -> "全螢幕模式切換"
                         tvCurrentIssueLeftTime.id -> "當期開獎時間倒數"
                         rvBetPositionSelect.id -> "投注位置選擇"
                         rvBetRegion.id -> "投注欄選擇"
