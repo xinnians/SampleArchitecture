@@ -64,10 +64,10 @@ class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog
             if (dateList.size == 0) {
                 dismiss()
             } else {
-                val start = dateList[0]
-                val end = dateList[dateList.size - 1]
-                val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
-                listener.getSearch(arrayList)
+//                val start = dateList[0]
+//                val end = dateList[dateList.size - 1]
+//                val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
+//                listener.getSearch(arrayList)
                 dismiss()
             }
         }
