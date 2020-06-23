@@ -29,32 +29,38 @@ class CustomTitleBar  @JvmOverloads constructor(
             if (isHide) {
                 isHide = false
                 ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form_open))
-                amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
+//                amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                amount.text = money
                 Handler().postDelayed({
                     ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form))
-                    amount.transformationMethod = PasswordTransformationMethod.getInstance()
+//                    amount.transformationMethod = PasswordTransformationMethod.getInstance()
+                    amount.text = hideText
                     isHide = true
                 }, showTime)
             } else {
                 isHide = true
                 ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
                 amount.let {
-                    it.transformationMethod = PasswordTransformationMethod.getInstance()
+//                    it.transformationMethod = PasswordTransformationMethod.getInstance()
+                    amount.text = hideText
                 }
                 Handler().removeCallbacksAndMessages(null)
             }
         }
     }
 
+    var hideText: String = "・・・・・・・"
+
     var money: String
-        get() = this.toString()
+//        get() = this.toString()
+        get() = "168,888,888.000"
         set(money){
             if (money.isNotBlank() || money.isNotEmpty()) {
                 amount.text = money
             } else {
                 amount.text = "0"
             }
-            amount.transformationMethod = PasswordTransformationMethod.getInstance()
+//            amount.transformationMethod = PasswordTransformationMethod.getInstance()
         }
 
     var showTime: Long = 1000
