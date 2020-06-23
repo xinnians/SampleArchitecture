@@ -79,4 +79,8 @@ class CustomTitleBar  @JvmOverloads constructor(
         ivBack.setOnClickListener(listener)
     }
 
+    fun setBackButtonVisable(visable: Int){
+        ivBack.visibility = visable
+    }
+
 }
