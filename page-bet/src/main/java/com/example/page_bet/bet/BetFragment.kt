@@ -143,26 +143,26 @@ class BetFragment : BaseFragment() {
         btnBet.onClick {
             //TODO 根據獎金盤/信用盤的不同 call的api跟參數皆有差異
             //TODO 先判斷當前選擇是否符合可以下注的選擇，可以的話再進行下注的動作。
-            var para: BetEntityParam = BetEntityParam(mViewModel.mIssueId,
-                                                      arrayListOf(BonusOrderEntity(betCurrency = 1,
-                                                                                   betUnit = 1.0,
-                                                                                   multiple = 1,
-                                                                                   rebate = 0.0,
-                                                                                   uuid = "uuid",
-                                                                                   amount = 1,
-                                                                                   playTypeCode = mViewModel.mPlayTypeId,
-                                                                                   betNumber = mViewModel.mSelectNumber,
-                                                                                   betCount = 10000)))
-            Log.e("Ian", "[getBetList] param: $para")
-            mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty", para).observeNotNull(this) { state ->
-                when (state) {
-                    is ViewState.Success -> {
-                        Log.e("Ian", "[getBetList] ViewState.success: data:${state.data}")
-                    }
-                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
-                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
-                }
-            }
+//            var para: BetEntityParam = BetEntityParam(mViewModel.mIssueId,
+//                                                      arrayListOf(BonusOrderEntity(betCurrency = 1,
+//                                                                                   betUnit = 1.0,
+//                                                                                   multiple = 1,
+//                                                                                   rebate = 0.0,
+//                                                                                   uuid = "uuid",
+//                                                                                   amount = 1,
+//                                                                                   playTypeCode = mViewModel.mPlayTypeId,
+//                                                                                   betNumber = mViewModel.mSelectNumber,
+//                                                                                   betCount = 10000)))
+//            Log.e("Ian", "[getBetList] param: $para")
+//            mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty", para).observeNotNull(this) { state ->
+//                when (state) {
+//                    is ViewState.Success -> {
+//                        Log.e("Ian", "[getBetList] ViewState.success: data:${state.data}")
+//                    }
+//                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+//                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+//                }
+//            }
         }
 
         //上層所有資訊欄位

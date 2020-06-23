@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlin.random.Random
 
 class Repository(private val sampleService: SampleService, private val localDb: LocalDatabase) {
 
@@ -43,7 +44,7 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     fun getLoginResult(): Flow<ViewState<LoginResponse.Data>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.getLoginResult(LoginRequest("test123", "test123"))
+            val result = if (isFakeMode) fakeLoginResponse else sampleService.getLoginResult(LoginRequest("test123", "test123"))
             emit(ViewState.success(result.data))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
@@ -63,7 +64,7 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     fun getIssueInfo(token: String, gameId: Int): Flow<ViewState<IssueInfoResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = if (isFakeMode) fakeIssueInfoResponse else sampleService.issueInfo(token, gameId)
+            val result = if (isFakeMode) fakeIssueInfoResponse() else sampleService.issueInfo(token, gameId)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
@@ -99,7 +100,8 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     fun getLotteryHistoricalRecord(token: String, gameId: Int, pageSize: Int = 10): Flow<ViewState<HistoricalResponse>> {
         return flow {
             emit(ViewState.loading())
-            val result = sampleService.historical(token, gameId, pageSize)
+            val result =
+                if (isFakeMode) HistoricalResponse(fakeHistoricalResponse(gameId, pageSize)) else sampleService.historical(token, gameId, pageSize)
             emit(ViewState.success(result))
         }.catch {
             emit(ViewState.error(it.message.orEmpty()))
@@ -230,8 +232,14 @@ class Repository(private val sampleService: SampleService, private val localDb: 
     private var fakeLoginResponse: LoginResponse =
         LoginResponse(data = LoginResponse.Data(0, 0L, "fake", "fake"), message = "isFake", messageCode = 0, status = 0)
 
-    private var fakeIssueInfoResponse: IssueInfoResponse =
-        IssueInfoResponse(IssueInfoResponse.Data(1592806090000L, 1592806095000L, 3692692, "202006221451", 1592806074431L))
+    private fun fakeIssueInfoResponse(): IssueInfoResponse {
+        var currentTime = System.currentTimeMillis()
+        return IssueInfoResponse(IssueInfoResponse.Data(currentTime + 1000 * Random.nextInt(10, 500),
+                                                        currentTime + 1000 * 30,
+                                                        3692692,
+                                                        "202006221451",
+                                                        currentTime))
+    }
 
     private var fakeLastIssueResultResponse = { gameId: ArrayList<Int> ->
         var list: ArrayList<LastIssueResultResponse.Data> = arrayListOf()
@@ -1555,5 +1563,11 @@ class Repository(private val sampleService: SampleService, private val localDb: 
                                                                                                                                                      1)),
                                                                                                                                              1))))))))
 
-
+    private var fakeHistoricalResponse = { gameId: Int, size: Int ->
+        var result: ArrayList<HistoricalResponse.Data> = arrayListOf()
+        for (index in 0 until size) {
+            result.add(HistoricalResponse.Data("202006221450", fakeWinNum(gameId)))
+        }
+        result.toList()
+    }
 }
