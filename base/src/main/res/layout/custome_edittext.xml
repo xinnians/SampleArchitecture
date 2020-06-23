@@ -32,16 +32,15 @@
         android:background="@drawable/radius_board"
         />
 
-    <TextView
-        android:id="@+id/tvHide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/ivHide"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="@id/etInput"
         app:layout_constraintTop_toTopOf="@+id/etInput"
         app:layout_constraintBottom_toBottomOf="@+id/etInput"
         android:layout_marginEnd="@dimen/dp_16"
-        android:textSize="@dimen/sp_12"
-        android:text="show"
+        android:src="@drawable/ic_icon_eyes_form"
         />
 
     <TextView

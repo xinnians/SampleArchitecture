@@ -39,7 +39,7 @@ class RegisterFragment : BaseFragment() {
         cetAccount.let {
             it.title = "用戶名"
             it.hint = "請輸入用戶名"
-            it.textVisible = false
+            it.ivEyeVisible = false
             it.textChangedListener(object : TextWatcherSon() {
                 override fun textChanged(editable: Editable) {
                     if (editable.toString().length < 6) {
@@ -98,7 +98,7 @@ class RegisterFragment : BaseFragment() {
 
         val s = SpannableStringBuilder()
             .append("已有帳號？")
-            .color(Color.RED) { append("登入") }
+            .color(Color.parseColor("#999999")) { append("登入") }
 
         tvLoginMsg.text = s
         tvLoginMsg.onClick {

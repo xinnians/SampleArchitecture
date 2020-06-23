@@ -34,7 +34,7 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>,
 
     class BaseViewHolder(val view: View, callback: CartPageDialog.SetCallback) : RecyclerView.ViewHolder(view){
 
-        var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
+        private var listAdapter: CartListAdapter = CartListAdapter(mutableListOf(), callback)
 
         init {
             itemView.rvCartList.let {

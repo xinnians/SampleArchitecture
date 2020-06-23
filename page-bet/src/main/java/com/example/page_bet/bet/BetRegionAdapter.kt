@@ -33,14 +33,14 @@ class BetRegionAdapter(data: List<MultipleLotteryEntity>) : BaseMultiItemQuickAd
         addItemType(BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char)
         addItemType(BetUnitDisplayMode.EDIT_AREA.typeNumber, R.layout.item_bet_region_edit_area)
         addItemType(BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber, R.layout.item_bet_region_any_edit_area)
-        addItemType(BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number)
+//        addItemType(BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ONLY_NUMBER.typeNumber, R.layout.item_bet_region_only_number_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ONE_CHAR.typeNumber, R.layout.item_bet_region_one_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.TWO_CHAR.typeNumber, R.layout.item_bet_region_twp_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.THREE_CHAR.typeNumber, R.layout.item_bet_region_three_char_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.EDIT_AREA.typeNumber, R.layout.item_bet_region_edit_area_full)
         addItemType(FULL_SCREEN + BetUnitDisplayMode.ANY_EDIT_AREA.typeNumber, R.layout.item_bet_region_any_edit_area_full)
-        addItemType(FULL_SCREEN + BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number_full)
+//        addItemType(FULL_SCREEN + BetUnitDisplayMode.ANY_ONLY_NUMBER.typeNumber, R.layout.item_bet_region_any_only_number_full)
     }
 
     override fun convert(helper: BaseViewHolder?, item: MultipleLotteryEntity?) {

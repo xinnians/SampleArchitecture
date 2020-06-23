@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_20"
-        android:src="@drawable/close"
+        android:src="@drawable/ic_icon_close"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,121 +72,34 @@
                     android:layout_marginStart="@dimen/dp_20"
                     >
 
-                    <TextView
-                        android:id="@+id/tvDollar"
-                        android:layout_width="@dimen/dp_38"
+                    <com.example.base.widget.BetUnitSelector
+                        android:id="@+id/viewBetUnitSelector"
+                        android:layout_width="@dimen/dp_210"
                         android:layout_height="@dimen/dp_30"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:text="1元"
-                        android:background="@drawable/bg_unit_select"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvDime"
-                        android:layout_width="@dimen/dp_38"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvDollar"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="@dimen/dp_7"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:text="1角"
-                        android:background="@drawable/bg_unit_unselect"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvPenny"
-                        android:layout_width="@dimen/dp_38"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvDime"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="@dimen/dp_7"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:text="1分"
-                        android:background="@drawable/bg_unit_unselect"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvCent"
-                        android:layout_width="@dimen/dp_38"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvPenny"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="@dimen/dp_7"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:text="1厘"
-                        android:background="@drawable/bg_unit_unselect"
-                        />
-
-                    <ImageView
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvCent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="@dimen/dp_12"
-                        android:src="@drawable/unit_change"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clRateRow2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp_106"
                     android:layout_height="@dimen/dp_30"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/dp_14"
                     android:layout_marginEnd="@dimen/dp_20"
-                    android:background="@drawable/bg_line_board"
                     >
 
-                    <TextView
-                        android:id="@+id/tvDown"
-                        android:layout_width="@dimen/dp_29"
-                        android:layout_height="@dimen/dp_30"
+                    <com.example.base.widget.BetMultipleSelector
+                        android:id="@+id/viewBetMultipleSelector"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:text="-"
-                        android:background="@drawable/bg_unit_unselect"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvCount"
-                        android:layout_width="@dimen/dp_42"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvDown"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_12"
-                        android:layout_marginStart="@dimen/dp_4"
-                        android:text="10000"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvUP"
-                        android:layout_width="@dimen/dp_29"
-                        android:layout_height="@dimen/dp_30"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvCount"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_14"
-                        android:layout_marginStart="@dimen/dp_4"
-                        android:text="+"
-                        android:background="@drawable/bg_unit_unselect"
+                        app:layout_constraintEnd_toEndOf="parent"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

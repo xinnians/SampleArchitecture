@@ -7,27 +7,74 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clToolBar"
+        android:id="@+id/clInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
+
+        <ImageView
+            android:id="@+id/ivBackToBet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/dp_20"
+            android:src="@drawable/ic_icon_prev"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/dp_211"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/bg_white_left_25_corner_button"
+            >
+
+            <TextView
+                android:id="@+id/tvIssueNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#7b7b7b"
+                android:layout_marginStart="@dimen/dp_20"
+                android:text="20200309期"
+                />
+
+            <TextView
+                android:id="@+id/tvIssueTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/sp_18"
+                android:textColor="#525252"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:text="00:00:00"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clCartListLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toBottomOf="@+id/clToolBar"
+        app:layout_constraintTop_toBottomOf="@+id/clInfoLayout"
         app:layout_constraintBottom_toTopOf="@+id/clBottom"
         >
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tlCartType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
             android:minHeight="?attr/actionBarSize"
             app:tabIndicatorColor="#525252"
             app:tabIndicatorFullWidth="false"
@@ -55,7 +102,7 @@
         android:id="@+id/clAppendLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toBottomOf="@+id/clToolBar"
+        app:layout_constraintTop_toBottomOf="@+id/clInfoLayout"
         app:layout_constraintBottom_toTopOf="@+id/clBottom"
         android:background="#f8f8f8"
         android:visibility="gone"
@@ -69,13 +116,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/dp_7"
-            android:background="#f4f4f4"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clPencil"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_27"
+                android:layout_height="@dimen/dp_27"
                 android:layout_marginEnd="@dimen/dp_20"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -264,7 +310,7 @@
                 />
 
             <RadioButton
-                android:id="@+id/rbWinStop"
+                android:id="@+id/rbAppendWinStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="追中即停"
