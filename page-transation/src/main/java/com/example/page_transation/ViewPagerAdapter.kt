@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.page_all.view.*
 class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFragment.FakeUserCash) : PagerAdapter() {
 
     companion object {
+        private const val CASH_PAGE = 1
         private const val BALANCE_PAGE = 2
         private const val TRANSFER_PAGE = 3
     }
@@ -27,18 +28,18 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
     var mFakeDataDetail: MutableList<TransationFragment.FakeUserCashDetail> ?= null
     var mTransAdapter: TransAdapter
     lateinit var bottomBehavior: BottomSheetBehavior<View>
-//    var windowHieght: Int
+    var bottomBehaviorList: MutableMap<Int, BottomSheetBehavior<View>> = mutableMapOf()
     var mContext: Context
     val tab: TabLayout
-    private var alphaAnimation: AlphaAnimation? = null
-    private var slideOffsetAction: ((slideOffset: Float)->Unit) ? =null
+    private var slideOffsetAction: ((position: Int, slideOffset: Float)->Unit) ?= null
+    private var slideStateChangeAction: ((position: Int,slideState: Int)->Unit) ?= null
+    private var slideStateAction: ((sheet: BottomSheetBehavior<View>) -> Unit) ?= null
 
     init {
         mFakeData = fakeData
         mFakeDataDetail = fakeData.data
         Log.d("msg", "fakeData size: ${fakeData.data.size}")
         mTransAdapter = TransAdapter(mFakeDataDetail!!)
-//        this.windowHieght = windowHieght
         this.mContext = context
         this.tab = tab
     }
@@ -68,6 +69,53 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
                 container.addView(view)
                 return view
             }
+            CASH_PAGE -> {
+                val view = LayoutInflater.from(container.context).inflate(R.layout.page_all, container, false)
+                container.addView(view)
+                view.tvFliterDate.text = getPageTitle(position)
+                view.tvTotalAssets.text = mFakeData?.totalCash.toString()
+                view.tvWithdraw.text = mFakeData?.withdraw.toString()
+                view.tvLockCash.text = mFakeData?.lockCash.toString()
+                var layoutManager = LinearLayoutManager(view.context)
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                view.recyclerTrans.layoutManager = layoutManager
+                view.recyclerTrans.adapter = mTransAdapter
+                view.viewTreeObserver.addOnGlobalLayoutListener {
+                    var height = view.height
+                    var setOff = dpToPx(34f+76f, mContext)
+                    bottomBehavior.peekHeight = (height - view.constrainRecords.height - setOff).toInt()
+
+                }
+                bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
+                bottomBehaviorList.put(position, bottomBehavior)
+                slideStateAction?.invoke(bottomBehavior)
+                bottomBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                        slideOffsetAction?.invoke(position, slideOffset)
+                    }
+                    override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                        Log.d("msg", "position: ${position} ,newState: ${newState}")
+                        when(newState) {
+                            BottomSheetBehavior.STATE_HIDDEN ->{Log.d("msg", "newState: STATE_HIDDEN")}
+                            BottomSheetBehavior.STATE_HALF_EXPANDED -> {Log.d("msg", "newState: STATE_HALF_EXPANDED")}
+                            BottomSheetBehavior.STATE_COLLAPSED -> {
+                                // state = 4
+                                Log.d("msg", "position: ${position}, newState: STATE_COLLAPSED")
+                                slideStateChangeAction?.invoke(position, BottomSheetBehavior.STATE_COLLAPSED)
+
+                            }
+                            BottomSheetBehavior.STATE_EXPANDED -> {
+                                // state = 3
+                                Log.d("msg", "position: ${position}, newState: STATE_EXPANDED")
+                                slideStateChangeAction?.invoke(position, BottomSheetBehavior.STATE_EXPANDED)
+
+                            }
+                        }
+                    }
+
+                })
+                return view
+            }
             else -> {
                 val view = LayoutInflater.from(container.context).inflate(R.layout.page_all, container, false)
                 container.addView(view)
@@ -79,95 +127,61 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
                 layoutManager.orientation = LinearLayoutManager.VERTICAL
                 view.recyclerTrans.layoutManager = layoutManager
                 view.recyclerTrans.adapter = mTransAdapter
-
-                tab.alpha = 1.0f
-                alphaAnimation = AlphaAnimation(1.0f, 0.0f)
-                alphaAnimation?.duration = 3000
-                alphaAnimation?.fillAfter = true
-
                 view.viewTreeObserver.addOnGlobalLayoutListener {
+                    /**
+                     * 計算 bottomSheet 起始位置
+                     * 1.整個頁面高度 - 中間 LinearLayout 高度 - bottomSheet到LinearLayout的 marginTop(34)
+                      */
                     var height = view.height
-//                    Log.d("msg", "height: ${height}")
-                    bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
                     var setOff = dpToPx(34f+76f, mContext)
                     bottomBehavior.peekHeight = (height - view.constrainRecords.height - setOff).toInt()
-                    bottomBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
-                        override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                            Log.d("msg", "slideOffset: ${slideOffset}")
-//                            if(slideOffset == 1.0f) {
-////                                tab.visibility = View.INVISIBLE
-//                            }
-//                            if(slideOffset == 0.0f) {
-////                                tab.visibility = View.VISIBLE
-//                            }
-//                            tab.alpha = 1.0f - 0.2f - slideOffset
-                            slideOffsetAction?.invoke(slideOffset)
-                        }
-
-                        override fun onStateChanged(bottomSheet: View, newState: Int) {
-                            Log.d("msg", "newState: ${newState}")
-                            when(newState) {
-                                BottomSheetBehavior.STATE_HIDDEN ->{Log.d("msg", "newState: STATE_HIDDEN")}
-                                BottomSheetBehavior.STATE_HALF_EXPANDED -> {Log.d("msg", "newState: STATE_HALF_EXPANDED")}
-                                BottomSheetBehavior.STATE_COLLAPSED -> {Log.d("msg", "newState: STATE_COLLAPSED")}
-                                BottomSheetBehavior.STATE_EXPANDED -> {Log.d("msg", "newState: STATE_EXPANDED")}
+                }
+                bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
+                bottomBehaviorList.put(position, bottomBehavior)
+                slideStateAction?.invoke(bottomBehavior)
+                bottomBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                        slideOffsetAction?.invoke(position, slideOffset)
+                    }
+                    override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                            Log.d("msg", "position: ${position} ,newState: ${newState}")
+                        when(newState) {
+                            BottomSheetBehavior.STATE_HIDDEN ->{Log.d("msg", "newState: STATE_HIDDEN")}
+                            BottomSheetBehavior.STATE_HALF_EXPANDED -> {Log.d("msg", "newState: STATE_HALF_EXPANDED")}
+                            BottomSheetBehavior.STATE_COLLAPSED -> {
+                                // state = 4
+                                Log.d("msg", "position: ${position}, newState: STATE_COLLAPSED")
+                                slideStateChangeAction?.invoke(position, BottomSheetBehavior.STATE_COLLAPSED)
+                            }
+                            BottomSheetBehavior.STATE_EXPANDED -> {
+                                // state = 3
+                                Log.d("msg", "position: ${position}, newState: STATE_EXPANDED")
+                                slideStateChangeAction?.invoke(position, BottomSheetBehavior.STATE_EXPANDED)
                             }
                         }
+                    }
 
-                    })
-//                    bottomBehavior.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
-//                        override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                            Log.d("msg", "onSlide")
-//                        }
-//
-//                        override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                            Log.d("msg", "onStateChanged")
-//                        }
-//
-//                    })
-                }
-//                bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
-//                bottomBehavior.peekHeight = windowHieght - 384
-
-
-
-//                view.btnShowSheet.setOnClickListener {
-//                    Log.d("msg", "show")
-//                    showBottomSheet()
-//                }
-//                view.btnHideSheet.setOnClickListener {
-//                    Log.d("msg", "hide")
-//                    hideBottomSheet()
-//                }
+                })
                 return view
             }
         }
     }
 
-    fun setSlideOffset(action: (slideOffset: Float) -> Unit) {
+    fun setSlideOffset(action: (position: Int, slideOffset: Float) -> Unit) {
         this.slideOffsetAction = action
+    }
+
+    fun stateChangedCallback(action: (position: Int, slideState: Int) -> Unit) {
+        this.slideStateChangeAction = action
+    }
+
+    fun setSlideState(action: (sheet: BottomSheetBehavior<View>) -> Unit) {
+        this.slideStateAction = action
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
         Log.d("msg", "destroyItem")
+        bottomBehaviorList.remove(position)
         container.removeView(any as View)
-    }
-
-    fun  hideBottomSheet(){
-        bottomBehavior.isHideable = true
-        bottomBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-    }
-
-    fun showBottomSheet() {
-        bottomBehavior.isHideable = false
-        setBottomViewVisible(bottomBehavior.state != BottomSheetBehavior.STATE_EXPANDED)
-    }
-
-    private fun setBottomViewVisible(showFlag: Boolean) {
-        if (showFlag)
-            bottomBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        else
-            bottomBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 }

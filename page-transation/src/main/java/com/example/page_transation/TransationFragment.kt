@@ -1,7 +1,10 @@
 package com.example.page_transation
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -10,9 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.get
+import androidx.annotation.RequiresApi
 import com.example.base.BaseActivity
 import com.example.base.BaseFragment
+import com.example.base.dpToPx
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_transation.*
@@ -35,9 +39,11 @@ class TransationFragment : BaseFragment() {
     private var mViewPagerAdapter: ViewPagerAdapter? = null
     private lateinit var mTransationViewModel: TransationViewModel
     private lateinit var mFakeUserCash: FakeUserCash
-//    lateinit var bottomBehavior: BottomSheetBehavior<View>
-//    lateinit var bottomSheet: View
     private var unSelectTab: Int = 0
+    private var transTemp: Int = 0
+    private var nowPosition = 0
+    private var finalSlideState: Int = 4
+    private var tabImgHeight: Int = 0
 
     private val navigation: TransationNavigation by lazy {
         XInjectionManager.findComponent<TransationNavigation>()
@@ -52,6 +58,7 @@ class TransationFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_transation, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setFakeData()
@@ -70,6 +77,7 @@ class TransationFragment : BaseFragment() {
             holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_circle)
             holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_balance_account))
             holder.tvTabItem?.setTextColor(Color.parseColor("#7c7e83"))
+
             when(index) {
                 ALL -> {
                     holder.imgTabItem?.background = resources.getDrawable(R.drawable.bg_selected_circle)
@@ -77,6 +85,11 @@ class TransationFragment : BaseFragment() {
                     holder.tvTabItem?.setTextColor(Color.BLACK)
                     holder.tvTabItem?.text = "全部"
                     tvTransTitle.text = "全部交易"
+                    holder.imgTabItem?.viewTreeObserver?.addOnGlobalLayoutListener{
+                        // 計算 tabBar 圖片的高度
+                        tabImgHeight = holder?.imgTabItem?.height!!
+//                        Log.d("msg", "tabImgHeight: ${tabImgHeight}")
+                    }
                 }
                 CASH -> { holder.tvTabItem?.text = "資金" }
                 BALANCE -> { holder.tvTabItem?.text = "盈虧" }
@@ -86,26 +99,54 @@ class TransationFragment : BaseFragment() {
                 ADJUSTMENT -> { holder.tvTabItem?.text = "調整" }
             }
         }
-        val displayMetrics = DisplayMetrics()
-        activity?.windowManager?.defaultDisplay?.getMetrics((displayMetrics))
-        val height: Int = displayMetrics.heightPixels
-//        mViewPagerAdapter = ViewPagerAdapter(height, mFakeUserCash)
         mViewPagerAdapter = context?.let { ViewPagerAdapter(tabTransationType,it, mFakeUserCash) }
-
         pagerTransation.adapter = this.mViewPagerAdapter
         pagerTransation.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabTransationType))
         tabTransationType.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pagerTransation))
-        Log.d("msg", "windows height: ${height}")
-
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun setLinstener() {
-        mViewPagerAdapter?.setSlideOffset {
-            tabTransationType.alpha = 1.0f - 0.2f - it
-            if(it == 0f) {
-                pagerTransation.setSwipePagingEnabled(true)
-            } else if(it == 1f) {
-                pagerTransation.setSwipePagingEnabled(false)
+        // bottomSheet 被滑動時
+        mViewPagerAdapter?.setSlideOffset { position: Int, progress: Float ->
+            // tabBar 需要位移的高度為圖片高度 + 文字與圖片的 marginTop 距離
+            var translateHeight = context?.let { dpToPx(11f, it) + tabImgHeight.toFloat() }
+            var trans = ((progress * translateHeight!!) % translateHeight+1).toInt()
+//            Log.d("msg", "slideOffset: ${position}, progress: ${trans}")
+            /**
+             * 判斷是否移動 tabBar
+             * 1.偏移量是否重複
+             * 2.是否為當前 tab，不是當前 tab 則不移動
+             * 3.偏移量是否為 1
+             */
+            if(trans != transTemp && position == nowPosition && trans != 1) {
+//                Log.d("msg", "slideOffset: ${position}, progress: ${trans}")
+                startTranslateY(tabTransationType, trans)
+                transTemp = trans
+            }
+        }
+        // bottomSheet 狀態改變時
+        mViewPagerAdapter?.stateChangedCallback { position, slideState ->
+            /**
+             * 當 bottomSheet 狀態改變時要把所有頁面的狀態調整為一致
+             * 1.判斷所有頁面的 bottomSheet 狀態是否與當前狀態一致
+             * 2.判斷是否為當前頁面的 bottomSheet，只需要改變其他頁面狀態，當前頁面的已經更動
+             */
+            mViewPagerAdapter?.bottomBehaviorList?.forEach { t, u ->
+                if(u.state != slideState && t != nowPosition) {
+                    u.state = slideState
+                }
+            }
+            finalSlideState = slideState
+        }
+        // 初始化 bottomSheet 狀態
+        mViewPagerAdapter?.setSlideState {
+            /**
+             * 初始化 bottomSheet 時要根據當前頁面的狀態設定
+             */
+            when(finalSlideState) {
+                BottomSheetBehavior.STATE_EXPANDED -> {it.state = BottomSheetBehavior.STATE_EXPANDED}
+                BottomSheetBehavior.STATE_COLLAPSED -> {it.state = BottomSheetBehavior.STATE_COLLAPSED}
             }
         }
         tabTransationType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -129,12 +170,9 @@ class TransationFragment : BaseFragment() {
                 holder.imgTabItem?.setImageDrawable(resources.getDrawable(R.drawable.ic_selected_balance_account))
                 holder.tvTabItem?.setTextColor(Color.BLACK)
                 tvTransTitle.text = tab.text
+                nowPosition = tab.position
                 // 更換頁面要重新顯示 tabBar
-                Log.d("msg", "unSelectTab: ${unSelectTab}")
-                if(tab.position != unSelectTab) {
-                    tabTransationType.alpha = 1.0f
-                    tabTransationType.visibility = View.VISIBLE
-                }
+//                Log.d("msg", "tab stage: ${selectTabState[tab.position]}")
             }
         })
     }
@@ -146,6 +184,13 @@ class TransationFragment : BaseFragment() {
             imgTabItem = view.findViewById(R.id.imgTabItem)
             tvTabItem = view.findViewById(R.id.tvTabItem)
         }
+    }
+
+    fun startTranslateY(view: View, translateY: Int){
+//        val transY = context?.let { dpToPx(translateY.toFloat(), it) }
+//        Log.d("msg", "translateY: ${translateY.toFloat()}")
+        val currentY: Float= view.translationY
+        view.translationY = -translateY.toFloat()
     }
 
     fun setFakeData() {

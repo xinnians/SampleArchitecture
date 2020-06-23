@@ -7,7 +7,7 @@ import androidx.viewpager.widget.ViewPager
 
 class CustomViewPager(context: Context, attrs: AttributeSet): ViewPager(context, attrs) {
 
-    private var swipeEnabled = false
+    private var swipeEnabled = true
 
     init {
 //        enabled = true
