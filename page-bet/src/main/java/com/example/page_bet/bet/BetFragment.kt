@@ -29,6 +29,8 @@ import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.android.synthetic.main.fragment_bet.toolbar
+import kotlinx.android.synthetic.main.fragment_lottery_center.*
 import kotlinx.coroutines.isActive
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
@@ -335,6 +337,8 @@ class BetFragment : BaseFragment() {
                 Toast.makeText(requireContext(), "購物車沒資料喔", Toast.LENGTH_SHORT).show()
             }
         }
+
+        toolbar.backListener(View.OnClickListener { navigation.backPrePage() })
     }
 
     private fun initBinding() {

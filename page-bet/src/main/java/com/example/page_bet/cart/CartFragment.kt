@@ -41,8 +41,30 @@ class CartFragment : BaseFragment() {
         cartViewModel.getAllGameId()
         cartPagerAdapter = CartPagerAdapter(mutableListOf(), callBack)
         init()
+        initListener()
+    }
+
+    private fun initListener() {
         btnBet.onClick {
-            cartViewModel.delCartById(cartPagerAdapter.pageData[0].gameId)
+            cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
+        }
+
+        ivBackToBet.onClick {
+            if (isAppendListMode) {
+                Log.d("mori", "is append list = $isAppendListMode")
+                (activity as BaseActivity).Dialog(layout = R.layout.alert_big,
+                                                  title = "",
+                                                  content = "您還有未投注計劃，\n確認重選注單？",
+                                                  positiveButton = "重選",
+                                                  negativeButton = "返回",
+                                                  onNegativeButtonClicked = {},
+                                                  onPositiveButtonClicked = {
+                                                      getBackToCartList()
+                                                  })
+            } else {
+                Log.d("mori", "is append list = $isAppendListMode")
+                navigation.goBackToBetPage()
+            }
         }
     }
 
@@ -227,6 +249,8 @@ class CartFragment : BaseFragment() {
             if (isAppendListMode) {
                 getBackToCartList()
                 cartViewModel.delCart(cart)
+            } else {
+                cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
             }
         }
     }
