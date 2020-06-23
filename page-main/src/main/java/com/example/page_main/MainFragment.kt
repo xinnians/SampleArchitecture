@@ -79,6 +79,8 @@ class MainFragment : BaseFragment() {
         btnDailySign.setOnClickListener {
             //TODO
         }
+
+        toolBar.backListener(View.OnClickListener { requireActivity().finish() })
     }
 
     // 輪播 recyclerView

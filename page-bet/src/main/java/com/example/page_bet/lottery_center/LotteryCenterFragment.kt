@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
+import com.example.base.onClick
+import com.example.base.widget.CustomTitleBar
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetFragment
@@ -84,6 +86,9 @@ class LotteryCenterFragment : BaseFragment() {
         TabLayoutMediator(tlLotteryType,vpGameIssueInfo) { tab: TabLayout.Tab, i: Int ->
             tab.text = GameTypeId.values()[i].chineseName
         }.attach()
+
+        toolbar.backListener(View.OnClickListener { navigation.backPrePage() })
+
     }
 
     private fun initData() {
