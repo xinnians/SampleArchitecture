@@ -49,11 +49,11 @@ class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog
         }
 
         btnSearch.onClick {
-            val dateList = calendarView.selectedDates
-            val start = dateList[0]
-            val end = dateList[dateList.size - 1]
-            val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
-            listener.getSearch(arrayList)
+//            val dateList = calendarView.selectedDates
+//            val start = dateList[0]
+//            val end = dateList[dateList.size - 1]
+//            val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
+//            listener.getSearch(arrayList)
             dismiss()
         }
     }
