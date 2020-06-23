@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ededed">
 
-    <com.example.resource.ToolBar
+    <com.example.base.widget.CustomTitleBar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
