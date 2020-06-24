@@ -1,17 +1,21 @@
 package com.example.base
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import com.hadilq.liveevent.LiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -41,14 +45,6 @@ inline fun View.onClick(crossinline clickAction: () -> Unit) = this.setOnClickLi
     clickAction.invoke()
 }
 
-fun Fragment.toast(text: CharSequence) = requireActivity().toast(text)
-
-fun Context.toast(message: CharSequence): Toast = Toast
-    .makeText(this, message, Toast.LENGTH_SHORT)
-    .apply {
-        show()
-    }
-
 fun Fragment.drawable(resId: Int) = requireContext().drawable(resId)
 
 fun Context.drawable(resId: Int) = ContextCompat.getDrawable(this, resId)
@@ -64,44 +60,35 @@ fun dpToPx(dp: Float, context: Context): Float {
     return (dp * density).roundToInt().toFloat()
 }
 
-//fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
-//    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }
-//}
-//
-//fun AppCompatActivity.switchFragment(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
-//    this.supportFragmentManager?.inTransaction { add(idRes, fragment, tag) }
-//}
-//inline fun androidx.fragment.app.FragmentManager.inTransaction(crossinline action: androidx.fragment.app.FragmentTransaction.() -> androidx.fragment.app.FragmentTransaction) {
-//    this.beginTransaction().setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.right_in, R.anim.right_out)
-//        .action().commit()
-//}
-//
-//inline fun androidx.fragment.app.FragmentManager.inStackTransaction(crossinline action: androidx.fragment.app.FragmentTransaction.() -> androidx.fragment.app.FragmentTransaction) {
-//    this.beginTransaction().setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.right_in, R.anim.right_out)
-//        .action().addToBackStack(null).commit()
-//}
-//
-//inline fun AppCompatActivity.Dialog(@LayoutRes layout: Int, title: String,
-//                                    content: String = "",
-//                                    negativeButton: String = "取消",
-//                                    positiveButton: String = "退出",
-//                                    crossinline onNegativeButtonClicked: () -> Unit,
-//                                    crossinline onPositiveButtonClicked: () -> Unit) {
-//    android.app.Dialog(this).apply {
-//        setContentView(layout)
-//        findViewById<TextView>(R.id.alert_title).text = title
-//        with(findViewById<TextView>(R.id.alert_content)) { if (content.isBlank()) gone() else text = content }
-//        findViewById<TextView>(R.id.alert_negative).onClick { this.dismiss(); onNegativeButtonClicked.invoke() }
-//        findViewById<TextView>(R.id.alert_negative).text = negativeButton
-//        findViewById<TextView>(R.id.alert_positive).text = positiveButton
-//        findViewById<TextView>(R.id.alert_positive).onClick { this.dismiss(); onPositiveButtonClicked.invoke() }
-//    }.show()
-//}
+inline fun AppCompatActivity.Dialog(@LayoutRes layout: Int, title: String,
+                                    content: String = "",
+                                    negativeButton: String = "取消",
+                                    positiveButton: String = "退出",
+                                    crossinline onNegativeButtonClicked: () -> Unit,
+                                    crossinline onPositiveButtonClicked: () -> Unit) {
+    android.app.Dialog(this).apply {
+        setContentView(layout)
+        findViewById<TextView>(R.id.alert_title).text = title
+        with(findViewById<TextView>(R.id.alert_content)) { if (content.isBlank()) gone() else text = content }
+        findViewById<TextView>(R.id.alert_negative).onClick { this.dismiss(); onNegativeButtonClicked.invoke() }
+        findViewById<TextView>(R.id.alert_negative).text = negativeButton
+        findViewById<TextView>(R.id.alert_positive).text = positiveButton
+        findViewById<TextView>(R.id.alert_positive).onClick { this.dismiss(); onPositiveButtonClicked.invoke() }
+    }.show()
+}
 
 fun getDateTime(millionsecond: Long): String {
     val date = Date(millionsecond)
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     return sdf.format(date)
+}
+
+fun getMonth(date: Date): String {
+    return DateFormat.format("MM", date).toString()
+}
+
+fun getDay(date: Date): String {
+    return DateFormat.format("dd", date).toString()
 }
 
 fun convertDate(time: String): Long {
@@ -151,20 +138,23 @@ fun closeSoftKeyboard(mEditText: EditText, mContext: Context) {
     imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
 }
 
+fun String.isNumeric(): Boolean{
+    this.forEach {
+        if(!Character.isDigit(it)){
+            return false
+        }
+    }
+    return true
+}
 
+fun Int.isOdd(): Boolean {
+    return this % 2 != 0
+}
 
-var extensionProgress: AlertDialog? = null
-
-//fun runProgress(myContext: Context, loading: Boolean) {
-//    if (extensionProgress == null) {
-//        extensionProgress = AlertDialog.Builder(myContext, R.style.DialogBackgroundNull).setCancelable(true)
-//            .setView(R.layout.loading_progress).create()
-//    }
-//    when (loading) {
-//        true -> extensionProgress!!.show()
-//        false -> {
-//            extensionProgress!!.dismiss()
-//            extensionProgress = null
-//        }
-//    }
-//}
+fun <T> MutableLiveData<T>.toSingleEvent(): MutableLiveData<T> {
+    val result = LiveEvent<T>()
+    result.addSource(this) {
+        result.value = it
+    }
+    return result
+}

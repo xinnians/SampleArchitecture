@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_7"
+    android:layout_margin="@dimen/dp_5"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/bg_white_circle_gray_stroke"
+        android:background="@drawable/bg_white_25_corner_gray_stroke"
         android:text="百個"
         android:gravity="center"
         android:textColor="#666666"

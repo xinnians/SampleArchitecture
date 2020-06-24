@@ -9,10 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.base.AppInjector
-import com.example.base.BaseFragment
-import com.example.base.DatePickerDialog
-import com.example.base.observeNotNull
+import com.example.base.*
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetFragment
@@ -102,6 +99,7 @@ class LotteryResultFragment: BaseFragment() {
     }
 
     fun setListener() {
+        ivLeftArrow.onClick { navigation?.backPrePage() }
         etNumSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) { }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }

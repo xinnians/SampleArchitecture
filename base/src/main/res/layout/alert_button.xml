@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/alert_negative"
+        android:layout_width="@dimen/dp_135"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="alert_negative"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/alert_positive"
+        />
+
+    <TextView
+        android:id="@+id/alert_positive"
+        android:layout_width="@dimen/dp_135"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="alert_positive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

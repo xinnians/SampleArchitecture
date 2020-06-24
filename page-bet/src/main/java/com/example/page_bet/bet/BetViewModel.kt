@@ -4,11 +4,14 @@ import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.base.timer
+import com.example.base.toSingleEvent
 import com.example.repository.Repository
 import com.example.repository.constant.BetItemType
+import com.example.repository.constant.playTypeID_206010
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -23,43 +26,59 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
     var mPlayTypeInfoList: PlayTypeInfoResponse? = null
     var mPlayTypeId: Int = -1
     var mBetItemType: BetItemType = BetItemType.NONE
+    var mSecondBetItemType: BetItemType = BetItemType.NONE
     var mSelectNumber: String = ""
     var mIssueId: Int = -1
     var mToken: String = ""
+
+    var mUnitValue: Double = 1.0
+    var mCurrencyUnit: Int = 1
+    var mMultiple: Int = 1
+
+    var mCurrentIssueTimerJob: Job? = null
 
     /** --------------------------------------- LiveData --------------------------------------- **/
 
     var liveCurrentIssueInfo: MutableLiveData<ViewState<IssueInfoResponse>> = MutableLiveData()
 
     //當期期號
-    var liveIssueDisplayNumber: MutableLiveData<String> = MutableLiveData()
+    var liveIssueDisplayNumber: MutableLiveData<String> = MutableLiveData<String>().toSingleEvent()
 
     //當期期號剩餘時間
-    var liveCurrentIssueLeftTime: MutableLiveData<String> = MutableLiveData()
+    var liveCurrentIssueLeftTime: MutableLiveData<String> = MutableLiveData<String>().toSingleEvent()
 
     //最近一期開獎期號
-    var liveLastIssueDisplayNumber: MutableLiveData<String> = MutableLiveData()
+    var liveLastIssueDisplayNumber: MutableLiveData<String> = MutableLiveData<String>().toSingleEvent()
 
     //最近一期開獎號碼
-    var liveLastIssueResultItem: MutableLiveData<MutableList<MultipleIssueResultItem>> = MutableLiveData()
+    var liveLastIssueResultItem: MutableLiveData<MutableList<MultipleIssueResultItem>> = MutableLiveData<MutableList<MultipleIssueResultItem>>().toSingleEvent()
 
     //玩法列表
-    var livePlayTypeList: MutableLiveData<ArrayList<BetTypeEntity>> = MutableLiveData()
+    var livePlayTypeList: MutableLiveData<ArrayList<BetTypeEntity>> = MutableLiveData<ArrayList<BetTypeEntity>>().toSingleEvent()
 
     //投注欄位選擇列表
-    var liveBetPositionList: MutableLiveData<MutableList<MultiplePlayTypePositionItem>> = MutableLiveData()
+    var liveBetPositionList: MutableLiveData<MutableList<MultiplePlayTypePositionItem>> = MutableLiveData<MutableList<MultiplePlayTypePositionItem>>().toSingleEvent()
 
     //當前玩法名稱顯示
-    var liveGamePlayTypeDisPlayName: MutableLiveData<String> = MutableLiveData()
+    var liveGamePlayTypeDisPlayName: MutableLiveData<String> = MutableLiveData<String>().toSingleEvent()
 
     //顯示預設投注畫面通知
-    var liveDefaultUiDisplay: MutableLiveData<Unit> = MutableLiveData()
+    var liveDefaultUiDisplay: MutableLiveData<Unit> = MutableLiveData<Unit>().toSingleEvent()
 
     //歷史開獎紀錄10筆
-    var liveHistoryRecordList: MutableLiveData<MutableList<MultipleHistoryRecord>> = MutableLiveData()
+    var liveHistoryRecordList: MutableLiveData<MutableList<MultipleHistoryRecord>> = MutableLiveData<MutableList<MultipleHistoryRecord>>().toSingleEvent()
 
     //投注欄位列表
-    var liveBetRegionList: MutableLiveData<MutableList<MultipleLotteryEntity>> = MutableLiveData()
+    var liveBetRegionList: MutableLiveData<MutableList<MultipleLotteryEntity>> = MutableLiveData<MutableList<MultipleLotteryEntity>>().toSingleEvent()
+
+    //當前選擇總注數
+    var liveBetCount: MutableLiveData<Int> = MutableLiveData<Int>().toSingleEvent()
+
+    //當前選擇總金額
+    var liveBetCurrency: MutableLiveData<Int> = MutableLiveData<Int>().toSingleEvent()
+
+    //是否需顯示全螢幕切換按鈕
+    var liveIsNeedShowFullScreen: MutableLiveData<Boolean> = MutableLiveData<Boolean>().toSingleEvent()
 
     var liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var liveError: MutableLiveData<String> = MutableLiveData()
@@ -79,7 +98,10 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                             }}期"
                             mIssueId = data.issueId
                             var leftTime = ((data.buyEndTime.minus(System.currentTimeMillis())).div(1000)).toInt()
-                            timer(1000, false) {
+
+                            mCurrentIssueTimerJob?.cancel()
+
+                            mCurrentIssueTimerJob = timer(1000, false) {
                                 var time = leftTime--
                                 liveCurrentIssueLeftTime.value = getDisplayTime(time)
                                 if (time <= 0) {
@@ -187,6 +209,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         var result = BetItemUtil.getTypeData(resources, mPlayTypeId.toString())
         mBetItemType = result.first
         var oriList = result.second
+        mSecondBetItemType = result.third
         var modifyList: MutableList<MultiplePlayTypePositionItem> = arrayListOf()
 
         //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
@@ -195,7 +218,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                 modifyList.add(MultiplePlayTypePositionItem(if (mBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size, item))
             }
         } else {
-            modifyList.add(MultiplePlayTypePositionItem(0, BetData("沒有管理到", arrayListOf())))
+            modifyList.add(MultiplePlayTypePositionItem(0, BetData(displayTitle = "沒有管理到",unitList =  arrayListOf(),betItemType = mBetItemType)))
         }
 
         liveBetPositionList.value = modifyList
@@ -233,20 +256,6 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         return repository.getBetList(token, param).asLiveData()
     }
 
-    /** --------------------------------------- Local Database --------------------------------------- **/
-    //Local Database
-    fun addCart(cart: Cart) = repository.addCart(cart).asLiveData()
-
-    fun getCartList(gameId: Int) = repository.getCartList(gameId).asLiveData()
-
-    fun getAllGameId() = repository.getAllGameId().asLiveData()
-
-    fun delCart(cart: Cart) = repository.delCart(cart).asLiveData()
-
-    fun updateCart(cart: Cart) = repository.updateCart(cart).asLiveData()
-
-    fun getCartArray(gameIdArray: ArrayList<Int>) = repository.getCartListArray(gameIdArray).asLiveData()
-
     /** --------------------------------------- Utils --------------------------------------- **/
     private fun getDisplayTime(second: Int): String {
         var h = 0
@@ -276,6 +285,7 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
 
     /** --------------------------------------- action --------------------------------------- **/
 
+    //選擇玩法
     var selectPlayType = { playTypeCode: Int, playTypeName: String, betGroupName: String, betTypeName: String ->
         liveGamePlayTypeDisPlayName.value = "$betTypeName $betGroupName $playTypeName"
         //儲存目前的playTypeCode，以便計算注數等判斷
@@ -284,35 +294,53 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
         //根據typeData顯示投注單位選擇，可以根據list的長度來判斷該顯示什麼樣式的投注單位選擇
         mBetItemType = result.first
         var oriList = result.second
+        mSecondBetItemType = result.third
         var modifyList: ArrayList<MultiplePlayTypePositionItem> = arrayListOf()
         //單式時因為oriList沒有東西所以產不出來，需要在oriList = 0時額外處理
         if (oriList.isNotEmpty()) {
-            var type = if (mBetItemType == BetItemType.SINGLE_BET_TYPE) 0 else oriList.size
+            var type = if (mBetItemType == BetItemType.SINGLE_BET_TYPE || mBetItemType == BetItemType.ANY_SINGLE_BET_TYPE) 0 else oriList.size
             for (item in oriList) {
                 modifyList.add(MultiplePlayTypePositionItem(type, item))
             }
         } else {
-            modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf())))
+            modifyList.add(MultiplePlayTypePositionItem(0, BetData("單式test", arrayListOf(),betItemType = mBetItemType)))
         }
+        liveIsNeedShowFullScreen.value = (mBetItemType == BetItemType.ANY_SINGLE_BET_TYPE || mBetItemType == BetItemType.SINGLE_BET_TYPE)
+
         liveBetPositionList.value = modifyList
         liveDefaultUiDisplay.value = Unit
+
+        //選擇玩法後初始化注數和總金額UI
+        liveBetCount.value = 0
+        liveBetCurrency.value = getTotalCurrency().toInt()
     }
 
+    //選擇投注欄位
     var selectBetPosition = { position: Int, data: MutableList<MultiplePlayTypePositionItem> ->
         data.apply {
             map { it.getData()?.isSelect = false }
             //在rvBetPosition點擊後 要改變顯示rvBetRegion的部分
             get(position).getData()?.apply {
+                Log.e("Ian","[selectBetPosition] BetData:$this")
                 isSelect = true
-                val data = mutableListOf(MultipleLotteryEntity(mBetItemType.unitDisplayMode, this))
+                val data = if(mPlayTypeId.toString() == playTypeID_206010 && position == 1){
+                    mutableListOf(MultipleLotteryEntity(mSecondBetItemType.unitDisplayMode, this))
+                }else
+                    mutableListOf(MultipleLotteryEntity(mBetItemType.unitDisplayMode, this))
+
                 liveBetRegionList.value = data
             }
             liveBetPositionList.value = this
         }
     }
 
+    //選擇該欄位投注數值
     var selectBetRegion = {
-        var selectNumber = liveBetPositionList.value?.toList()?.let { BetCountUtil.getBetSelectNumber(mPlayTypeId, it) }
+        var selectNumber = liveBetPositionList.value?.toList()?.let {
+            it.forEach { item ->
+                Log.e("Ian","[selectBetRegion] ${item.getData()}")
+            }
+            BetCountUtil.getBetSelectNumber(mPlayTypeId, it) }
         mSelectNumber = selectNumber?.betNumber.toString()
 
         livePlayTypeList.value?.let { betTypeList ->
@@ -324,10 +352,30 @@ class BetViewModel(var repository: Repository, var resources: Resources) : ViewM
                             //計算注數時，將該玩法的正則丟入判斷該投注號碼是否符合規則。
                             var count = selectNumber?.let { BetCountUtil.getBetCount(it, playType.regex) }
                             Log.e("Ian", "count:$count")
+                            liveBetCount.value = count
+                            liveBetCurrency.value = getTotalCurrency().toInt()
                         }
                     }
                 }
             }
         }
     }
+
+    var selectBetUnit = { unit: Double, currency: Int ->
+        mCurrencyUnit = currency
+        mUnitValue = unit
+        liveBetCurrency.value = getTotalCurrency().toInt()
+    }
+
+    var selectBetMultiple = { value: Int ->
+        mMultiple = value
+        liveBetCurrency.value = getTotalCurrency().toInt()
+    }
+
+    private fun getTotalCurrency(): Double {
+        var result = liveBetCount.value?.times(mCurrencyUnit * mUnitValue * mMultiple) ?: 0.0
+        Log.e("Ian", "[getTotalCurrency] result:$result")
+        return result
+    }
+
 }

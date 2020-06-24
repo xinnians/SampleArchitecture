@@ -9,10 +9,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import com.example.base.R
-import com.example.base.gone
-import com.example.base.onClick
-import com.example.base.visible
+import com.example.base.*
 import kotlinx.android.synthetic.main.custome_edittext.view.*
 
 class CustomEditTextView @JvmOverloads constructor(
@@ -27,14 +24,14 @@ class CustomEditTextView @JvmOverloads constructor(
         set.applyTo(this)
 
         var isHide = true
-        tvHide.onClick {
+        ivHide.onClick {
             if (isHide) {
                 isHide = false
-                tvHide.text = "hide"
+                ivHide.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form_open))
                 etInput.transformationMethod = HideReturnsTransformationMethod.getInstance()
             } else {
                 isHide = true
-                tvHide.text = "show"
+                ivHide.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form))
                 etInput.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
@@ -81,13 +78,13 @@ class CustomEditTextView @JvmOverloads constructor(
             }
         }
 
-    var textVisible: Boolean
+    var ivEyeVisible: Boolean
         get() = true
-        set(textVisible) {
-            if (textVisible) {
-                tvHide.visible()
+        set(ivEyeVisible) {
+            if (ivEyeVisible) {
+                ivHide.visible()
             } else {
-                tvHide.gone()
+                ivHide.gone()
             }
         }
 

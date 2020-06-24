@@ -19,6 +19,7 @@ class LotteryCenterViewModel(private var repository: Repository) : ViewModel() {
     private var mAllGameLastIssueInfo: List<LastIssueResultResponse.Data>? = null
 
     fun setGameMenuList(list: ArrayList<MultipleMenuItem>) {
+        mGameLists.clear()
         for (index in GameTypeId.values()) {
             var gameList: GameMenuResponse.Data = GameMenuResponse.Data(
                 id = index.typeId, gameTypeDisplayName = index.name, gameInfoEntityList = listOf()

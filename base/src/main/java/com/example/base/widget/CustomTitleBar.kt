@@ -28,33 +28,39 @@ class CustomTitleBar  @JvmOverloads constructor(
         ivShowMoney.onClick {
             if (isHide) {
                 isHide = false
-                ivShowMoney.setImageDrawable(context.drawable(R.drawable.open_eye))
-                amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form_open))
+//                amount.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                amount.text = money
                 Handler().postDelayed({
-                    ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
-                    amount.transformationMethod = PasswordTransformationMethod.getInstance()
+                    ivShowMoney.setImageDrawable(context.drawable(R.drawable.ic_icon_eyes_form))
+//                    amount.transformationMethod = PasswordTransformationMethod.getInstance()
+                    amount.text = hideText
                     isHide = true
                 }, showTime)
             } else {
                 isHide = true
                 ivShowMoney.setImageDrawable(context.drawable(R.drawable.close_eye))
                 amount.let {
-                    it.transformationMethod = PasswordTransformationMethod.getInstance()
+//                    it.transformationMethod = PasswordTransformationMethod.getInstance()
+                    amount.text = hideText
                 }
                 Handler().removeCallbacksAndMessages(null)
             }
         }
     }
 
+    var hideText: String = "・・・・・・・"
+
     var money: String
-        get() = this.toString()
+//        get() = this.toString()
+        get() = "168,888,888.000"
         set(money){
             if (money.isNotBlank() || money.isNotEmpty()) {
                 amount.text = money
             } else {
                 amount.text = "0"
             }
-            amount.transformationMethod = PasswordTransformationMethod.getInstance()
+//            amount.transformationMethod = PasswordTransformationMethod.getInstance()
         }
 
     var showTime: Long = 1000
@@ -71,6 +77,10 @@ class CustomTitleBar  @JvmOverloads constructor(
 
     fun backListener(listener: OnClickListener) {
         ivBack.setOnClickListener(listener)
+    }
+
+    fun setBackButtonVisable(visable: Int){
+        ivBack.visibility = visable
     }
 
 }

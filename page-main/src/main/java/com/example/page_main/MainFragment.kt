@@ -60,6 +60,7 @@ class MainFragment : BaseFragment() {
                     is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
                 }
             }
+        toolBar.setBackButtonVisable(View.GONE)
         val names = arrayOf("彩票", "棋盤", "真人視訊", "百家樂", "麻將")
         val adapter = CarouselAdapter(names)
         initRecyclerView(
@@ -78,6 +79,8 @@ class MainFragment : BaseFragment() {
         btnDailySign.setOnClickListener {
             //TODO
         }
+
+        toolBar.backListener(View.OnClickListener { requireActivity().finish() })
     }
 
     // 輪播 recyclerView

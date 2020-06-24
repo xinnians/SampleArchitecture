@@ -7,12 +7,20 @@ import com.example.page_login.LoginNavigation
 import com.example.page_main.MainNavigation
 
 internal class Navigator : BaseNavigator(), BetNavigation, LoginNavigation, MainNavigation, DepositNavigation {
+    override fun backPrePage() {
+        navController?.popBackStack()
+    }
+
     override fun toBetPage(gameInfo: Bundle) {
         navController?.navigate(R.id.action_betMenuFragment_to_betFragment, gameInfo)
     }
 
-    override fun toShoppingCartPage() {
-        navController?.navigate(R.id.action_betFragment_to_cartFragment)
+    override fun goBackToBetPage() {
+        navController?.popBackStack()
+    }
+
+    override fun toShoppingCartPage(gameId: Bundle) {
+        navController?.navigate(R.id.action_betFragment_to_cartFragment, gameId)
     }
 
     override fun toGameFavoritePage() {

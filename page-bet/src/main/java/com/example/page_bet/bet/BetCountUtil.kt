@@ -1,9 +1,11 @@
 package com.example.page_bet.bet
 
 import android.util.Log
+import com.example.base.isNumeric
 import com.example.repository.constant.*
 import com.example.repository.model.bet.BetSelectNumber
 import com.example.repository.model.bet.MultiplePlayTypePositionItem
+import com.example.repository.model.bet.toSelectNumber
 import java.net.URLDecoder
 import java.util.regex.Pattern
 
@@ -30,7 +32,6 @@ object BetCountUtil {
             playTypeID_204224,
             playTypeID_203100,
             playTypeID_203110,
-            playTypeID_203103,
             playTypeID_203200,
             playTypeID_203210,
             playTypeID_203300,
@@ -86,7 +87,8 @@ object BetCountUtil {
             playTypeID_204241,
             playTypeID_204242,
             playTypeID_205042,
-            playTypeID_205043
+            playTypeID_205043,
+            playTypeID_203134
             -> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
@@ -96,33 +98,34 @@ object BetCountUtil {
                     }
                 }
             }
-            playTypeID_203102,
+//            -> {
+//                for (index in betEntityList.indices){
+//                    for (entity in betEntityList[index].getData()?.unitList!!){
+//                        if(result.isNotEmpty()){
+//                            result.append("$")
+//                        }
+//                        if(entity.isSelect){
+//                            result.append(entity.unitValue)
+//                        }
+//                    }
+//                }
+//            }
+            playTypeID_202233,
+            playTypeID_202231,
+            playTypeID_202202,
+            playTypeID_202133,
+            playTypeID_202131,
+            playTypeID_202102,
+            playTypeID_203333,
+            playTypeID_203331,
+            playTypeID_203302,
+            playTypeID_203233,
+            playTypeID_203231,
+            playTypeID_203202,
             playTypeID_203131,
             playTypeID_203133,
-            playTypeID_203202,
-            playTypeID_203231,
-            playTypeID_203233,
-            playTypeID_203302,
-            playTypeID_203331,
-            playTypeID_203333,
-            playTypeID_202102,
-            playTypeID_202131,
-            playTypeID_202133,
-            playTypeID_202202,
-            playTypeID_202231,
-            playTypeID_202233
-            -> {
-                for (index in betEntityList.indices){
-                    for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
-                            result.append("$")
-                        }
-                        if(entity.isSelect){
-                            result.append(entity.unitValue)
-                        }
-                    }
-                }
-            }
+            playTypeID_203103,
+            playTypeID_203102,
             playTypeID_203135,
             playTypeID_203203,
             playTypeID_203235,
@@ -132,7 +135,7 @@ object BetCountUtil {
             playTypeID_202203-> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
+                        if(result.isNotEmpty() && result.last().toString()!=","){
                             result.append(",")
                         }
                         if(entity.isSelect){
@@ -140,26 +143,81 @@ object BetCountUtil {
                         }
                     }
                 }
+
+                if(result.isNotEmpty() && result.last().toString() == ","){
+                    result.deleteCharAt(result.lastIndex)
+                }
             }
             playTypeID_206010-> {
                 for (index in betEntityList.indices){
                     for (entity in betEntityList[index].getData()?.unitList!!){
-                        if(result.isNotEmpty()){
+                        if(result.isNotEmpty() && result.last().toString()!="," && result.last().toString()!="@"){
                             result.append(",")
                         }
                         if(entity.isSelect){
                             result.append(entity.unitValue)
                         }
+                    }
+                    if(result.isNotEmpty() && result.last().toString() == ","){
+                        result.deleteCharAt(result.lastIndex)
                     }
                     if(betEntityList.lastIndex != index){
                         result.append("@")
                     }
                 }
             }
-
+            playTypeID_205001-> {
+                result = getSingleBetTypeSelectNumber(5,betEntityList)
+            }
+            playTypeID_204101,playTypeID_204201-> {
+                result = getSingleBetTypeSelectNumber(4,betEntityList)
+            }
+            playTypeID_203101, playTypeID_203121, playTypeID_203122,
+            playTypeID_203201, playTypeID_203221, playTypeID_203222,
+            playTypeID_203301, playTypeID_203321, playTypeID_203322-> {
+                result = getSingleBetTypeSelectNumber(3,betEntityList)
+            }
+            playTypeID_202101, playTypeID_202120, playTypeID_202201, playTypeID_202220-> {
+                result = getSingleBetTypeSelectNumber(2,betEntityList)
+            }
+            playTypeID_202001,playTypeID_202020-> {
+                result = getSingleBetTypeSelectNumber(2,betEntityList,true)
+            }
+            playTypeID_203001,playTypeID_203021,playTypeID_203022->{
+                result = getSingleBetTypeSelectNumber(3,betEntityList,true)
+            }
+            playTypeID_204001-> {
+                result = getSingleBetTypeSelectNumber(4,betEntityList,true)
+            }
         }
         Log.e("Ian","[getBetSelectNumber] result: $result")
         return BetSelectNumber(playtypeCode.toString(),result.toString())
+    }
+
+    private fun getSingleBetTypeSelectNumber(length: Int, betEntityList: List<MultiplePlayTypePositionItem>, isAnyType: Boolean = false): StringBuilder{
+        var result: StringBuilder = StringBuilder()
+        for (index in betEntityList.indices) {
+            for (entity in betEntityList[index].getData()?.unitList!!) {
+                result.append(entity.unitValue)
+            }
+            Log.e("Ian","[getSingleBetTypeSelectNumber] oriString: $result")
+            var spiltList = result.split(Pattern.compile("[,. ;\n\r]"))
+            spiltList = spiltList.filter { it.isNumeric() && it.length == length}
+            result.clear()
+            if(isAnyType){
+                var anyText = betEntityList[0].getData()?.unitList?.get(0)?.unitSelect?.toSelectNumber()
+                result.append("$anyText@")
+            }
+
+            for(index in spiltList.indices){
+                result.append(spiltList[index])
+                if(index != spiltList.size-1){
+                    result.append(",")
+                }
+            }
+        }
+
+        return result
     }
 
     /**
@@ -168,6 +226,7 @@ object BetCountUtil {
     fun getBetCount(betSelectNumber: BetSelectNumber, regex: String): Int {
 
         var currentRegex = URLDecoder.decode(regex,"UTF-8")
+        Log.e("Ian","[getBetCount] currentRegex:$currentRegex")
         var pattern: Pattern? = null
 
         if(currentRegex.isNotEmpty()){
