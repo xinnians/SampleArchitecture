@@ -64,7 +64,7 @@ class MainFragment : BaseFragment() {
         val adapter = CarouselAdapter(names)
         initRecyclerView(
             recycle_view,
-            CarouselLayoutManager(CarouselLayoutManager.VERTICAL, false),
+            CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true),
             adapter
         )
     }
