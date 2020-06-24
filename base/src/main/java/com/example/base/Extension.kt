@@ -1,6 +1,7 @@
 package com.example.base
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,14 +60,6 @@ fun dpToPx(dp: Float, context: Context): Float {
     return (dp * density).roundToInt().toFloat()
 }
 
-//fun AppCompatActivity.switchFragmentToStack(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
-//    this.supportFragmentManager?.inStackTransaction { add(idRes, fragment, tag) }
-//}
-//
-//fun AppCompatActivity.switchFragment(@IdRes idRes: Int, fragment: androidx.fragment.app.Fragment, tag: String? = null) {
-//    this.supportFragmentManager?.inTransaction { add(idRes, fragment, tag) }
-//}
-
 inline fun AppCompatActivity.Dialog(@LayoutRes layout: Int, title: String,
                                     content: String = "",
                                     negativeButton: String = "取消",
@@ -88,6 +81,14 @@ fun getDateTime(millionsecond: Long): String {
     val date = Date(millionsecond)
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     return sdf.format(date)
+}
+
+fun getMonth(date: Date): String {
+    return DateFormat.format("MM", date).toString()
+}
+
+fun getDay(date: Date): String {
+    return DateFormat.format("dd", date).toString()
 }
 
 fun convertDate(time: String): Long {

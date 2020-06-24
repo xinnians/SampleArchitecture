@@ -29,6 +29,7 @@ class GameFavoriteViewModel : ViewModel() {
                     if(favoriteGames.contains(game)){
                         game.isFavorite = true
                     }
+                    game.isClick = false
                 }
                 resultList.add(group)
             }

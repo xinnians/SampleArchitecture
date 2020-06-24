@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
+import com.example.base.onClick
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import kotlinx.android.synthetic.main.fragment_game_favorite.*
@@ -47,5 +48,6 @@ class GameFavoriteFragment : BaseFragment() {
         rvGameList.adapter = adapter
 
         ivLeftArrow.setOnClickListener { navigation.goBackToBetMenuPage() }
+        btnSave.onClick { navigation.goBackToBetMenuPage() }
     }
 }
