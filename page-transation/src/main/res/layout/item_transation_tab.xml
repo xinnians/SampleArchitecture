@@ -13,8 +13,9 @@
         app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:id="@+id/tvTabItem"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dp_17"
+        android:gravity="center"
         android:layout_marginTop="@dimen/dp_3"
         app:layout_constraintTop_toBottomOf="@id/imgTabItem"
         app:layout_constraintStart_toStartOf="@id/imgTabItem"

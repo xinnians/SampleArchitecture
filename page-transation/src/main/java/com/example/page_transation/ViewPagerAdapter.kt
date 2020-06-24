@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.include_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.page_all.view.*
 
 
-class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFragment.FakeUserCash) : PagerAdapter() {
+class ViewPagerAdapter(context: Context, fakeData: TransationFragment.FakeUserCash) : PagerAdapter() {
 
     companion object {
         private const val CASH_PAGE = 1
@@ -30,10 +30,11 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
     lateinit var bottomBehavior: BottomSheetBehavior<View>
     var bottomBehaviorList: MutableMap<Int, BottomSheetBehavior<View>> = mutableMapOf()
     var mContext: Context
-    val tab: TabLayout
     private var slideOffsetAction: ((position: Int, slideOffset: Float)->Unit) ?= null
     private var slideStateChangeAction: ((position: Int,slideState: Int)->Unit) ?= null
     private var slideStateAction: ((sheet: BottomSheetBehavior<View>) -> Unit) ?= null
+    // bottomSheet 到頂端的距離(不含中間 cashView 的高度)
+    private var sheetToTitleOffsetHeight: Float = 34f+92f
 
     init {
         mFakeData = fakeData
@@ -41,7 +42,6 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
         Log.d("msg", "fakeData size: ${fakeData.data.size}")
         mTransAdapter = TransAdapter(mFakeDataDetail!!)
         this.mContext = context
-        this.tab = tab
     }
 
     override fun isViewFromObject(view: View, o: Any): Boolean {
@@ -82,8 +82,8 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
                 view.recyclerTrans.adapter = mTransAdapter
                 view.viewTreeObserver.addOnGlobalLayoutListener {
                     var height = view.height
-                    var setOff = dpToPx(34f+76f, mContext)
-                    bottomBehavior.peekHeight = (height - view.constrainRecords.height - setOff).toInt()
+                    var offset = dpToPx(sheetToTitleOffsetHeight, mContext)
+                    bottomBehavior.peekHeight = (height - view.constrainRecords.height - offset).toInt()
 
                 }
                 bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
@@ -130,11 +130,12 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
                 view.viewTreeObserver.addOnGlobalLayoutListener {
                     /**
                      * 計算 bottomSheet 起始位置
-                     * 1.整個頁面高度 - 中間 LinearLayout 高度 - bottomSheet到LinearLayout的 marginTop(34)
+                     * 1.整個頁面高度 - 中間 LinearLayout 高度 - bottomSheet到LinearLayout的 marginTop(34) - offset
+                     *
                       */
                     var height = view.height
-                    var setOff = dpToPx(34f+76f, mContext)
-                    bottomBehavior.peekHeight = (height - view.constrainRecords.height - setOff).toInt()
+                    var offset = dpToPx(sheetToTitleOffsetHeight, mContext)
+                    bottomBehavior.peekHeight = (height - view.constrainRecords.height - offset).toInt()
                 }
                 bottomBehavior = BottomSheetBehavior.from(view.bottom_sheet)
                 bottomBehaviorList.put(position, bottomBehavior)
@@ -167,6 +168,12 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
         }
     }
 
+    override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
+        Log.d("msg", "destroyItem")
+        bottomBehaviorList.remove(position)
+        container.removeView(any as View)
+    }
+
     fun setSlideOffset(action: (position: Int, slideOffset: Float) -> Unit) {
         this.slideOffsetAction = action
     }
@@ -179,9 +186,4 @@ class ViewPagerAdapter(tab:TabLayout, context: Context, fakeData: TransationFrag
         this.slideStateAction = action
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
-        Log.d("msg", "destroyItem")
-        bottomBehaviorList.remove(position)
-        container.removeView(any as View)
-    }
 }

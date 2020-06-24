@@ -1,12 +1,10 @@
 package com.example.page_transation
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_transation.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 import kotlin.random.Random
+
 
 class TransationFragment : BaseFragment() {
 
@@ -69,7 +68,7 @@ class TransationFragment : BaseFragment() {
     @SuppressLint("ResourceType")
     private fun initView() {
         (activity as BaseActivity?)?.showBottomNav()
-        tabTransationType.setSelectedTabIndicator(Color.TRANSPARENT)
+        tabTransationType.setSelectedTabIndicator(R.color.transparent)
         for(index in 0..6) {
             var tab = tabTransationType.getTabAt(index)
             tab?.setCustomView(R.layout.item_transation_tab)
@@ -99,7 +98,7 @@ class TransationFragment : BaseFragment() {
                 ADJUSTMENT -> { holder.tvTabItem?.text = "調整" }
             }
         }
-        mViewPagerAdapter = context?.let { ViewPagerAdapter(tabTransationType,it, mFakeUserCash) }
+        mViewPagerAdapter = context?.let { ViewPagerAdapter(it, mFakeUserCash) }
         pagerTransation.adapter = this.mViewPagerAdapter
         pagerTransation.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabTransationType))
         tabTransationType.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(pagerTransation))
