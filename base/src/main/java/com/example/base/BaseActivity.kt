@@ -1,10 +1,12 @@
 package com.example.base
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.repository.room.LocalDatabase
+
 
 abstract class  BaseActivity : AppCompatActivity() {
 
@@ -16,6 +18,14 @@ abstract class  BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         mSharedViewModel = AppInjector.obtainViewModel(application)
+
+        val dm = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(dm)
+
+        dm.apply {
+            mSharedViewModel.isBigScreen.value = this.heightPixels/this.widthPixels > 16/9
+        }
+//        Log.e("Ian","widthPixels:${dm.widthPixels}, heightPixels:${dm.heightPixels}, density:${dm.density}, densityDpi:${dm.densityDpi}, scaledDensity:${dm.scaledDensity}, xdpi:${dm.xdpi}, ydpi:${dm.ydpi}")
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

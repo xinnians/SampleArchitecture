@@ -91,6 +91,7 @@ class BetFragment : BaseFragment() {
         }
         cartViewModel.checkGameInCart(mViewModel.mGameId)
         cartViewModel.getAllCartList()
+        isBigScreen = getSharedViewModel().isBigScreen.value ?: true
     }
 
     private fun initView() {
@@ -195,7 +196,7 @@ class BetFragment : BaseFragment() {
                     override fun onTransitionEnd(transition: Transition?) {
                         var layout = ScrollableLinearLayoutManager(context, false)
                         layout.orientation = LinearLayoutManager.VERTICAL
-                        rvBetRegion.layoutManager = layout
+                        rvBetRegion?.layoutManager = layout
 
                         mBetPositionAdapter?.setFirstItemSelect()
                     }
@@ -212,6 +213,7 @@ class BetFragment : BaseFragment() {
                     override fun onTransitionStart(transition: Transition?) {
                     }
                 })
+
                 TransitionManager.beginDelayedTransition(layoutBetMain, zoomOutTransition)
                 zoomOut.applyTo(clTopLayout)
                 zoomOutTopRow.applyTo(layoutCurrentIssueInfo)
@@ -232,7 +234,7 @@ class BetFragment : BaseFragment() {
 
                         var layout = ScrollableLinearLayoutManager(context, true)
                         layout.orientation = LinearLayoutManager.VERTICAL
-                        rvBetRegion.layoutManager = layout
+                        rvBetRegion?.layoutManager = layout
 
                         var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
                         mBetPositionAdapter?.data?.apply {
