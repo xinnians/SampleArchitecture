@@ -152,12 +152,12 @@ class LoginFragment : BaseFragment() {
         btnLogin.text = "登入"
         btnLogin.onClick {
             if (isAccount && isPws) {
-                if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
+//                if ((cetAccount.text == prefStore.account && cetPws.text == prefStore.password)) {
                     Toast.makeText(requireContext(), "登入成功", Toast.LENGTH_SHORT).show()
                     navigation.mainPage()
-                } else {
-                    Toast.makeText(requireContext(), "帳號密碼錯誤", Toast.LENGTH_SHORT).show()
-                }
+//                } else {
+//                    Toast.makeText(requireContext(), "帳號密碼錯誤", Toast.LENGTH_SHORT).show()
+//                }
             } else {
                 Toast.makeText(requireContext(), "請輸入帳號密碼喔", Toast.LENGTH_SHORT).show()
             }
