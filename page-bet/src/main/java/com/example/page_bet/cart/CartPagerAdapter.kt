@@ -16,8 +16,6 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
         BaseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_cart_list, parent, false), callback)
 
-    var pageData: MutableList<Cart> = mutableListOf()
-
     override fun getItemCount(): Int = data.size
 
     fun addData(newData: MutableList<MutableList<Cart>>) {
@@ -27,7 +25,6 @@ class CartPagerAdapter(var data: MutableList<MutableList<Cart>>,
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(data[position])
-        pageData = data[position]
     }
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.base.*
@@ -26,6 +27,8 @@ class CartFragment : BaseFragment() {
     private var currentItemId:Int = -1
     private var isAppendListMode = false
     private var isAppendWinStop = false
+    private var isGameInCart = false
+    private var tabName = mutableListOf<String>()
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
     }
@@ -36,7 +39,10 @@ class CartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cartViewModel = AppInjector.obtainViewModel(this)
-        currentItemId = arguments?.getInt(BetFragment.TAG_GAME_ID)!!
+        arguments?.let {
+            currentItemId = it.getInt(BetFragment.TAG_GAME_ID)
+            isGameInCart = it.getBoolean(BetFragment.TAG_GAME_IN_CART)
+        }
         vpCartType.isUserInputEnabled = false
         cartViewModel.getAllGameId()
         cartPagerAdapter = CartPagerAdapter(mutableListOf(), callBack)
@@ -46,7 +52,7 @@ class CartFragment : BaseFragment() {
 
     private fun initListener() {
         btnBet.onClick {
-            cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
+            oneTouchBet()
         }
 
         ivBackToBet.onClick {
@@ -90,7 +96,7 @@ class CartFragment : BaseFragment() {
 
             it.delCartByIdResult.observeNotNull(this) { result ->
                 if (-1 != result) {
-                    navigation.goBackToBetPage()
+                    Log.d("mori", "remove by id is done")
                 }
             }
         }
@@ -250,41 +256,55 @@ class CartFragment : BaseFragment() {
                 getBackToCartList()
                 cartViewModel.delCart(cart)
             } else {
-                cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
+                oneTouchBet()
+            }
+        }
+    }
+
+    private fun oneTouchBet() {
+        val tabPosition = tlCartType.selectedTabPosition
+        val cartInfo = cartPagerAdapter.data[tabPosition]
+        if (cartInfo.size != 0) {
+            cartViewModel.delCartById(cartInfo[0].gameId)
+            cartPagerAdapter.let {
+                tabName.removeAt(tabPosition)
+                it.data.removeAt(tabPosition)
+                it.notifyDataSetChanged()
+                if (it.data.size == 0) {
+                    navigation.goBackToBetPage()
+                }
             }
         }
     }
 
     private fun getIdAndName(allId: MutableList<Int>) {
-        Log.d("mori", "all id = $allId")
-        val tabName = mutableListOf<String>()
         getSharedViewModel().gameMenuList.value.let { menuItem ->
-            val filterList = menuItem?.filterNot { it.getData()?.gameTypeDisplayName == "Hot" || it.getData()?.gameTypeDisplayName == "Favorite" }
-            for (id in allId) {
-                for (item in filterList!!.iterator()) {
-                    for (entity in item.getData()!!.gameInfoEntityList) {
+            val filterList = menuItem?.filterNot {
+                it.getData()?.gameTypeDisplayName == "Hot" || it.getData()?.gameTypeDisplayName == "Favorite"
+            }
+            allId.forEach { id ->
+                filterList!!.forEach { filter ->
+                    filter.getData()!!.gameInfoEntityList.forEach { entity ->
                         if (id == entity.gameId) {
-                            Log.d("mori", "tab name = ${entity.gameName}")
                             tabName.add(entity.gameName)
                         }
                     }
                 }
             }
         }
-        Log.d("mori", "all tab name = $tabName")
-        setAdapter(allId, tabName)
-    }
 
-    private fun setAdapter(gameId: MutableList<Int>, tabName: MutableList<String>) {
-        cartViewModel.getCartArray(gameId as ArrayList<Int>)
+        cartViewModel.getCartArray(allId as ArrayList<Int>)
         vpCartType.adapter = cartPagerAdapter
         cartPagerAdapter.notifyDataSetChanged()
         TabLayoutMediator(tlCartType, vpCartType) { tab: TabLayout.Tab, i: Int ->
             tab.text = tabName[i]
         }.attach()
-        for (position in 0 until gameId.size) {
-            if (gameId[position] == currentItemId) {
-                Handler().postDelayed({ vpCartType.setCurrentItem(position, false) }, 100)
+
+        if (isGameInCart) {
+            for (position in 0 until allId.size) {
+                if (allId[position] == currentItemId) {
+                    Handler().postDelayed({ vpCartType.setCurrentItem(position, false) }, 100)
+                }
             }
         }
     }

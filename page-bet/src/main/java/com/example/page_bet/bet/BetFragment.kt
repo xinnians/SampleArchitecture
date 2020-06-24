@@ -42,6 +42,7 @@ class BetFragment : BaseFragment() {
         const val TAG_GAME_ID = "tag_game_id"
         const val TAG_GAME_NAME = "tag_game_name"
         const val TAG_GAME_TYPE = "tag_game_type"
+        const val TAG_GAME_IN_CART = "tag_game_in_cart"
     }
 
     private lateinit var mViewModel: BetViewModel
@@ -329,8 +330,9 @@ class BetFragment : BaseFragment() {
         }
 
         ivShoppingCart.onClick {
-            if (isGoToShoppingCart && isGameInCart) {
+            if (isGoToShoppingCart) {
                 navigation.toShoppingCartPage(Bundle().apply {
+                    putBoolean(TAG_GAME_IN_CART, isGameInCart)
                     putInt(TAG_GAME_ID, mViewModel.mGameId)
                 })
             } else {
@@ -384,10 +386,11 @@ class BetFragment : BaseFragment() {
         cartViewModel.addCartResult.observeNotNull(this){
             if (-1L != it) {
 //                Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
+                isGameInCart = true
             }
         }
 
-        cartViewModel.getAllCartListResult.observeNotNull(viewLifecycleOwner) {
+        cartViewModel.getAllCartListResult.observeNotNull(this) {
             isGoToShoppingCart = it
         }
 
