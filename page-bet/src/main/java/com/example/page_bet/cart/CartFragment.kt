@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_cart.clAppendLayout
 import kotlinx.android.synthetic.main.item_cart_layout.*
 import me.vponomarenko.injectionmanager.x.XInjectionManager
+import java.lang.Exception
 
 class CartFragment : BaseFragment() {
     private lateinit var cartPagerAdapter: CartPagerAdapter
@@ -46,7 +47,11 @@ class CartFragment : BaseFragment() {
 
     private fun initListener() {
         btnBet.onClick {
-            cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
+            try {
+                cartViewModel.delCartById(cartPagerAdapter.data[tlCartType.selectedTabPosition][0].gameId)
+            }catch (e: Exception){
+                Log.e("Ian","[btnBet.onClick] Exception:$e")
+            }
         }
 
         ivBackToBet.onClick {
