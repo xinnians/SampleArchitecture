@@ -93,7 +93,7 @@ class BetFragment : BaseFragment() {
         var mFancyShowCaseView: FancyShowCaseView? = null
         mFancyShowCaseView = FancyShowCaseView.Builder(activity as Activity)
 //            .focusOn(tvCurrentIssueLeftTime)
-            .focusOn(arrayListOf(ivZoom,rvBetPositionSelect,rvBetRegion,ivAddToShoppingCart,btnBet))
+            .focusOn(arrayListOf(rvBetPositionSelect,rvBetRegion,ivZoom,clRateLayout,ivAddToShoppingCart,btnBet))
             .focusShape(FocusShape.ROUNDED_RECTANGLE)
             .roundRectRadius(0)
             .title("當期開獎時間倒數")
@@ -104,14 +104,18 @@ class BetFragment : BaseFragment() {
 //            })
             .customView(R.layout.item_hints, object : OnViewInflateListener {
                 override fun onViewInflated(view: View,focusId: Int,focusIndex: Int) {
+                    var tvSkip = view.findViewById<TextView>(R.id.tvSkip)
+                    tvSkip.onClick { mFancyShowCaseView?.hide() }
+
                     val textView = view.findViewById<TextView>(R.id.tvHints)
                     textView.text = when(focusId){
-                        ivZoom.id -> "全螢幕模式切換"
+                        ivZoom.id -> "小提示:\n" + "也可點擊此處展開投注列表"
                         tvCurrentIssueLeftTime.id -> "當期開獎時間倒數"
-                        rvBetPositionSelect.id -> "投注位置選擇"
-                        rvBetRegion.id -> "投注欄選擇"
-                        ivAddToShoppingCart.id -> "加入購物車"
-                        btnBet.id -> "投注按鈕"
+                        rvBetPositionSelect.id -> "1. 点击此处选择投注单位"
+                        rvBetRegion.id -> "2. 選取投注號碼"
+                        ivAddToShoppingCart.id -> "4.點擊添加至購物車"
+                        clRateLayout.id -> "3. 調整下注條件"
+                        btnBet.id -> "5.也可直接投注"
                         else -> "empty"
                     }
                     val params = textView.layoutParams as ConstraintLayout.LayoutParams
