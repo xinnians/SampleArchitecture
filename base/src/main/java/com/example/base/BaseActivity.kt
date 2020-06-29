@@ -13,7 +13,6 @@ abstract class  BaseActivity : AppCompatActivity() {
     private var mKeyDownListenerList: ArrayList<OnKeyDownListener>? = arrayListOf()
 
     private lateinit var mSharedViewModel: SharedViewModel
-    private var db: LocalDatabase? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
