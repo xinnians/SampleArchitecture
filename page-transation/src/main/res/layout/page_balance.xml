@@ -1,101 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingRight="@dimen/dp_20"
     android:paddingLeft="@dimen/dp_20">
-
-    <LinearLayout
-        android:id="@+id/constrainRecords"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_100"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10"
-        android:background="@drawable/bg_white_corner"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <LinearLayout
+        android:layout_height="match_parent">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pagerGameName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvTotalAssetsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="遊戲一"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="#f4f4f4"/>
-            <TextView
-                android:id="@+id/tvWithdrawTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="遊戲二"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="#f4f4f4"/>
-            <TextView
-                android:id="@+id/tvLockCashTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="遊戲三"/>
-        </LinearLayout>
+            android:layout_height="@dimen/dp_100"
+            android:layout_marginTop="@dimen/dp_75"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </androidx.viewpager.widget.ViewPager>
         <LinearLayout
+            android:id="@+id/llGuidePage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvTotalAssets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="99,999,999"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="#f4f4f4"/>
-            <TextView
-                android:id="@+id/tvWithdraw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="12,234,999"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="#f4f4f4"/>
-            <TextView
-                android:id="@+id/tvLockCash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="9,567,123"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_height="@dimen/dp_6"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_13"
+            app:layout_constraintTop_toBottomOf="@id/pagerGameName"
+            app:layout_constraintStart_toStartOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/include_bottom_sheet" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

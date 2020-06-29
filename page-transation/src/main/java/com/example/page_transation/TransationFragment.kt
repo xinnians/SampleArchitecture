@@ -185,13 +185,12 @@ class TransationFragment : BaseFragment() {
         }
     }
 
+    // 移動 tabBar
     fun startTranslateY(view: View, translateY: Int){
-//        val transY = context?.let { dpToPx(translateY.toFloat(), it) }
-//        Log.d("msg", "translateY: ${translateY.toFloat()}")
-        val currentY: Float= view.translationY
         view.translationY = -translateY.toFloat()
     }
 
+    // 假資料的 function
     fun setFakeData() {
         var datalist = mutableListOf<FakeUserCashDetail>()
         for(index in 0..20) {
@@ -207,10 +206,19 @@ class TransationFragment : BaseFragment() {
             var fakeDetail = FakeUserCashDetail(gameType, transDate, transAmount)
             datalist.add(fakeDetail)
         }
-        mFakeUserCash = FakeUserCash(123456, 2345, 23456, datalist)
+
+        var gameList = mutableListOf<FakeUserGame>()
+        for(index in 0..8) {
+            var gameName = "遊戲一"
+            var gameAmount = Random.nextInt(0,100000)
+            var fakeUserGame = FakeUserGame(gameName, gameAmount)
+            gameList.add(fakeUserGame)
+        }
+        mFakeUserCash = FakeUserCash(123456, 2345, 23456, datalist, gameList)
     }
 
     data class FakeUserCashDetail(var gameType:String, var transDate:String, var transAmount:Int)
-    data class FakeUserCash(var totalCash:Int, var withdraw:Int, var lockCash:Int, var data:MutableList<FakeUserCashDetail>)
-
+    data class FakeUserCash(var totalCash:Int, var withdraw:Int, var lockCash:Int,
+                            var data:MutableList<FakeUserCashDetail>, var gameData:MutableList<FakeUserGame>)
+    data class FakeUserGame(var gameName:String, var gameAmount: Int)
 }
