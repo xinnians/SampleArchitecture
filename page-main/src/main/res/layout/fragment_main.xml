@@ -17,7 +17,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
 
-    <com.example.resource.ToolBar
+    <com.example.base.widget.CustomTitleBar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

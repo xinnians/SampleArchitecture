@@ -10,7 +10,6 @@ import com.savvi.rangedatepicker.CalendarPickerView
 import kotlinx.android.synthetic.main.dialog_date_picker.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.AbstractList
 
 class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog(context) {
 
@@ -19,10 +18,7 @@ class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog
         setContentView(R.layout.dialog_date_picker)
         window?.let {
             it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            it.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT
-            )
+            it.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
         }
 
         val nextMonth = Calendar.getInstance()
@@ -36,11 +32,25 @@ class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog
                 .inMode(CalendarPickerView.SelectionMode.RANGE)
             it.scrollToDate(Date())
             it.setOnStartDateClickListener { date ->
-                tvStartDay.text = date.toString()
+                tvStartDay.let {
+                    it.text = ""
+                    it.text = getDay(date)
+                }
+                tvStartMonth.let {
+                    it.text = ""
+                    it.text = getMonth(date)
+                }
             }
 
             it.setOnEndDateClickListener { date ->
-                tvEndDay.text = date.toString()
+                tvEndDay.let {
+                    it.text = ""
+                    it.text = getDay(date)
+                }
+                tvEndMonth.let {
+                    it.text = ""
+                    it.text = getMonth(date)
+                }
             }
         }
 
@@ -51,17 +61,19 @@ class DatePickerDialog(context: Context, var listener: GetDateListener) : Dialog
 
         btnSearch.onClick {
             val dateList = calendarView.selectedDates
-            val start = dateList[0]
-            val end = dateList[dateList.size - 1]
-            val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
-            listener.getSearch(arrayList)
-            dismiss()
+            if (dateList.size == 0) {
+                dismiss()
+            } else {
+//                val start = dateList[0]
+//                val end = dateList[dateList.size - 1]
+//                val arrayList = arrayListOf(convertDate(start.toString()), convertDate(end.toString()))
+//                listener.getSearch(arrayList)
+                dismiss()
+            }
         }
     }
 
-    interface GetDateListener{
+    interface GetDateListener {
         fun getSearch(list: ArrayList<Long>)
     }
-
 }
-

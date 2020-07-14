@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.example.base.AppInjector
 import com.example.base.BaseFragment
 import com.example.base.observeNotNull
+import com.example.base.onClick
+import com.example.base.widget.CustomTitleBar
 import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.BetFragment
@@ -49,6 +51,7 @@ class LotteryCenterFragment : BaseFragment() {
     }
 
     private fun initView() {
+
         tlLotteryType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 Log.e("Ian", "[onTabReselected] tab:${tab?.position}")
@@ -72,7 +75,6 @@ class LotteryCenterFragment : BaseFragment() {
 
         mAdapter= ViewPagerAdapter()
         mAdapter!!.setResultAction {
-//            Log.d("msg", "reult win: ${it.data?.winNum} + gameId: ${it.data?.gameId}")
             var bundle = Bundle()
             it.data?.gameId?.let { it1 -> bundle.putInt(BetFragment.TAG_GAME_ID, it1) }
             navigation.toLotteryResultPage(bundle)
@@ -84,6 +86,9 @@ class LotteryCenterFragment : BaseFragment() {
         TabLayoutMediator(tlLotteryType,vpGameIssueInfo) { tab: TabLayout.Tab, i: Int ->
             tab.text = GameTypeId.values()[i].chineseName
         }.attach()
+
+        toolbar.backListener(View.OnClickListener { navigation.backPrePage() })
+
     }
 
     private fun initData() {

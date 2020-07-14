@@ -486,7 +486,8 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager implements
         final float absCurrentScrollPosition = makeScrollPositionInRange0ToCount(currentScrollPosition, mItemsCount);
         final int centerItem = Math.round(absCurrentScrollPosition);
         if (mCircleLayout && 1 < mItemsCount) {
-            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 3, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
+            // 在輪播的情況下只顯示三個項目
+            final int layoutCount = Math.min(mLayoutHelper.mMaxVisibleItems * 2 + 1, mItemsCount);// + 3 = 1 (center item) + 2 (addition bellow maxVisibleItems)
             mLayoutHelper.initLayoutOrder(layoutCount);
 
             final int countLayoutHalf = layoutCount / 2;

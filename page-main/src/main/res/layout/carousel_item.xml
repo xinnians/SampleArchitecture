@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/dp_250"
     android:layout_height="@dimen/dp_250"
     android:layout_margin="@dimen/dp_10">
 
     <RelativeLayout
+        android:id="@+id/viewBackground"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
         android:layout_centerInParent="true"

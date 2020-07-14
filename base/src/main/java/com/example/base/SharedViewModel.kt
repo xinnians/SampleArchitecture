@@ -10,4 +10,5 @@ class SharedViewModel(repository: Repository) :
 
     var lotteryToken: MutableLiveData<String> = MutableLiveData()
     var gameMenuList: MutableLiveData<ArrayList<MultipleMenuItem>> = MutableLiveData()
+    var isBigScreen: MutableLiveData<Boolean> = MutableLiveData()
 }

@@ -162,5 +162,5 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.page_bet.cart.CartFragment"
-        android:label="CartFragment"></fragment>
+        android:label="CartFragment"/>
 </navigation>

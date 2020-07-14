@@ -23,7 +23,6 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class MainFragment : BaseFragment() {
 
-    private var isHide = true
     private lateinit var mMainViewModel: MainViewModel
 
     private val navigation: MainNavigation by lazy {
@@ -61,11 +60,16 @@ class MainFragment : BaseFragment() {
                     is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
                 }
             }
-        val names = arrayOf("彩票", "棋盤", "真人視訊", "百家樂", "麻將")
+        toolBar.setBackButtonVisable(View.GONE)
+        val names = arrayOf(CarouselAdapter.Game("彩票",R.drawable.ic_lottery_inum),
+                            CarouselAdapter.Game("棋盤",R.drawable.ic_dice),
+                            CarouselAdapter.Game("真人視訊",R.drawable.ic_sport),
+                            CarouselAdapter.Game("百家樂",R.drawable.ic_lottery),
+                            CarouselAdapter.Game("麻將",R.drawable.ic_sport))
         val adapter = CarouselAdapter(names)
         initRecyclerView(
             recycle_view,
-            CarouselLayoutManager(CarouselLayoutManager.VERTICAL, false),
+            CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true),
             adapter
         )
     }
@@ -79,6 +83,8 @@ class MainFragment : BaseFragment() {
         btnDailySign.setOnClickListener {
             //TODO
         }
+
+        toolBar.backListener(View.OnClickListener { requireActivity().finish() })
     }
 
     // 輪播 recyclerView

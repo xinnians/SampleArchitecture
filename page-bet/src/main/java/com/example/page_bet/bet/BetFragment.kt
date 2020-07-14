@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.*
 import com.example.base.AppInjector
@@ -21,10 +23,15 @@ import com.example.page_bet.BetNavigation
 import com.example.page_bet.R
 import com.example.page_bet.bet.lottery_record.LotteryRecordDialog
 import com.example.page_bet.bet.play_type_select.PlayTypeDialog
+import com.example.page_bet.cart.CartViewModel
+import com.example.repository.constant.playTypeID_206010
 import com.example.repository.model.base.ViewState
 import com.example.repository.model.bet.*
 import com.example.repository.room.Cart
 import kotlinx.android.synthetic.main.fragment_bet.*
+import kotlinx.android.synthetic.main.fragment_bet.toolbar
+import kotlinx.android.synthetic.main.fragment_lottery_center.*
+import kotlinx.coroutines.isActive
 import me.vponomarenko.injectionmanager.x.XInjectionManager
 
 class BetFragment : BaseFragment() {
@@ -35,9 +42,11 @@ class BetFragment : BaseFragment() {
         const val TAG_GAME_ID = "tag_game_id"
         const val TAG_GAME_NAME = "tag_game_name"
         const val TAG_GAME_TYPE = "tag_game_type"
+        const val TAG_GAME_IN_CART = "tag_game_in_cart"
     }
 
     private lateinit var mViewModel: BetViewModel
+    private lateinit var cartViewModel: CartViewModel
     private var mPlayTypeDialog: PlayTypeDialog? = null
     private var mLotteryHistoryDialog: LotteryRecordDialog? = null
 
@@ -47,6 +56,9 @@ class BetFragment : BaseFragment() {
 
     private var isBetUnitShow = true
     private var isZoomIn = false
+    private var isGoToShoppingCart = false
+    private var isGameInCart = false
+    private var isBigScreen = true
 
     private val navigation: BetNavigation by lazy {
         XInjectionManager.findComponent<BetNavigation>()
@@ -65,15 +77,21 @@ class BetFragment : BaseFragment() {
         initListener()
         initBinding()
         initUI()
+        initScreen()
     }
 
     private fun initData() {
         mViewModel = AppInjector.obtainViewModel(this)
+        cartViewModel = AppInjector.obtainViewModel(this)
         arguments?.let {
             mViewModel.mGameName = it.getString(TAG_GAME_NAME, "empty")
+            ivGameName.text = mViewModel.mGameName
             mViewModel.mGameId = it.getInt(TAG_GAME_ID, -1)
             mViewModel.mGameTypeId = it.getInt(TAG_GAME_TYPE, -1)
         }
+        cartViewModel.checkGameInCart(mViewModel.mGameId)
+        cartViewModel.getAllCartList()
+        isBigScreen = getSharedViewModel().isBigScreen.value ?: true
     }
 
     private fun initView() {
@@ -107,7 +125,7 @@ class BetFragment : BaseFragment() {
             }
         })
 
-        viewBetMultipleSelector.setOnMultipleValueChangeListener(object : BetMultipleSelector.OnMultipleValueChangeListener{
+        viewBetMultipleSelector.setOnMultipleValueChangeListener(object : BetMultipleSelector.OnMultipleValueChangeListener {
             override fun onChange(value: Int) {
                 mViewModel.selectBetMultiple(value)
             }
@@ -129,34 +147,40 @@ class BetFragment : BaseFragment() {
         btnBet.onClick {
             //TODO 根據獎金盤/信用盤的不同 call的api跟參數皆有差異
             //TODO 先判斷當前選擇是否符合可以下注的選擇，可以的話再進行下注的動作。
-            var para: BetEntityParam = BetEntityParam(mViewModel.mIssueId,
-                                                      arrayListOf(BonusOrderEntity(betCurrency = 1,
-                                                                                   betUnit = 1.0,
-                                                                                   multiple = 1,
-                                                                                   rebate = 0.0,
-                                                                                   uuid = "uuid",
-                                                                                   amount = 1,
-                                                                                   playTypeCode = mViewModel.mPlayTypeId,
-                                                                                   betNumber = mViewModel.mSelectNumber,
-                                                                                   betCount = 10000)))
-            Log.e("Ian", "[getBetList] param: $para")
-            mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty", para).observeNotNull(this) { state ->
-                when (state) {
-                    is ViewState.Success -> {
-                        Log.e("Ian", "[getBetList] ViewState.success: data:${state.data}")
-                    }
-                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
-                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
-                }
-            }
+//            var para: BetEntityParam = BetEntityParam(mViewModel.mIssueId,
+//                                                      arrayListOf(BonusOrderEntity(betCurrency = 1,
+//                                                                                   betUnit = 1.0,
+//                                                                                   multiple = 1,
+//                                                                                   rebate = 0.0,
+//                                                                                   uuid = "uuid",
+//                                                                                   amount = 1,
+//                                                                                   playTypeCode = mViewModel.mPlayTypeId,
+//                                                                                   betNumber = mViewModel.mSelectNumber,
+//                                                                                   betCount = 10000)))
+//            Log.e("Ian", "[getBetList] param: $para")
+//            mViewModel.getBetList(getSharedViewModel().lotteryToken.value ?: "empty", para).observeNotNull(this) { state ->
+//                when (state) {
+//                    is ViewState.Success -> {
+//                        Log.e("Ian", "[getBetList] ViewState.success: data:${state.data}")
+//                    }
+//                    is ViewState.Loading -> Log.e("Ian", "ViewState.Loading")
+//                    is ViewState.Error -> Log.e("Ian", "ViewState.Error : ${state.message}")
+//                }
+//            }
         }
 
+        //上層所有資訊欄位
         val zoomIn = ConstraintSet()
-        val zoomInTopRow = ConstraintSet()
         val zoomOut = ConstraintSet()
+        //期數欄位
+        val zoomInTopRow = ConstraintSet()
         val zoomOutTopRow = ConstraintSet()
+        //最外層
         val mainInLayout = ConstraintSet()
         val mainOutLayout = ConstraintSet()
+        //投注單位
+        val showRate = ConstraintSet()
+        showRate.clone(clUnderLayout)
         mainInLayout.clone(layoutBetMain)
         mainOutLayout.clone(layoutBetMain)
         zoomIn.clone(clTopLayout)
@@ -164,7 +188,7 @@ class BetFragment : BaseFragment() {
         zoomInTopRow.clone(layoutCurrentIssueInfo)
         zoomOutTopRow.clone(layoutCurrentIssueInfo)
 
-        btnZoom.onClick {
+        clZoom.onClick {
             if (isZoomIn) {
                 //恢復原來大小
                 val zoomOutTransition = AutoTransition()
@@ -172,7 +196,7 @@ class BetFragment : BaseFragment() {
                     override fun onTransitionEnd(transition: Transition?) {
                         var layout = ScrollableLinearLayoutManager(context, false)
                         layout.orientation = LinearLayoutManager.VERTICAL
-                        rvBetRegion.layoutManager = layout
+                        rvBetRegion?.layoutManager = layout
 
                         mBetPositionAdapter?.setFirstItemSelect()
                     }
@@ -189,11 +213,18 @@ class BetFragment : BaseFragment() {
                     override fun onTransitionStart(transition: Transition?) {
                     }
                 })
+
                 TransitionManager.beginDelayedTransition(layoutBetMain, zoomOutTransition)
                 zoomOut.applyTo(clTopLayout)
                 zoomOutTopRow.applyTo(layoutCurrentIssueInfo)
                 mainOutLayout.applyTo(layoutBetMain)
-                btnZoom.background = drawable(R.drawable.bg_zoom_in)
+                ivZoom.setImageDrawable(context!!.drawable(R.drawable.ic_icon_extend))
+                if (isBigScreen) {
+                    showRate.applyTo(clUnderLayout)
+                    tvLabel.gone()
+                } else {
+                    tvLabel.visible()
+                }
                 isZoomIn = false
             } else {
                 //放大投注區
@@ -203,11 +234,24 @@ class BetFragment : BaseFragment() {
 
                         var layout = ScrollableLinearLayoutManager(context, true)
                         layout.orientation = LinearLayoutManager.VERTICAL
-                        rvBetRegion.layoutManager = layout
+                        rvBetRegion?.layoutManager = layout
 
                         var list: ArrayList<MultipleLotteryEntity> = arrayListOf()
+                        mBetPositionAdapter?.data?.apply {
+                            for(index in 0 until this.size){
+                                if(mViewModel.mPlayTypeId.toString() == playTypeID_206010 && index == 1){
+                                    list.add(MultipleLotteryEntity(mViewModel.mSecondBetItemType.unitDisplayMode,
+                                                                   this[index].getData()!!,
+                                                                   true))
+                                }else{
+                                    list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode,
+                                                                   this[index].getData()!!,
+                                                                   true))
+                                }
+                            }
+                        }
                         mBetPositionAdapter?.data?.forEach {
-                            list.add(MultipleLotteryEntity(mViewModel.mBetItemType.unitDisplayMode, it.getData()!!, true))
+
                         }
                         setBetRegionDisplay(list)
 
@@ -234,27 +278,19 @@ class BetFragment : BaseFragment() {
                 zoomInView(zoomInTopRow, R.id.tvCurrentIssueLeftTime, 2).applyTo(layoutCurrentIssueInfo)
                 zoomInView(zoomInTopRow, R.id.tvCurrentIssueNumber, 3).applyTo(layoutCurrentIssueInfo)
 
-                zoomInView(mainInLayout, R.id.btnZoom, 4).applyTo(layoutBetMain)
-                btnZoom.background = drawable(R.drawable.bg_zoom_out)
+                zoomInView(mainInLayout, R.id.clZoom, 4).applyTo(layoutBetMain)
+                if (isBigScreen) {
+                    tvLabel.visible()
+                    hideRateLayout(layoutBetMain)
+                }
+                ivZoom.setImageDrawable(context!!.drawable(R.drawable.ic_icon_narrow))
                 isZoomIn = true
             }
         }
 
-        val showRate = ConstraintSet()
-        val hideRate = ConstraintSet()
-        showRate.clone(clUnderLayout)
-        hideRate.clone(clUnderLayout)
         tvLabel.onClick {
             if (isBetUnitShow) {
-                TransitionManager.beginDelayedTransition(clUnderLayout)
-                hideRate.apply {
-                    clear(R.id.clRateLayout)
-                    connect(R.id.clRateLayout, ConstraintSet.TOP, R.id.clBottomLayout, ConstraintSet.TOP)
-                    connect(R.id.clRateLayout, ConstraintSet.START, R.id.clBottomLayout, ConstraintSet.START)
-                    connect(R.id.clRateLayout, ConstraintSet.END, R.id.clBottomLayout, ConstraintSet.END)
-                }.applyTo(clUnderLayout)
-                tvLabel.text = "Show"
-                isBetUnitShow = false
+                hideRateLayout(clUnderLayout)
             } else {
                 TransitionManager.beginDelayedTransition(clUnderLayout)
                 showRate.applyTo(clUnderLayout)
@@ -292,24 +328,21 @@ class BetFragment : BaseFragment() {
                             uuid = "uuid",
                             betCount = 10000,
                             amount = 1)
-
-            mViewModel.addCart(cart).observeNotNull(this) { state ->
-                when (state) {
-                    is ViewState.Success -> {
-                        Log.e("Mori", "ViewState.Success")
-                        if (-1L != state.data) {
-                            toast("加入購物車成功")
-                        }
-                    }
-                    is ViewState.Loading -> Log.e("Mori", "ViewState.Loading")
-                    is ViewState.Error -> Log.e("Mori", "ViewState.Error : ${state.message}")
-                }
-            }
+            cartViewModel.addCart(cart)
         }
 
         ivShoppingCart.onClick {
-            navigation.toShoppingCartPage()
+            if (isGoToShoppingCart) {
+                navigation.toShoppingCartPage(Bundle().apply {
+                    putBoolean(TAG_GAME_IN_CART, isGameInCart)
+                    putInt(TAG_GAME_ID, mViewModel.mGameId)
+                })
+            } else {
+                Toast.makeText(requireContext(), "購物車沒資料喔", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        toolbar.backListener(View.OnClickListener { navigation.backPrePage() })
     }
 
     private fun initBinding() {
@@ -343,11 +376,39 @@ class BetFragment : BaseFragment() {
         mViewModel.liveBetRegionList.observeNotNull(this) {
             mBetRegionAdapter?.setNewData(it)
         }
+
         mViewModel.liveBetCount.observeNotNull(this) {
             tvCount.text = it.toString()
         }
         mViewModel.liveBetCurrency.observeNotNull(this) {
             tvCurrency.text = it.toString()
+
+        }
+
+        cartViewModel.addCartResult.observeNotNull(this){
+            if (-1L != it) {
+//                Toast.makeText(requireContext(), "加入購物車完成", Toast.LENGTH_SHORT).show()
+                isGameInCart = true
+            }
+        }
+
+        cartViewModel.getAllCartListResult.observeNotNull(this) {
+            isGoToShoppingCart = it
+        }
+
+        mViewModel.liveIsNeedShowFullScreen.observeNotNull(this) {
+            clZoom.visibility = if (it) View.INVISIBLE else View.VISIBLE
+        }
+
+        cartViewModel.checkCartListResult.observeNotNull(this) { result ->
+            isGameInCart = if (result.size > 0) {
+                viewPoint.visible()
+                true
+            } else {
+                viewPoint.gone()
+                false
+            }
+
         }
     }
 
@@ -379,6 +440,28 @@ class BetFragment : BaseFragment() {
         mBetRegionAdapter?.setNewData(data)
     }
 
+    private fun initScreen() {
+        if (isBigScreen) {
+            tvLabel.gone()
+        } else {
+            tvLabel.visible()
+            hideRateLayout(clUnderLayout)
+        }
+    }
+
+    private fun hideRateLayout(connectLayout: ViewGroup) {
+        val rateSet = ConstraintSet()
+        TransitionManager.beginDelayedTransition(connectLayout)
+        rateSet.apply {
+            clear(R.id.clRateLayout)
+            connect(R.id.clRateLayout, ConstraintSet.TOP, R.id.clBottomLayout, ConstraintSet.TOP)
+            connect(R.id.clRateLayout, ConstraintSet.START, R.id.clBottomLayout, ConstraintSet.START)
+            connect(R.id.clRateLayout, ConstraintSet.END, R.id.clBottomLayout, ConstraintSet.END)
+        }.applyTo(clUnderLayout)
+        tvLabel.text = "Show"
+        isBetUnitShow = false
+    }
+
     private fun zoomInView(set: ConstraintSet, resId: Int, type: Int): ConstraintSet {
         return set.apply {
             clear(resId, ConstraintSet.TOP)
@@ -393,27 +476,35 @@ class BetFragment : BaseFragment() {
                 }
 
                 2 -> {
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP, R.id.layoutCurrentIssueInfo, ConstraintSet.TOP)
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, R.id.layoutCurrentIssueInfo, ConstraintSet.START)
-                    connect(R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM, R.id.layoutCurrentIssueInfo, ConstraintSet.BOTTOM)
-                    setMargin(R.id.tvCurrentIssueLeftTime, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.TOP, R.id.layoutCurrentIssueInfo, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.START, R.id.layoutCurrentIssueInfo, ConstraintSet.START)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.layoutCurrentIssueInfo, ConstraintSet.BOTTOM)
+                    setMargin(resId, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
                 }
 
                 3 -> {
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.TOP, R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP)
-                    connect(R.id.tvCurrentIssueNumber, ConstraintSet.BOTTOM, R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM)
-                    setMargin(R.id.tvCurrentIssueNumber, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.START, R.id.tvCurrentIssueLeftTime, ConstraintSet.END)
+                    connect(resId, ConstraintSet.TOP, R.id.tvCurrentIssueLeftTime, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.tvCurrentIssueLeftTime, ConstraintSet.BOTTOM)
+                    setMargin(resId, ConstraintSet.START, dpToPx(30f, requireContext()).toInt())
                 }
 
                 4 -> {
-                    connect(R.id.btnZoom, ConstraintSet.TOP, R.id.layoutBetMain, ConstraintSet.TOP)
-                    connect(R.id.btnZoom, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
-                    setMargin(R.id.btnZoom, ConstraintSet.END, dpToPx(26f, requireContext()).toInt())
-                    setMargin(R.id.btnZoom, ConstraintSet.TOP, dpToPx(5f, requireContext()).toInt())
+                    connect(resId, ConstraintSet.TOP, R.id.layoutBetMain, ConstraintSet.TOP)
+                    connect(resId, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
+                    setMargin(resId, ConstraintSet.END, dpToPx(26f, requireContext()).toInt())
+                    setMargin(resId, ConstraintSet.TOP, dpToPx(5f, requireContext()).toInt())
                 }
+
+                5 -> {
+                    connect(resId, ConstraintSet.START, R.id.layoutBetMain, ConstraintSet.START)
+                    connect(resId, ConstraintSet.END, R.id.layoutBetMain, ConstraintSet.END)
+                    connect(resId, ConstraintSet.BOTTOM, R.id.clBottomLayout, ConstraintSet.TOP)
+                }
+
             }
 
         }
     }
+
 }
